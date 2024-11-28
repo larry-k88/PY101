@@ -1,2 +1,4 @@
-# Repo for Course PY101 of Python Track:
-# Lessons 1, 2 and 3
+Repo for Course PY101 of Python Track:
+Lesson 1: 26/11/24 - 
+Lesson 2
+Lesson 3
