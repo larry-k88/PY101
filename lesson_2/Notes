@@ -1,0 +1,130 @@
+# Lesson 2 Contents
+
++ [Truthiness](#truthiness)
++ [Virtual Environments](#virtual-environments)
++ 
+
+## Truthiness
+
+### Booleans
+
+These actually capture `True` and `False` rather than *truthy* and *falsy* - they are the definitive versions of truthiness  
+[**Logical Operators**](#logical-operators) will evaluate their operands and return boolean value:
+
+        num = 4
+        num < 10    # True
+
+The return of a Boolean isn't often useful, but using that Boolean to return the result of a conditional expression is more useful:
+
+        num = 4
+        if num < 3:
+            print('less than 3') # this is more useful than `True`
+        else:
+            print('3 or more')
+
+### Logical Operators
+
+#### `and`
+
++ Returns `True` when **all** sub-expressions evaluate to `True`
++ Sub-expressions can be chained and are evaluated from left to right:
+
+        num = 10
+
+        (num > 2) and (num < 15) and (num % 2 == 0)
+            # True: between 2-15 and even
+
+        (num > 2) and (num < 15) and (num % 2 == 1)
+            # False: between 2-15 and odd
+
+  + If **any** are `False`, the whole expression will return `False`
+  + Parentheses not required (`<` and `>` have *higher* precedence than `and`), but it's clearer and foolproof
+
+#### `or`
+
++ Returns `True` when either sub-expression (the operands) are evaluate to `True`
++ Can also be chained as above:
+
+        num = 10
+
+        (num > 2) or (num < 15) or (num % 2 == 0)
+            # True: more than 2, or less than 15 or even
+
+        (num > 2) or (num < 15) or (num % 2 == 1)
+            # True: more than 2, or less than 15 or odd
+
+#### `not`
+
++ Returns the inverse of the truth value of the condition (logical negation):
+
+        num = 10
+        
+        num > 2         # True
+        not (num > 2)   # False
+
+### Short-Circuits
+
+This is the idea that Python can stop evaluating sub-expressions if it already knows the evaluation of the whole expression
+
+Expressions containing `and` and `or` exhibit this, as they move from left to right. They will short circuit when:
+
++ A sub-expression in an `and` expression evaluates as `False`
++ A sub-expression in an `or` expression evaluates as `True`
+
+The remaining expressions are ***not*** evaluated which can be useful if they might contain exceptions (errors):
+
+    if name != None and name.isupper():
+        print(f"Hi, {name}.")
+    else:
+        print("Hello, whoever you are.")
+
+
+Here, the variable `name` must be anything other than `None` to avoid an error. If it's in CAPS, it will print "Hi, {name}" but if not, it will print ("Hello, whoever you are.")  
+If `name = None` and the `name != None and` code wasn't there, we would get an error
+
+### Truthy and Falsy
+
+These describe the nature of the values `True` and `False` - the former is obviously truthy and the latter falsy, but what about other values?  
+Most are truthy, the exceptions are as follows:
+
++ False
++ None
++ 0
++ 0.0
++ 0j
++ "" (an empty string)
++ [] (an empty list)
++ {} (an empty dictionary)
++ () (an empty tuple)
++ set() (an empty set)
++ frozenset() (an empty frozenset)
++ range(0) (an empty range)
+
+Values don't have to be `True` to be truthy:
+
+        num = 5
+        if num:
+            print('truthy value')
+        else:
+            print('falsy value')
+
+  + Note that `num` does not equal `True`, it is simply *truthy*
+
+Using `if name` to test for empty strings works, but is discouraged  
+Instead, use `if name == ''` to test for empty strings
+
+
+## Virtual Environments (venv)
+
++ These are created to enable programs to be run within them that may need different software versions
++ Instead of changing PATHs to run an older software version, install all versions and then just set them up in the venv depending on the program's needs 
++ You can then activate/deactivate the venv and it will have the versions you need
+
+1. Create a directory (~/.venv) to store them in 
+2. `python3.9 -m venv ~/.venv/env_a`
+   + uses Python 3.9 to create a venv called 'env_a'
+   + `-m venv` tells Python to run the venv module
+3. `source ~/.venv/env_a/bin/activate`
+   + activates env_a
+4. `deactivate`
+   + returns to default environment and versions
