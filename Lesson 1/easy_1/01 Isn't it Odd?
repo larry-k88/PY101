@@ -1,0 +1,55 @@
+'''
+Write a function that takes one integer argument and returns
+`True` when the number's absolute value is odd, `False` otherwise.
+
+
+Problem:    Take a number, check if it's odd and return True if so.
+            If number is negative, take the absolute value
+            Input - number
+            Output - True if odd, False otherwise
+            Args - 1x, number
+            Requirements:
+                Input must be an int
+                Output is a bool
+                Number can be negative, take absolute value  
+
+Examples:   Input = 2, Output = False
+            Input = 3, Output = True
+            Input = -2, Output = False
+            Input = -3, Output = True
+            Input = <anything other than int>, Output = None
+
+Data:       Function
+            Guard clause
+            If statement to check result of % operator
+            Return Boolean
+
+Algorithm:  Check if input is an integer
+            If no:
+                -> None
+            If yes:
+                -> take absolute value
+                -> check evaluation of % operator
+                -> = 1:
+                    --> True
+                -> Not 1:
+                    --> False  
+
+'''
+
+def is_it_odd(number):
+    if type(number) != int:
+        return 'Argument must be an integer'
+    return abs(number) % 2 == 1
+
+print(is_it_odd(2))     # False
+print(is_it_odd(3))     # True
+print(is_it_odd(-14))   # False
+print(is_it_odd(-11))   # True
+
+print(is_it_odd(0))     # False
+print(is_it_odd(2.0))   # Argument must be an integer
+print(is_it_odd(''))    # Argument must be an integer
+print(is_it_odd('3'))   # Argument must be an integer
+
+# Don't actually need `abs` when the divisor is 1, -1 or 2
