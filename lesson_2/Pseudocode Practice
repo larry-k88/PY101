@@ -1,0 +1,98 @@
+# Pseudocode Practice
+
+Write pseudocode and formal pseudocode for:
+
+1. A function that returns the sum of two numbers:
+
+*Pseudocode*
+
++ Take the two arguments from the function call
++ Add them together 
++ Save the result and return it to the user
+
+*Formal Pseudocode*
+
+    START
+
+    READ two arguments from the function call
+
+    Perform addition operation on the arguments
+
+    SET the result of the above
+
+    PRINT the result to user
+
+    END
+
+2. A function that takes a list of strings, and returns a string that is all those strings concatenated together
+
+*Pseudocode*
+
++ Given a list of strings
++ Iterate over the objects in the list
++ Use built-in function to join the objects separated with a space
++ Return the new string
+
+*Formal Pseudocode*
+
+    START
+
+    GET the list of strings from the user
+
+    READ the list and iterate over them
+
+    For each object, use str.join() to concatenate them together
+
+    SET the result to a variable
+
+    PRINT the result
+
+    END
+
+3. A function that takes a list of integers, and returns a new list with every other element from the original list, starting with the first element. For instance:
+  
+        every_other([1,4,7,2,5]) # => [1,7,5]
+
+*Pseudocode*
+
++ From a list of integers:
++ Iterate through the list, jumping by 2 each time
++ Add the integer at that position to a new list
++ Once the iterations have reached the end, stop
++ Return new list
+
+*Formal Pseudocode*
+
+        START
+
+        READ list and length(list) 
+        SET result = empty_list
+        SET Iterator = 1
+        
+        WHILE Iterator < length(list):
+            Append the item at index of iterator
+            Iterator + 2
+    
+        PRINT result
+
+
+4. A function that determines the index of the 3rd occurrence of a given character in a string. For instance, if the given character is 'x' and the string is 'axbxcdxex', the function should return 6 (the index of the 3rd 'x'). If the given character does not occur at least 3 times, return None.
+
+*Pseudocode*
+
++ 
+
+*Formal Pseudocode*
+
+
+5. A function that takes two lists of numbers and returns the result of merging the lists. The elements of the first list should become the elements at the even indexes of the returned list, while the elements of the second list should become the elements at the odd indexes. For instance:
+  
+        merge([1, 2, 3], [4, 5, 6]) # => [1, 4, 2, 5, 3, 6]
+
+*Pseudocode*
+
++ 
+
+*Formal Pseudocode*
+
+

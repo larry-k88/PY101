@@ -1,8 +1,8 @@
 # Lesson 2 Contents
 
 + [Truthiness](#truthiness)
-+ [Virtual Environments](#virtual-environments)
-+ 
++ [Virtual Environments](#virtual-environments-venv)
++ [Pseudocode](#pseudocode)
 
 ## Truthiness
 
@@ -128,3 +128,56 @@ Instead, use `if name == ''` to test for empty strings
    + activates env_a
 4. `deactivate`
    + returns to default environment and versions
+
+## Pseudocode
+
+Code for humans - in plain english and describes a logical process (logical domain layer)
+
+The second part is the syntactical programming language layer (i.e. actually writing the code) doing both at once is hard
+
+The issue is that can't verify that it works programmatically
+
+### Formal Pseudocode
+
+        Keyword	    Meaning
+        START	    start of the program
+        SET	        set a variable that we can use for later
+        GET	        retrieve input from user
+        PRINT	    display output to user
+        READ	    retrieve a value from a variable
+        IF/ELSE 	show conditional branches in logic
+        WHILE	    show looping logic
+        END	        end of the program
+
+Using the above keywords, we can make the pseudocode a bit easier more universal and slightly closer to real code, but it still can't be verified
+
+*Example*: "Write a function that takes one integer argument and returns True when the number's absolute value is odd, False otherwise."
+
+*Pseudocode*:
+
++ Take a single input
++ Check if it is an integer and return a prompt if not
++ Ensure we take the absolute value of the integer
++ Check if it is odd, return True if so
++ Otherwise, return False
+
+*Formal Pseudocode*:
+
+        START
+        READ argument from function call
+        IF input type is not an integer:
+            PRINT prompt for an integer
+        IF input type is an integer:
+            READ absolute value of input
+            IF result of dividing input by 2 is 1:
+                PRINT True
+            IF result of dividing input by 2 is not 1:
+                PRINT False
+        END
+
+See [Exercise 1](../lesson_1/easy_1/01%20Isn't%20it%20Odd) for Python code
+
+For large projects, we can't put the whole thing into pseudocode and hope to translate it into formal pseudocode and then programming language; we need to take each piece step by step to test the logic, before moving on to the next piece.
+
+Further examples from Lesson 2 can be found [here](./Pseudocode%20Practice)
+
