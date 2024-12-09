@@ -80,10 +80,20 @@ Write pseudocode and formal pseudocode for:
 
 *Pseudocode*
 
-+ 
++ From a string, given a letter:
++ Count the number of occurrences in the string
++ If the number is less than 3, return None
++ If the number is 3, return the index of third occurrence
 
 *Formal Pseudocode*
 
+        START
+
+        READ the string and count occurrences
+        IF occurrences 0 < 3: 
+            PRINT None
+        ELSE:
+            Find first occurrence, then second occurrence then print third occurrence
 
 5. A function that takes two lists of numbers and returns the result of merging the lists. The elements of the first list should become the elements at the even indexes of the returned list, while the elements of the second list should become the elements at the odd indexes. For instance:
   
@@ -91,7 +101,9 @@ Write pseudocode and formal pseudocode for:
 
 *Pseudocode*
 
-+ 
++ Take two lists and assign then to variables
++ Create and empty list to hold the result
++ Iterate over 
 
 *Formal Pseudocode*
 

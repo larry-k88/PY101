@@ -3,6 +3,8 @@
 + [Truthiness](#truthiness)
 + [Virtual Environments](#virtual-environments-venv)
 + [Pseudocode](#pseudocode)
++ [Flowcharts](#flowcharts)
++ [Pylint](#pylint)
 
 ## Truthiness
 
@@ -147,6 +149,7 @@ The issue is that can't verify that it works programmatically
         READ	    retrieve a value from a variable
         IF/ELSE 	show conditional branches in logic
         WHILE	    show looping logic
+        SUBPROCESS  self-contained block of logic
         END	        end of the program
 
 Using the above keywords, we can make the pseudocode a bit easier more universal and slightly closer to real code, but it still can't be verified
@@ -181,3 +184,23 @@ For large projects, we can't put the whole thing into pseudocode and hope to tra
 
 Further examples from Lesson 2 can be found [here](./Pseudocode%20Practice)
 
+## Flowcharts
+
+These show the logic flow to solve the problem - called the imperative/procedural way  
+Pseudocode can be converted into a flowchart but can include sub-processes (in rectangle boxes) that have self-contained functionality 
+
+## Pylint
+
+Static code analyser:
+
++ Enforces good style guide - PEP 8
++ Identifies potential logic errors - code linter:
+  + Convention - standard programming violations
+  + Refactor - bad code smell
+  + Warning - python specific
+  + Error - broken code
+  + Fatal - prevent further processing
+  
+Rules can be configured using a `.pylintrc` file (usually created in the project directory)
+
+I have created one from LS that sits in the PY101 directory
