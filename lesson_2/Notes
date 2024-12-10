@@ -203,4 +203,7 @@ Static code analyser:
   
 Rules can be configured using a `.pylintrc` file (usually created in the project directory)
 
-I have created one from LS that sits in the PY101 directory
+Must sit in the directory that the project you are running is in
+
+## Debugging
+
