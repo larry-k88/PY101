@@ -207,3 +207,14 @@ Must sit in the directory that the project you are running is in
 
 ## Debugging
 
+Many techniques exits and vary from person to person; some options include:
+
++ Reproduce the error
++ Determine the boundaries of the error - which part of the line has the error
+  + The explanation of the error may help here
++ Trace the code - the stack trace shows how far the program got before the error, so this shows that anything above the error line is fine (known as 'trapping the error')
++ Understand the problem well - what is the actual programmatic issue?
++ Implement a fix - `try` clauses are not fixing problem origin, merely putting a plaster on them (but may be all that's available to you if the code isn't yours).
+  + Fix the source of the error if possible, right back at the origin
+  + Fix one problem at a time
+  + Test it - use manual inputs to check edge cases
