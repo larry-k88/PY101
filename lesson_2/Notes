@@ -218,3 +218,15 @@ Many techniques exits and vary from person to person; some options include:
   + Fix the source of the error if possible, right back at the origin
   + Fix one problem at a time
   + Test it - use manual inputs to check edge cases
+  
+#### Techniques
+
++ Go line by line - be patient and read the details
++ Rubber duck debugging - can help notice previously missed details
++ Walk away - after the problem is 'loaded' into your brain. Try exercise
++ Use `print` at carefully placed positions to analyse the code
++ Use a debugger, like pdb:
+  + Insert `breakpoint()` and run the code
+  + Use `c` to step through until the next breakpoint
+  + Use `n` to step through the next line
+  + Use `p` and a variable or expression to check the expected outcomes
