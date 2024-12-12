@@ -5,6 +5,8 @@
 + [Pseudocode](#pseudocode)
 + [Flowcharts](#flowcharts)
 + [Pylint](#pylint)
++ [Debugging](#debugging)
++ [Errors](#errors)
 
 ## Truthiness
 
@@ -230,3 +232,125 @@ Many techniques exits and vary from person to person; some options include:
   + Use `c` to step through until the next breakpoint
   + Use `n` to step through the next line
   + Use `p` and a variable or expression to check the expected outcomes
+
+## Errors
+
+These are actually **exception objects** which are created when the interpreter cannot continue executing the program: the object describes the problem and stops the program
+
+### Terminology
+
+Python *raises* an exception but throwing exceptions/errors are common phrases
+
+#### NameError
+
++ Using a variable or function that is undefined
+
+#### TypeError
+
++ Using a value of the wrong type in an expression
+
+        word = 'hello'
+        word.find(42) # TypeError
+
++ Calling an object that isn't callable
+
+        number = 42
+        number() # TypeError
+
+#### SyntaxError
+
++ These are unique as they arises after loading the program, but *before* it runs
++ Encounters code that break syntactic rules, e.g. missing trailing quote:
+
+        print('hello) # SyntaxError
+
+#### ValueError
+
++ Using the correct data type, but the value is inappropriate for the operation
+
+        number = int('abc') # ValueError
+        number = int('45') # number reassigned to 45
+
+#### IndexError
+
++ Trying to access an index outside the range
+
+        numbers = [1, 2]
+        numbers[2] # IndexError
+
+#### KeyError
+
++ Trying to access a dictionary key that doesn't exist
+
+        dictionary = {'Barry': 5, 'Gary' : 4, 'Harry' : 5}
+        dictionary['Barry'] # 5
+        dictionary['Larry'] # KeyError
+
+#### ZeroDivisionError
+
++ Dividing by zero either using `/` or `%`
+
+        result_1 = 10 / 0 # ZeroDivisionError: division by zero
+        result_2 = 10 % 0 # ZeroDivisionError: integer modulo by zero
+
+### Exception Handling
+
++ Allows you to try and manage errors using statements:
+  + `try`
+  + `except`
+  + `else`
+  + `finally`
+
+1. The code that might raise the exception is placed inside the `try` block  
+   a. Python will monitor the block for exceptions
+2. If one is found, Python will look for a matching `except` block to handle the specific type of exception  
+   a. If a match is found, the code within the `except` block is run
+3. If no exceptions are in the `try` block are raised, this code runs
+4. Any code in the `finally` block runs regardless of any exceptions being raised 
+
+Example:
+
+    try:
+        num_str = input("Enter a number: ")
+        num = int(num_str)
+
+        result = 10 / num
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+    except ZeroDivisionError:
+        print("Cannot divide by zero.")
+    else:
+        print(f"Result: {result}")
+    finally:
+        print("Exception handling complete.")
+
+This catches occurrences when use enters something that isn't an integer (such as a float, or string), or 0
+
+### Preventing Errors
+
+#### Look Before You Leap (LBYL)
+
++ This process checks for potential errors prior to executing, typically using guard clauses that return an output if some specific criteria aren't met  
++ For example, you need an argument to be a string for the function to run:
+
+        if type(arg) != str:
+            return arg
+
++ This just returns the argument if it's not a string, instead of throwing an error
++ Guard clauses are best used to ensure arguments are valid, unless you are confident that the argument will always be a string (e.g. via prior confident programming)
+
+
+#### It's Easier to Ask Forgiveness than Permission (EAFP)
+
++ Typically this process uses [exception handling](#exception-handling)
++ Tries code without any explicit checks/guard clauses and deals with exceptions
+  
+### Edge Cases
+
++ These involve dealing with values at the edges of potential value ranges
++ E.g.:
+  + Expecting a number but we have 0, or a negative
+  + Expecting a whole number but getting a float or a fraction
+  + Expecting a collection but getting an empty collection
+  + Dealing with leading/trailing white space, special characters or solely spaces
++ Worth testing some edge cases to evaluate the code
