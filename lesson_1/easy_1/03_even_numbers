@@ -1,0 +1,57 @@
+'''
+Print all even numbers from 1 to 99, inclusive,
+with each number on a separate line.
+
+Bonus Question: Can you solve the problem by iterating over just
+the odd numbers?
+
+
+Problem:    Take the numbers from 1 to 99 inclusive and print out each
+            even number on a new line
+            Input - numbers 1-99 
+            Output - even numbers from that range
+            Requirements:
+                Input must be integer values from 1-99
+                Output must be even (i.e. % evaluates to 0/falsy)
+                No specific guidance on other inputs
+
+Examples:   range(1, 100) - would give the required range
+            2, 4, 6 etc. (on different lines)
+
+Data:       range constructor function
+            for loop
+            if statement
+            modulo operator
+            print inside the loop
+
+Algorithm:  for the number in the range
+                if even (modulo operator):
+                    print
+
+** Bonus **                
+Problem:    Take the even numbers from 1 to 99 inclusive and print out
+            each number on a new line
+            Input - numbers between 1-99
+            Output - even numbers from that list/range
+            Requirements:
+                Input must be integer values from 1-99
+                Only even numbers must be iterated over
+                No specific guidance on other inputs
+
+Examples:   range(2, 100, 2) - would give the required range of even
+            numbers
+
+Data:       range constructor function, with step as '2'
+            for loop
+                print number
+
+Algorithm:  for the number in the range:
+                print
+'''
+
+# for _ in range (1, 100):
+#     if _ % 2 == 0:
+#         print (_)
+
+for _ in range (2, 100, 2):
+    print(_)
