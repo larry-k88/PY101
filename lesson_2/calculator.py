@@ -36,28 +36,37 @@ def invalid_number(number_str):
 
     return False
 
-while True:
-    prompt(data['welcome'])
+def messages(message, lang='en'):
+    return data[lang][message]
 
-    prompt(data['first_number'])
+prompt(data['welcome'])
+lang_choice = input()
+
+while True:
+    if lang_choice == '1':
+        lang = 'en'
+    elif lang_choice == '2':
+        lang = 'fr'
+
+    prompt(messages('first_number'))
     number1 = input()
 
     while invalid_number(number1):
-        prompt(data['number_input_error'])
+        prompt(messages('number_input_error'))
         number1 = input()
 
-    prompt(data['second_number'])
+    prompt(messages('second_number'))
     number2 = input()
 
     while invalid_number(number2):
-        prompt(data['number_input_error'])
+        prompt(messages('number_input_error'))
         number2 = input()
 
-    prompt(data['operation'])
+    prompt(messages('operation'))
     operation = input()
 
     while operation not in ["1", "2", "3", "4"]:
-        prompt(data['operation_input_error'])
+        prompt(messages('operation_input_error'))
         operation = input()
 
     match operation:
@@ -70,9 +79,9 @@ while True:
         case "4":
             output = int(number1) / int(number2)
 
-    prompt(f'{data['output']}{output}')
+    prompt(f'{messages('output')}{output}')
 
-    prompt(data['carry_on'])
+    prompt(messages('carry_on'))
     carry_on = input()
     if carry_on not in ['Y', 'y', 'yes']:
         break
