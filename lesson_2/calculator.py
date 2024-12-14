@@ -70,7 +70,7 @@ while True:
         case "4":
             output = int(number1) / int(number2)
 
-    prompt(data['output'])
+    prompt(f'{data['output']}{output}')
 
     prompt(data['carry_on'])
     carry_on = input()
