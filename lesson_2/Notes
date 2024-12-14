@@ -7,6 +7,7 @@
 + [Pylint](#pylint)
 + [Debugging](#debugging)
 + [Errors](#errors)
++ [Precedence](#precedence)
 
 ## Truthiness
 
@@ -354,3 +355,35 @@ This catches occurrences when use enters something that isn't an integer (such a
   + Expecting a collection but getting an empty collection
   + Dealing with leading/trailing white space, special characters or solely spaces
 + Worth testing some edge cases to evaluate the code
+
+## Precedence
+
++ Not necessarily simply the order that operators are evaluated, but that's the basic idea
++ Don't rely on you/others knowing the precedence, use parentheses to make it clear
++ Operators with high precedence *bind* to their operands more tightly:
+
+        3 + 5 * 7 # 38
+
+  + `*` binds more tightly to `5` and `7` and is evauluated first
+  + `+` then binds to `3` and `35`
+
++ Python will go through an expression and evaluate what it can *without* calling operators:
+
+        def value(n):
+            print(n)
+            return n
+        
+        print(value(3) + value(5) * value(7))
+
+  + The functions are evaluated before the operands, therefore it prints each number on a separate line, and then the evaluation of `3 + 5 * 7` which, from before, is `38`
+
+#### Short-circuiting
+
++ This is a special case and Python treats `and` and `or` differently:
+
+        5 and 1 / 0           # ZeroDivisionError
+        None or 1 / 0         # ZeroDivisionError
+
+        None and 1 / 0           # None
+        5 or 1 / 0               # 5
+  + The division is *not* done first in the second 2 examples, instead, they short-circuit and return the first operand - the `1 / 0` expression is never evaluated
