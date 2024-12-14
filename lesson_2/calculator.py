@@ -40,14 +40,19 @@ with open('calculator_messages.json', 'r') as file:
     data = json.load(file)
 
 prompt(data['welcome'])
-lang_choice = input()
 
 while True:
+    lang = 'en'
+    lang_choice = input()
     if lang_choice == '1':
-        lang = 'en'
+        break
     elif lang_choice == '2':
         lang = 'fr'
+        break
+    else:
+        prompt(data['language'])
 
+while True:
     prompt(messages('first_number'))
     number1 = input()
 

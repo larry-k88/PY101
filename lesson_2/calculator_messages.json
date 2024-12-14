@@ -1,5 +1,6 @@
 {
     "welcome" : "Welcome to Calculator! Please select language:\n1) English 2) French",
+    "language" : "Please select 1 or 2",
     "en" : 
         {
         "first_number" : "What's the first number?", 
