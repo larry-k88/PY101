@@ -46,27 +46,52 @@ def invalid_number(number_str):
     
     return False
 
-SQM_TO_SQFT_CONV = 10.7639
-
 def prompt(message):
     print(f'==> {message}')
 
-prompt('Enter the width (in metres):')
-width = input()
+def choose_units():
+    prompt('Please select your units: 1) Meters 2) Feet')
+    unit_choice = input()
+    while unit_choice not in ['1', '2']:
+        prompt('Please enter either 1 or 2:')
+        unit_choice = input()
 
-while invalid_number(width):
-    prompt('Width must be a positive whole number or decimal')
+    if unit_choice == '1': 
+        units = 'metres'
+    elif unit_choice == '2':
+        units = 'feet'
+    return units
+    
+def get_width():
+    prompt(f'Enter the width (in {units}):')
     width = input()
+    while invalid_number(width):
+        prompt('Width must be a positive whole number or decimal')
+        width = input()
+    return width
 
-prompt('Enter the length (in metres):')
-length = input()
-
-while invalid_number(length):
-    prompt('Length must be a positive whole number or decimal')
+def get_length():
+    prompt(f'Enter the length (in {units}):')
     length = input()
+    while invalid_number(length):
+        prompt('Length must be a positive whole number or decimal')
+        length = input()
+    return length
 
-area_sqm = float(width) * float(length)
-area_sqft = area_sqm * SQM_TO_SQFT_CONV
+def calc_area(width, length):
+    area = float(width) * float(length)
+    if units == 'metres':
+        prompt(f'The area of the room is {area:.2f} sq m\n'
+            f'({area * SQM_TO_SQFT_CONV:.2f} sq ft)')
+    else:
+        prompt(f'The area of the room is {area:.2f} sq ft\n'
+            f'({area / SQM_TO_SQFT_CONV:.2f} sq m)')
+    
 
-prompt(f'The area of the room is {area_sqm:.2f} sq m,\n'
-       f'or {area_sqft:.2f} sq ft')
+prompt('Let\'s calculate the area of a room!')
+
+SQM_TO_SQFT_CONV = 10.7639
+units = choose_units()
+width = get_width()
+length = get_length()
+calc_area(width, length)
