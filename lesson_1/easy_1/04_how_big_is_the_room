@@ -1,0 +1,72 @@
+'''
+Build a program that asks the user to enter the
+length and width of a room, in meters,
+then prints the room's area in both square meters and square feet.
+
+Note: 1 square meter == 10.7639 square feet
+
+Problem:    Ask the user to type in the length and width of a room
+            and prints the area in 2 different units
+            Input - from user, must be a float
+            Output - two different units, consider f-strings
+            Requirements:
+                Input should be a float, and not zero or neg
+                Ratio from sq m to sq ft is a CONST
+                Output should be rounded (2dp)
+
+Examples:   Length = 4.5
+            Width = 6
+            Output = 27 sq m or 290.6253 sq feet
+
+Data:       Input() x2
+            Valid number function to catch errors
+            * operator for area and conversion
+            print output       
+
+Algorithm:  START
+            GET 2x inputs
+            SET width, length the above
+            Validate numbers with function
+            Perform operations on numbers
+                Area = W * L
+                Area (m) * CONST = Area (ft)
+            PRINT output
+            END
+
+'''
+
+def invalid_number(number_str):
+    try:
+        float(number_str)
+        1 / float(number_str)
+    except:
+        ValueError
+        ZeroDivisionError
+        return True
+    
+    return False
+
+SQM_TO_SQFT_CONV = 10.7639
+
+def prompt(message):
+    print(f'==> {message}')
+
+prompt('Enter the width (in metres):')
+width = input()
+
+while invalid_number(width):
+    prompt('Width must be a positive whole number or decimal')
+    width = input()
+
+prompt('Enter the length (in metres):')
+length = input()
+
+while invalid_number(length):
+    prompt('Length must be a positive whole number or decimal')
+    length = input()
+
+area_sqm = float(width) * float(length)
+area_sqft = area_sqm * SQM_TO_SQFT_CONV
+
+prompt(f'The area of the room is {area_sqm:.2f} sq m,\n'
+       f'or {area_sqft:.2f} sq ft')
