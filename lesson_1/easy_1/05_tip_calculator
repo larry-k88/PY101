@@ -1,0 +1,48 @@
+'''
+Create a simple tip calculator. The program should prompt for a bill
+amount and a tip rate. The program must compute the tip,
+then print both the tip and the total amount of the bill.
+
+You can ignore input validation and assume that
+the user will enter valid numbers.
+
+Problem:    Ask the user for the bill amount and tip rate (%)
+            and tell them the tip, and the total bill
+            Input - from user, assume valid (float)
+            Output - either tip and total on separate lines, or consider
+                    f-string
+            Requirements:
+                No data validation necessary
+                Output should be rounded to 2dp
+            START
+            GET/SET bill amount
+            GET/SET tip percentage
+            Operate on inputs
+            PRINT outputs
+            END
+
+Examples:   Sub-total = £100.00, tip rate = 12.5%
+            Tip = £12.50, Total = £112.50
+
+Data:       input() to get the 2 pieces of data
+            * and + operators to get the outputs
+            print to output to the user
+
+Algorithm:  Ask for inputs x2
+            SET sub_total = input_1
+            SET tip_percentage = input_2
+            SET tip = tip_percentage/100 * sub_total
+            SET total = sub_total + tip
+            PRINT total
+            PRINT tip
+
+'''
+
+sub_total = float(input('What is the bill? '))
+tip_percentage = float(input('What is the tip percentage? '))
+
+tip = (tip_percentage/100 * sub_total)
+total = sub_total + tip
+
+print(f'The tip is £{tip:.2f}')
+print(f'The total is £{total:.2f}')
