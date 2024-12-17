@@ -8,6 +8,7 @@
 + [Debugging](#debugging)
 + [Errors](#errors)
 + [Precedence](#precedence)
++ [Type Conversions](#type-conversions)
 
 ## Truthiness
 
@@ -386,3 +387,73 @@ This catches occurrences when use enters something that isn't an integer (such a
         None and 1 / 0           # None
         5 or 1 / 0               # 5
   + The division is *not* done first in the second 2 examples, instead, they short-circuit and return the first operand - the `1 / 0` expression is never evaluated
+
+## Type Conversions
+
++ Process of converting one type into another - also known as 'coercion' and has two variations: explicit and implicit
+
+### Explicit Coercion
+
+Intentional use of a built-in function to covert one to another:
+
+#### Values to Integers
+
++ `int`()
++ Will only work with 'numerical' strings, e.g.
+  + '500' - returns 500
+  + 5.42 - returns 5
+  + Byte-like objects (not discussed now)
+  + True/False - returns 1/0
+
++ On a non-numerical string, will raise `ValueError`, e.g.
+  + 'abc' - returns ValueError
+
++ On any other type, it will raise a `TypeError`
+
+#### Values to Floats
+
++ `float`()
++ Works similarly to `int()`, other than...
++ Special 'Non-a-Number' value: `nan` - arises from operations with no meaningful result:
+      
+        result = float('inf') - float('inf') # nan
++ Note than `float('NaN')` returns `nan`
+
+#### Values to Strings
+
++ `str()`
++ Works with all built-in data types
++ The `print()` function automatically coerces its arguments to strings, but isn't considered coercion as it doesn't return strings, it prints them
++ String interpolation ('f-strings') coerces the values in the expression to strings
+
+        name = 'George'
+        age = 28
+        print(f'My name is {name} and I am {age})
+        # `name` and `age` are converted to strings
++ `repr() `is similar but returns the string representation of the object:
+  + Note that when you use the `print()` function, it strips away the quotes:
+    + [feedback on repr() vs str() - assingment 20]
+
+#### Values to Booleans
+
++ `bool()`
++ Works will all built-in data types and non-built-in values
++ It uses the truthiness to evaluate as `True` or `False`
+
+        bool(None) # False
+        bool([1, 2, 3]) # True
+
+### Implicit Coercion
+
++ Also known as automatic coercion - without programmer's direct instruction
+
+#### Combining Integer and Float
+
++ Python automatically converts the integer to a float before the operation
+  + The result will be a float
+
+#### Combining String with Non-string
+
++ Combining a string with a number will raise a `TypeError`
++ This is different in the `print()` function which converts integers to strings before printing (not considered coercion as it takes place behind the scenes)
+
