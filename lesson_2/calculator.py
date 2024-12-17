@@ -1,24 +1,25 @@
-# Ask user which operation they want to perform
-# Perform the operation on the 2 inputs
-# Print the result (and the operation?) to the terminal
+'''Ask user which operation they want to perform
+Perform the operation on the 2 inputs
+Print the result (and the operation?) to the terminal
 
-# Pseudocode
+Pseudocode
 
-# Ask user for 2 numbers
-# Ask user which operation to use
-# Perform operation depending on choice
-# Print result
+Ask user for 2 numbers
+Ask user which operation to use
+Perform operation depending on choice
+Print result
 
-# Formal pseudocode
+Formal pseudocode
 
-# START
-# GET number_1 and number_2
-# SET number_1 and number_2
-# GET operation
-# IF operation = 1 of 4 options:
-#   Perform that operation
-# PRINT the result
-# END
+START
+GET number_1 and number_2
+SET number_1 and number_2
+GET operation
+IF operation = 1 of 4 options:
+  Perform that operation
+PRINT the result
+END
+'''
 
 import json
 
@@ -89,6 +90,5 @@ while True:
 
     prompt(messages('carry_on'))
     carry_on = input()
-    if carry_on not in ['Y', 'y', 'yes']:
+    if carry_on not in (messages('carry_on_options')):
         break
-        

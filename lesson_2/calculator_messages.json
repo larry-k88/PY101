@@ -9,7 +9,8 @@
         "operation" : "What operation would you like to perform? \n1) Add 2) Subtract 3) Multiply 4) Divide",
         "operation_input_error" : "You must choose 1, 2, 3, or 4",
         "output" : "The result is ",
-        "carry_on": "Would you like to perform another calculation (y/n)"
+        "carry_on": "Would you like to perform another calculation? (y/n)",
+        "carry_on_options" : "['Y', 'y', 'yes']"
     },
     "fr" : 
         {
@@ -19,6 +20,7 @@
         "operation" : "Quelle opération souhaiteriez-vous réaliser? \n1) Ajouter 2) Soustraire 3) Multiplier 4) Diviser",
         "operation_input_error" : "Vous devez choisir 1, 2, 3, or 4",
         "output" : "Le résultat est ",
-        "carry_on": "Souhaitez-vous effectuer un autre calcul (y/n)"        
+        "carry_on": "Souhaitez-vous effectuer un autre calcul? (o/n)",
+        "carry_on_options" : "['O', 'o', 'oui']"        
     }
 }
