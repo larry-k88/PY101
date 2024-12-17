@@ -38,60 +38,56 @@ Algorithm:  START
 def invalid_number(number_str):
     try:
         float(number_str)
-        1 / float(number_str)
-    except:
-        ValueError
-        ZeroDivisionError
+    except ValueError:
         return True
-    
     return False
 
 def prompt(message):
     print(f'==> {message}')
 
 def choose_units():
-    prompt('Please select your units: 1) Meters 2) Feet')
-    unit_choice = input()
-    while unit_choice not in ['1', '2']:
+    prompt('Please select your units: 1) Metres 2) Feet')
+    user_unit_choice = input()
+    while user_unit_choice not in ['1', '2']:
         prompt('Please enter either 1 or 2:')
-        unit_choice = input()
+        user_unit_choice = input()
 
-    if unit_choice == '1': 
-        units = 'metres'
-    elif unit_choice == '2':
-        units = 'feet'
-    return units
-    
+    match user_unit_choice:
+        case '1':
+            return 'metres'
+        case '2':
+            return 'feet'
+
 def get_width():
-    prompt(f'Enter the width (in {units}):')
+    prompt('Enter the width: ')
     width = input()
     while invalid_number(width):
-        prompt('Width must be a positive whole number or decimal')
+        prompt('Must be a positive whole number or decimal, try again')
         width = input()
     return width
 
 def get_length():
-    prompt(f'Enter the length (in {units}):')
+    prompt('Enter the length: ')
     length = input()
     while invalid_number(length):
-        prompt('Length must be a positive whole number or decimal')
+        prompt('Must be a positive whole number or decimal, try again')
         length = input()
     return length
 
 def calc_area(width, length):
-    area = float(width) * float(length)
+    return float(width) * float(length)
+
+def output():
     if units == 'metres':
         prompt(f'The area of the room is {area:.2f} sq m\n'
             f'({area * SQM_TO_SQFT_CONV:.2f} sq ft)')
     else:
         prompt(f'The area of the room is {area:.2f} sq ft\n'
             f'({area / SQM_TO_SQFT_CONV:.2f} sq m)')
-    
 
 prompt('Let\'s calculate the area of a room!')
 
 SQM_TO_SQFT_CONV = 10.7639
 units = choose_units()
-width = get_width()
-length = get_length()
-calc_area(width, length)
+area = calc_area(get_width(), get_length())
+output()

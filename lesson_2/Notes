@@ -19,11 +19,11 @@ These actually capture `True` and `False` rather than *truthy* and *falsy* - the
         num = 4
         num < 10    # True
 
-The return of a Boolean isn't often useful, but using that Boolean to return the result of a conditional expression is more useful:
+The return of a Boolean isn't often useful, but *using* that returned Boolean value of a conditional expression is useful:
 
         num = 4
-        if num < 3:
-            print('less than 3') # this is more useful than `True`
+        if num < 3: # evaluates as True
+            print('less than 3') # therefore, this line is executed
         else:
             print('3 or more')
 
@@ -43,11 +43,11 @@ The return of a Boolean isn't often useful, but using that Boolean to return the
             # False: between 2-15 and odd
 
   + If **any** are `False`, the whole expression will return `False`
-  + Parentheses not required (`<` and `>` have *higher* precedence than `and`), but it's clearer and foolproof
+  + Parentheses not required (`<` and `>` have *higher* precedence than `and`), but it's clearer and foolproof to include them
 
 #### `or`
 
-+ Returns `True` when either sub-expression (the operands) are evaluate to `True`
++ Returns `True` when **either** sub-expression (the operands) evaluate to `True`
 + Can also be chained as above:
 
         num = 10
@@ -60,7 +60,7 @@ The return of a Boolean isn't often useful, but using that Boolean to return the
 
 #### `not`
 
-+ Returns the inverse of the truth value of the condition (logical negation):
++ Returns the inverse of the truth value of the condition ('logical negation'):
 
         num = 10
         
@@ -84,8 +84,8 @@ The remaining expressions are ***not*** evaluated which can be useful if they mi
         print("Hello, whoever you are.")
 
 
-Here, the variable `name` must be anything other than `None` to avoid an error. If it's in CAPS, it will print "Hi, {name}" but if not, it will print ("Hello, whoever you are.")  
-If `name = None` and the `name != None and` code wasn't there, we would get an error
+  + Here, the variable `name` must be anything other than `None` to avoid an error. If it's in CAPS, it will print "Hi, {name}" but if not, it will print ("Hello, whoever you are.")  
+  + If `name = None` and the `name != None and` code wasn't there, we would get an error
 
 ### Truthy and Falsy
 
@@ -157,7 +157,7 @@ The issue is that can't verify that it works programmatically
 
 Using the above keywords, we can make the pseudocode a bit easier more universal and slightly closer to real code, but it still can't be verified
 
-*Example*: "Write a function that takes one integer argument and returns True when the number's absolute value is odd, False otherwise."
+*Example*: "Write a function that takes one integer argument and returns `True` when the number's absolute value is odd, `False` otherwise."
 
 *Pseudocode*:
 
@@ -204,9 +204,8 @@ Static code analyser:
   + Error - broken code
   + Fatal - prevent further processing
   
-Rules can be configured using a `.pylintrc` file (usually created in the project directory)
-
-Must sit in the directory that the project you are running is in
++ Rules can be configured using a `.pylintrc` file (usually created in the project directory)
+  + Must sit in the directory that the project you are running is in
 
 ## Debugging
 
@@ -226,7 +225,7 @@ Many techniques exits and vary from person to person; some options include:
 
 + Go line by line - be patient and read the details
 + Rubber duck debugging - can help notice previously missed details
-+ Walk away - after the problem is 'loaded' into your brain. Try exercise
++ Walk away - after the problem is 'loaded' into your brain
 + Use `print` at carefully placed positions to analyse the code
 + Use a debugger, like pdb:
   + Insert `breakpoint()` and run the code
@@ -240,7 +239,7 @@ These are actually **exception objects** which are created when the interpreter 
 
 ### Terminology
 
-Python *raises* an exception but throwing exceptions/errors are common phrases
+Python *raises* an exception but *throwing* exceptions/errors are common phrases
 
 #### NameError
 
