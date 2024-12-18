@@ -42,29 +42,27 @@ def invalid_number_type(number_str):
         float(number_str)
     except (ValueError, TypeError):
         return True
+    else:
+        if number_str.startswith('-'):
+            return True
     return False
-
-# def invalid_number_value(number_str):
-#     if float(number_str) < 0:
-#         return True
-#     return False
 
 def display_monthly_payments():
     prompt(f'Your monthly repayments will be: £{monthly_payments:.2f}')
 
 def get_loan_amount():
     prompt('What is the loan amount?')
-    loan_amount_str = input()
-    while invalid_number_type(loan_amount_str):
-        prompt('Please provide a whole number or decimal')
-        loan_amount_str = input()
-    return loan_amount_str
+    loan_amount_string = input()
+    while invalid_number_type(loan_amount_string):
+        prompt('Please provide a positive whole number or decimal')
+        loan_amount_string = input()
+    return loan_amount_string
 
 def get_apr():
     prompt('What is the APR as a percentage?')
     monthly_apr_string = input()
     while invalid_number_type(monthly_apr_string):
-        prompt('Please provide a whole number or decimal')
+        prompt('Please provide a positive whole number or decimal')
         monthly_apr_string = input()
     return monthly_apr_string
 
@@ -72,7 +70,7 @@ def get_loan_duration():
     prompt('What is the loan duration in years?')
     loan_duration_string = input()
     while invalid_number_type(loan_duration_string):
-        prompt('Please provide a whole number or decimal')
+        prompt('Please provide a positive whole number or decimal')
         loan_duration_string = input()
     return loan_duration_string
 
