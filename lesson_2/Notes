@@ -9,6 +9,7 @@
 + [Errors](#errors)
 + [Precedence](#precedence)
 + [Type Conversions](#type-conversions)
++ [Tips](#tips)
 
 ## Truthiness
 
@@ -457,3 +458,86 @@ Intentional use of a built-in function to covert one to another:
 + Combining a string with a number will raise a `TypeError`
 + This is different in the `print()` function which converts integers to strings before printing (not considered coercion as it takes place behind the scenes)
 
+## Tips
+
+### Naming Things
+
++ Don't try to save characters on variable names - be descriptive
++ Don't 'hardcode' possible values in case of future changes (e.g. call it `play_again`, rather than `yes_or_no`)
++ Try to use idiomatic names:
+  + Non-constants and object properties, functions, methods: snake_case
+    + `number_of_people`, `var_` (deconflicts with keywords), `_var` (internal use only)
+  + Classes: CamelCase or Capwords
+    + `BoxTurtle`, `BlackCat`
+  + Constants: SCREAMING_SNAKE_CASE
+    + `MIN_AGE`, `DEFAULT_TIMEOUT`
++ Non-idiomatic (but valid) names are not recommended, but useable
+  + `π`, `milesperhour`, `user_Profile`
++ Invalid names cannot be used:
+  + `42ndStreet` (begins with digits), `happy-days` (hyphen), `for` (keyword)
+
+### Magic Numbers
+
++ Numbers (or other simple values) that appear in various places without any particular information relating to them
++ e.g. the number `5` when programming about a card-game with 5 cards in a players' hand - the number may appear in other places too, such as a 'best-of-five' match
+  + Best to set the magic numbers as a constant at the top of the program
++ Numbers may also appear when referring to Unicode tables and can be unclear. Rather than:
+
+        FIRST_CHARACTER_CODE = 97 # refers to the letter `a`
+        LAST_CHARACTER_CODE = 122 # refers to the letter `z`
+
+    use:
+
+        FIRST_CHARACTER_CODE = ord('a')
+        LAST_CHARACTER_CODE = ord('z')
+
+### Mutating Constants
+
+Avoid using any mutating operations (e.g. appending lists, index reassignment or `pop()`) on constants - Python will allow them to happen but it should be avoided
+
+### Functions
+
+#### Guidelines
+
++ They should do one thing, and be relatively short (10 or so lines)
++ Their names should hint at what they do, mutate or return. E.g.
+  
+        def updated_cards(total, cards)
+        # probably mutates one of the arguments, therefore the return value shouldn't be significant
+
++ If they are longer, consider splitting into 2 functions
++ A function should *either* return a useful value *or* have a [side effect](#side-effects), not both (avoid `get_and_display_total()`, split it up)
+  + A useful value has meaning to calling the code - something that returns an arbitrary number or the same value, like `None`, is not usually useful
++ There will be exceptions to this, such as reading from a database, writing to the terminal and also returning it
++ Function names should reflect the purpose:
+  + `display_total` implies it will print the total (i.e. a side effect)
+  + `compute_total` implies it will return the value of the calculation
++ Functions that display something could be prefixed with `print`, `say`, or `display` - these should not return values or mutate arguments, and probably use the `print()` function 
++ Learn when to use `while` loops, or generic `while True` loops
+
+#### Side Effects
+
++ Reassigns a non-local variable
+    + e.g. one in an outer scope
++ Modifies value of a data structure passed as an argument, or accessed from an outer scope
+    + e.g. appending an element to a list argument
+
+            def add_to_list(target_list, value_to_append):
+                target_list.append(value_to_append)
+                return target_list # This returns a useful value AND has a side effect
+
++ Reads or writes to a file, network connection, browser or system hardware
+    + e.g. printing and reading input from the terminal
+
+            def display_total(num1, num2):
+                print(num1 + num2)
+
++ Raises an exception without handling it
++ Calls another function which has side effects
+
+#### Abstraction levels
+
++ Functions should work in isolation, in the REPL, for example
++ They should work with inputs, and produce outputs: when calling them, you shouldn't need to think about implementation
+
+  
