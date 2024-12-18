@@ -80,7 +80,10 @@ calc_loan_amount = float(get_loan_amount())
 apr = float(get_apr()) / 12 / 100
 calc_loan_duration = float(get_loan_duration()) * 12
 
-monthly_payments = (calc_loan_amount
-                    * apr / (1 - (1 + apr) ** (-calc_loan_duration)))
+try:
+    monthly_payments = (calc_loan_amount * apr
+                    / (1 - (1 + apr) ** (-calc_loan_duration)))
+except ZeroDivisionError:
+    monthly_payments = calc_loan_amount / calc_loan_duration
 
 prompt(repayment_calc())
