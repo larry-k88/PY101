@@ -37,53 +37,55 @@ Algorithm:
 def prompt(message):
     print(f'--> {message}')
 
-def invalid_number(number_str):
+def invalid_number_type(number_str):
     try:
         float(number_str)
-        if float(number_str) < 0:
-            return True
-    except ValueError:
+    except (ValueError, TypeError):
         return True
     return False
 
-def repayment_calc():
-    return f'Your monthly repayments will be: £{monthly_payments:.2f}'
+# def invalid_number_value(number_str):
+#     if float(number_str) < 0:
+#         return True
+#     return False
+
+def display_monthly_payments():
+    prompt(f'Your monthly repayments will be: £{monthly_payments:.2f}')
 
 def get_loan_amount():
     prompt('What is the loan amount?')
-    user_loan_amount = input()
-    while invalid_number(user_loan_amount):
-        prompt('Number must be greater than 0 and '
-               'a whole number or decimal only')
-        user_loan_amount = input()
-    return user_loan_amount
+    loan_amount_str = input()
+    while invalid_number_type(loan_amount_str):
+        prompt('Please provide a whole number or decimal')
+        loan_amount_str = input()
+    return loan_amount_str
 
 def get_apr():
     prompt('What is the APR as a percentage?')
-    user_apr = input()
-    while invalid_number(user_apr):
-        prompt('Number must be greater than 0 and '
-               'a whole number or decimal only')
-        user_apr = input()
-    return user_apr
+    monthly_apr_string = input()
+    while invalid_number_type(monthly_apr_string):
+        prompt('Please provide a whole number or decimal')
+        monthly_apr_string = input()
+    return monthly_apr_string
 
 def get_loan_duration():
     prompt('What is the loan duration in years?')
-    user_loan_duration = input()
-    while invalid_number(user_loan_duration):
-        prompt('Number must be greater than 0 and '
-               'a whole number or decimal')
-        user_loan_duration = input()
-    return user_loan_duration
+    loan_duration_string = input()
+    while invalid_number_type(loan_duration_string):
+        prompt('Please provide a whole number or decimal')
+        loan_duration_string = input()
+    return loan_duration_string
 
-calc_loan_amount = float(get_loan_amount())
-apr = float(get_apr()) / 12 / 100
-calc_loan_duration = float(get_loan_duration()) * 12
+loan_amount_float = float(get_loan_amount())
+monthly_apr_float = float(get_apr()) / 100 # converts percentage to decimal
+annual_apr_float = monthly_apr_float / 12
+loan_duration_float = float(get_loan_duration()) * 12 # converts to months
 
 try:
-    monthly_payments = (calc_loan_amount * apr
-                    / (1 - (1 + apr) ** (-calc_loan_duration)))
+    monthly_payments = (loan_amount_float * annual_apr_float
+                     / (1 - (1 + annual_apr_float)
+                     ** (-loan_duration_float)))
 except ZeroDivisionError:
-    monthly_payments = calc_loan_amount / calc_loan_duration
+    monthly_payments = loan_amount_float / loan_duration_float
 
-prompt(repayment_calc())
+display_monthly_payments()
