@@ -47,6 +47,8 @@ def invalid_number_float(number_str):
         return True
     if float(number_str) < 0:
         return True
+    if number_str == 'inf':
+        return True
     return False
 
 def invalid_number_int(number_str):
@@ -56,15 +58,15 @@ def invalid_number_int(number_str):
         return True
     if float(number_str) < 0:
         return True
+    if number_str == 'inf':
+        return True
     return False
-
-def display_monthly_payments():
-    prompt(f'Your monthly repayments will be: £{output_monthly_payments:.2f}')
 
 def get_loan_amount():
     prompt('What is the loan amount?')
     loan_amount_string = input()
-    while invalid_number_float(loan_amount_string) or loan_amount_string == '0':
+    while (invalid_number_float(loan_amount_string)
+           or loan_amount_string == '0'):
         prompt('Please provide a positive whole number or decimal')
         loan_amount_string = input()
     return loan_amount_string
@@ -86,10 +88,11 @@ def get_loan_length():
             prompt('Please provide a positive whole number')
             loan_length_string_years = input('Years: ')
         loan_length_string_months = input('Months: ')
-        while invalid_number_int(loan_length_string_months) or int(loan_length_string_months) > 12:
+        while (invalid_number_int(loan_length_string_months)
+               or int(loan_length_string_months) > 12):
             prompt('Please provide a whole number between 0 and 12')
             loan_length_string_months = input('Months: ')
-        loan_length_total = ((int(loan_length_string_years) * 12)
+        loan_length_total = ((int(loan_length_string_years) * MONTHS_IN_YEAR)
                             + int(loan_length_string_months))
         if loan_length_total == 0:
             prompt('Length of loan must be at least 1 month, please try again')
@@ -98,7 +101,7 @@ def get_loan_length():
 def calc_monthly_payments():
     loan_amount_float = float(get_loan_amount())
     monthly_apr_float = float(get_apr()) / 100 # converts percentage to decimal
-    annual_apr_float = monthly_apr_float / 12
+    annual_apr_float = monthly_apr_float / MONTHS_IN_YEAR
     loan_duration_float = get_loan_length()
 
     try:
@@ -109,20 +112,22 @@ def calc_monthly_payments():
         monthly_payments = loan_amount_float / loan_duration_float
     return monthly_payments
 
+def display_monthly_payments():
+    prompt(f'Your monthly repayments will be: £{output_monthly_payments:.2f}')
+
 def get_carry_on():
     prompt('Do you want to do another calculation? (y/n)')
-    carry_on_options = ['n', 'N', 'no', 'No', 'NO',
-                        'y', 'Y', 'yes', 'Yes', 'YES']
     carry_on = input()
-    while carry_on not in carry_on_options:
+    while carry_on not in ['n', 'N', 'y', 'Y']:
         prompt('Please enter y or n')
         carry_on = input()
-    if carry_on in carry_on_options[0:5]:
+    if carry_on in ['n', 'N']:
         return False
-    if carry_on in carry_on_options[5:10]:
+    if carry_on in ['y', 'Y']:
         return True
     return None
 
+MONTHS_IN_YEAR = 12
 display_welcome()
 while True:
     output_monthly_payments = calc_monthly_payments()
