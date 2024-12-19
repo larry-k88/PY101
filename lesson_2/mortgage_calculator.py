@@ -36,37 +36,35 @@ Algorithm:
 '''
 def prompt(message):
     print(f'--> {message}')
+    
+def display_welcome():
+    prompt('Welcome to the Repayment Calculator!')
 
-def invalid_number_type(number_str):
+def invalid_number(number_str):
     try:
         float(number_str)
     except (ValueError, TypeError):
         return True
-    if number_str.startswith('-'):
+    if float(number_str) <= 0:
         return True
     return False
 
-def display_welcome():
-    prompt('Welcome to the Repayment Calculator!')
+def invalid_number_apr(number_str):
+    try:
+        float(number_str)
+    except (ValueError, TypeError):
+        return True
+    if float(number_str) < 0:
+        return True
+    return False
 
 def display_monthly_payments():
     prompt(f'Your monthly repayments will be: £{output_monthly_payments:.2f}')
 
-def get_carry_on():
-    prompt('Do you want to do another calculation? (y/n)')
-    carry_on = input()
-    while carry_on not in ['n', 'N', 'no', 'No', 'y', 'Y', 'yes', 'Yes']:
-        prompt('Please enter y or n')
-        carry_on = input()
-        if carry_on in ['y', 'Y', 'yes', 'Yes']:
-            return True
-        if carry_on in ['n', 'N', 'no', 'No']:
-            return False
-
 def get_loan_amount():
     prompt('What is the loan amount?')
     loan_amount_string = input()
-    while invalid_number_type(loan_amount_string):
+    while invalid_number(loan_amount_string):
         prompt('Please provide a positive whole number or decimal')
         loan_amount_string = input()
     return loan_amount_string
@@ -74,7 +72,7 @@ def get_loan_amount():
 def get_apr():
     prompt('What is the APR as a percentage?')
     monthly_apr_string = input()
-    while invalid_number_type(monthly_apr_string):
+    while invalid_number_apr(monthly_apr_string):
         prompt('Please provide a positive whole number or decimal')
         monthly_apr_string = input()
     return monthly_apr_string
@@ -82,7 +80,7 @@ def get_apr():
 def get_loan_duration():
     prompt('What is the loan duration in years?')
     loan_duration_string = input()
-    while invalid_number_type(loan_duration_string):
+    while invalid_number(loan_duration_string):
         prompt('Please provide a positive whole number or decimal')
         loan_duration_string = input()
     return loan_duration_string
@@ -100,6 +98,17 @@ def calc_monthly_payments():
     except ZeroDivisionError:
         monthly_payments = loan_amount_float / loan_duration_float
     return monthly_payments
+
+def get_carry_on():
+    prompt('Do you want to do another calculation? (y/n)')
+    carry_on = input()
+    while carry_on not in ['n', 'N', 'no', 'No', 'y', 'Y', 'yes', 'Yes']:
+        prompt('Please enter y or n')
+        carry_on = input()
+    if carry_on in ['y', 'Y', 'yes', 'Yes']:
+            return True
+    if carry_on in ['n', 'N', 'no', 'No']:
+            return False
 
 display_welcome()
 while True:
