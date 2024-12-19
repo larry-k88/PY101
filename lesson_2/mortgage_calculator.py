@@ -42,13 +42,26 @@ def invalid_number_type(number_str):
         float(number_str)
     except (ValueError, TypeError):
         return True
-    else:
-        if number_str.startswith('-'):
-            return True
+    if number_str.startswith('-'):
+        return True
     return False
 
+def display_welcome():
+    prompt('Welcome to the Repayment Calculator!')
+
 def display_monthly_payments():
-    prompt(f'Your monthly repayments will be: £{monthly_payments:.2f}')
+    prompt(f'Your monthly repayments will be: £{output_monthly_payments:.2f}')
+
+def get_carry_on():
+    prompt('Do you want to do another calculation? (y/n)')
+    carry_on = input()
+    while carry_on not in ['n', 'N', 'no', 'No', 'y', 'Y', 'yes', 'Yes']:
+        prompt('Please enter y or n')
+        carry_on = input()
+        if carry_on in ['y', 'Y', 'yes', 'Yes']:
+            return True
+        if carry_on in ['n', 'N', 'no', 'No']:
+            return False
 
 def get_loan_amount():
     prompt('What is the loan amount?')
@@ -74,16 +87,25 @@ def get_loan_duration():
         loan_duration_string = input()
     return loan_duration_string
 
-loan_amount_float = float(get_loan_amount())
-monthly_apr_float = float(get_apr()) / 100 # converts percentage to decimal
-annual_apr_float = monthly_apr_float / 12
-loan_duration_float = float(get_loan_duration()) * 12 # converts to months
+def calc_monthly_payments():
+    loan_amount_float = float(get_loan_amount())
+    monthly_apr_float = float(get_apr()) / 100 # converts percentage to decimal
+    annual_apr_float = monthly_apr_float / 12
+    loan_duration_float = float(get_loan_duration()) * 12 # converts to months
 
-try:
-    monthly_payments = (loan_amount_float * annual_apr_float
-                     / (1 - (1 + annual_apr_float)
-                     ** (-loan_duration_float)))
-except ZeroDivisionError:
-    monthly_payments = loan_amount_float / loan_duration_float
+    try:
+        monthly_payments = (loan_amount_float * annual_apr_float
+                        / (1 - (1 + annual_apr_float)
+                        ** (-loan_duration_float)))
+    except ZeroDivisionError:
+        monthly_payments = loan_amount_float / loan_duration_float
+    return monthly_payments
 
-display_monthly_payments()
+display_welcome()
+while True:
+    output_monthly_payments = calc_monthly_payments()
+    display_monthly_payments()
+    if not get_carry_on():
+        prompt('Thank you for using the Repayment Calculator!')
+        break
+    
