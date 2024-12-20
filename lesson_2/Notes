@@ -10,6 +10,7 @@
 + [Precedence](#precedence)
 + [Type Conversions](#type-conversions)
 + [Tips](#tips)
++ [Variables and Functions](#variables-and-functions)
 
 ## Truthiness
 
@@ -540,4 +541,80 @@ Avoid using any mutating operations (e.g. appending lists, index reassignment or
 + Functions should work in isolation, in the REPL, for example
 + They should work with inputs, and produce outputs: when calling them, you shouldn't need to think about implementation
 
+## Variables and Functions
+
++ Assigning a variable inside a function creates a new one that only exists in the function:
+
+        my_var = 1
+
+        def my_func():
+            my_var = 2 # exists only in the function scope
+
+        my_func()
+        print(my_var) # Output: 1, not 2
+
++ However, mutating an element assigned to a variable, doesn't create a new variable:
+
+        my_var = [1]
+
+        def my_func():
+            my_var[0] = 2 
+
+        my_func() # reassigns first element to '2'
+        print(my_var) # Output: 2
+
++ The `append()` function mutates the object passed as an argument (`my_var`):
+
+        my_var = [1]
+
+        def my_func(my_var):
+            my_var.append(2)
+
+        my_func(my_var)
+        print(my_var)  # Output: [1, 2]
+
+    + If the function assigns something, the variable is shadowed (i.e. a new one is created)
+
+### Variable Scope
+
++ Scope is the part of the program that can access a particular variable:  
+
+#### Global
+
++ Keyword:
+  + `global` - tells Python to look in the global scope (instead of creating a new one)
+    + It's possible to create a variable if it doesn't exist already
++ Outermost scope
++ Any variable not in a function have global scope - can be accessed from anywhere, including inside functions
+
+#### Local
+
++ The scope where it is created, usually inside a function (or a nested function)
++ Rule 1:
+  + Variables defined in a function are local to it (cannot be accessed in outer scope)
++ Rule 2:
+  + Variables defined in a function are local unless marked `global` or `nonlocal`
++ Rule 3:
+  + Variables used, but not reassigned, may be in the outer scope (reassigning will create a new variable)
++ Rule 4:
+  + Peer scopes do not conflict - two functions with the same variable can exist, each with different values 
++ Rule 5: 
+  + Nested function have their own scope - inner scopes can access outer scopes, but not the other way round
   
++ NB variables defined in blocks, like `if` or `while` loops do not have their own scope in the same way that functions do
+
+### Pass by Reference, Pass by Value
+
++ Pass by reference appears to be when the argument in a function is simply a reference to the original/actual object - therefore, any action the function takes would alter (mutate) the original
++ Pass by value appears to be the opposite - the value is passed as the argument, so any action the function takes only alters within the function: the original is untouched
+
++ The processes can be aligned with mutating (pass by reference) and non-mutating (pass by value) actions
+
++ Python passes a reference to the object (not a copy of the object) - called 'pass by object reference'
++ Whether the function mutates the object depends on the mutability of that object
++ If the object can be mutated, the original will be affected
+
+**
+ 
+  + `nonlocal` - only in nested functions, looks in the outer function
+    + Not possible to create one if it doesn't exist already
