@@ -1,7 +1,9 @@
 import random
+import os
 
 VALID_CHOICES = ['rock', 'paper', 'scissors']
 
+os.system('clear')
 def prompt(message):
     print(f'==> {message}')
 
@@ -10,13 +12,13 @@ def display_winner(player, computer):
     if ((player == "rock" and computer == "scissors") or
         (player == "paper" and computer == "rock") or
         (player == "scissors" and computer == "paper")):
-        prompt('You win!')
+        return 'You win!'
     elif ((player == "rock" and computer == "paper") or
             (player == "paper" and computer == "scissors") or
             (player == "scissors" and computer == "rock")):
-        prompt("Computer wins!")
+        return 'Computer wins!'
     else:
-        prompt('It\'s a tie')
+        return 'It\'s a tie!'
 
 while True:
     prompt(f'Choose one: {', '.join(VALID_CHOICES)}')
@@ -28,7 +30,7 @@ while True:
 
     computer_choice = random.choice(VALID_CHOICES)
 
-    display_winner(choice, computer_choice)
+    prompt(display_winner(choice, computer_choice))
 
     while True:
         prompt('Do you want to play again? y/n')
