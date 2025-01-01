@@ -1,5 +1,7 @@
 import os
 
+MONTHS_IN_YEAR = 12
+
 def prompt(message):
     print(f'--> {message}')
 
@@ -45,7 +47,7 @@ def get_apr():
     if '%' in monthly_apr_string:
         monthly_apr_string = monthly_apr_string.replace('%','')
     while invalid_number_float(monthly_apr_string):
-        prompt('Please provide a whole number or decimal')
+        prompt('APR must be 0 or greater')
         monthly_apr_string = input()
     return monthly_apr_string
 
@@ -59,7 +61,7 @@ def get_loan_length():
             loan_length_years = input('Years: ')
         loan_length_months = input('Months: ')
         while invalid_number_int(loan_length_months):
-            prompt('Please provide a positive whole number')
+            prompt('Please provide a whole number')
             loan_length_months = input('Months: ')
         loan_length_total = ((int(loan_length_years) * MONTHS_IN_YEAR)
                             + int(loan_length_months))
@@ -76,16 +78,16 @@ def calc_monthly_payments():
     annual_apr_float = monthly_apr_float / MONTHS_IN_YEAR
     loan_duration_int = get_loan_length()
 
-    try:
-        monthly_payments = (loan_amount_float * annual_apr_float
-                           / (1 - (1 + annual_apr_float)
-                           ** (-loan_duration_int)))
-    except ZeroDivisionError:
+    if monthly_apr_float == 0:
         monthly_payments = loan_amount_float / loan_duration_int
+        return monthly_payments
+    monthly_payments = (loan_amount_float * annual_apr_float
+                            / (1 - (1 + annual_apr_float)
+                            ** (-loan_duration_int)))
     return monthly_payments
 
-def display_monthly_payments():
-    prompt(f'Your monthly repayments will be: £{output_monthly_payments:.2f}')
+def display_monthly_payments(output):
+    prompt(f'Your monthly repayments will be: £{output:.2f}')
 
 def get_carry_on():
     prompt('Do you want to do another calculation? (y/n)')
@@ -99,13 +101,12 @@ def get_carry_on():
         os.system('clear')
         return True
     return None
- 
-MONTHS_IN_YEAR = 12
+
 os.system('clear')
 display_welcome()
 while True:
     output_monthly_payments = calc_monthly_payments()
-    display_monthly_payments()
+    display_monthly_payments(output_monthly_payments)
     if not get_carry_on():
         prompt('Thank you for using the Repayment Calculator!')
         break
