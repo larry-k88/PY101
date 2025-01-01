@@ -58,9 +58,8 @@ def get_loan_length():
             prompt('Please provide a positive whole number')
             loan_length_years = input('Years: ')
         loan_length_months = input('Months: ')
-        while (invalid_number_int(loan_length_months)
-               or int(loan_length_months) > 11):
-            prompt('Please provide a whole number between 0 and 11')
+        while invalid_number_int(loan_length_months):
+            prompt('Please provide a positive whole number')
             loan_length_months = input('Months: ')
         loan_length_total = ((int(loan_length_years) * MONTHS_IN_YEAR)
                             + int(loan_length_months))
