@@ -494,12 +494,66 @@ Intentional use of a built-in function to covert one to another:
 
 ### Mutating Constants
 
-Avoid using any mutating operations (e.g. appending lists, index reassignment or `pop()`) on constants - Python will allow them to happen but it should be avoided
++ Avoid using any mutating operations (e.g. appending lists, index reassignment or `pop()`) on constants - Python will allow them to happen but it should be avoided
+
+### Mutating Collections
+
++ Avoid mutating the collection during iterations:
+  
+        words = ['scooby', 'do', 'on', 'channel', 'two']
+
+        for word in words:
+            print(word) # scooby, on, two (in that order)
+            words.remove(word)
+
+        print(words) # ['do', 'channel']
+
+  + As the iterations go on, the collection changes, so the built-in functions act on a different collection of objects each time
+  + Mutating individual objects within the collection is fine, e.g. one of a pair of data within a collection can be deleted:
+
+        pairs = [[6, 'scooby'], [2, 'do']]
+
+        for pair in pairs:
+        pair.pop(0)
+        # removes item at index 0 from each pair
+
+        print(pairs)  # prints [['scooby'], ['do']]
+
+### Variable Shadowing
+
++ This is when a global variable name is used inside a function - best avoided
++ Even if the `global` keyword is used in the function, this is just reassign the global variable
+  + Use another variable name instead
+
+### Using `_` as a variable
+
++ This is done when we don't need the variable we are extracting from the data:
+
+        names = ['kim', 'joe', 'sam']
+        for _ in names:
+            print('Got a name!')
+
++ If there are two items in a sequence, but you only need one, `_` can be used:
+  + NB `enumerate()` iterates over a sequence and couples the index to the value:
+
+
+        list(enumerate(names)) # [(0, 'kim'), (1, 'joe'), (2, 'sam')]
+
+  + So if we then wanted the indexes only (i.e. the value is not needed):
+
+        for index, _ in enumerate(names):
+            print(f'{index}: Got a name!')
+        # 0: Got a name!
+        # 1: Got a name!
+        # 2: Got a name!
+    + The `index, _` assigns each part of the tuple to the variables `index` and `_` respectively, indicating that we aren't using the value
 
 ### Functions
 
 #### Guidelines
 
++ Use descriptive names for functions:
+  + Those with outputs could have the prefix `display_` or `print_` - this will tell you it outputs something visual rather than returns a value
 + They should do one thing, and be relatively short (10 or so lines)
 + Their names should hint at what they do, mutate or return. E.g.
   
@@ -540,6 +594,10 @@ Avoid using any mutating operations (e.g. appending lists, index reassignment or
 
 + Functions should work in isolation, in the REPL, for example
 + They should work with inputs, and produce outputs: when calling them, you shouldn't need to think about implementation
+
+### White Spaces
+
++ Use blank lines in a similar way to when writing, as though they are paragraphs
 
 ## Variables and Functions
 
