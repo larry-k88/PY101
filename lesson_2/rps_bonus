@@ -1,7 +1,7 @@
 import random
 import os
 
-VALID_CHOICES = ['rock', 'paper', 'scissors']
+VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 
 os.system('clear')
 def prompt(message):
