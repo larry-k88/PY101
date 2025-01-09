@@ -1,0 +1,26 @@
+{
+    "welcome" : "Welcome to Rock, Paper, Scissors, Lizard, Spock!",
+    "view_rules" : "Type 'rules' to view the rules of the game, or press Enter to start",
+    "rules" : {"general" : "GAME RULES\nWhen prompted, select your choice from the list\n1 point to the winner of each round, 0 if it's a draw.\nFirst to 3 points wins the match!\nType 'exit' to quit",
+                "rock" : "Rock breaks scissors and crushes lizard",
+                "paper" : "Paper covers rock and disproves Spock",
+                "scissors" : "Scissors cut paper and decapitates lizard",
+                "lizard" : "Lizard eats paper and poisons Spock",
+                "spock" : "Spock smashes scissors and vaporizes rock"
+            },
+    "start_game" : "Press Enter to start",        
+    "player_win_round" : "You win the round: 1 point to you!",
+    "computer_win_round" : "Computer wins the round: 1 point to them!",
+    "player_win_match" : "You win the match!",
+    "computer_win_match" : "Computer wins the match!",
+    "tie_round" : "This round is a tie: no points awarded",
+    "user_choice" : "To make your choice, type one of the following:",
+    "user_prompt" : "Select an option and press Enter:",
+    "scissors_or_spock" : "Please select 'sc' for scissors or 'sp' for Spock",
+    "invalid_choice" : "That's not a valid choice, please try again",
+    "current_scores" : "First to 3 - current scores are:",
+    "final_scores" : "Final scores are:",
+    "play_again" : "Press Enter to play the next round, or type 'exit' to quit",
+    "invalid_play_again" : "Please enter y or n...",
+    "thanks" : "Thank you for playing!"
+}
