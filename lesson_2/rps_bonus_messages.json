@@ -18,9 +18,9 @@
     "user_prompt" : "Select an option and press Enter:",
     "scissors_or_spock" : "Please select 'sc' for scissors or 'sp' for Spock",
     "invalid_choice" : "That's not a valid choice, please try again",
-    "current_scores" : "First to 3 - current scores are:",
-    "final_scores" : "Final scores are:",
+    "current_scores" : "First to 3 - current scores:",
+    "final_scores" : "Final scores:",
+    "quit" : "Game ended early - current scores:",
     "play_again" : "Press Enter to play the next round, or type 'exit' to quit",
-    "invalid_play_again" : "Please enter y or n...",
     "thanks" : "Thank you for playing!"
 }
