@@ -29,25 +29,39 @@ def display_welcome():
     prompt(MESSAGES["welcome"])
 
 def display_rules():
-    prompt(MESSAGES['view_rules'])
-    user_input = input().casefold()
-    if user_input == 'rules':
-        print()
-        prompt(MESSAGES['rules']['general'])
-        print()
-        prompt(MESSAGES['rules']['rock'])
-        prompt(MESSAGES['rules']['paper'])
-        prompt(MESSAGES['rules']['scissors'])
-        prompt(MESSAGES['rules']['lizard'])
-        prompt(MESSAGES['rules']['spock'])
-        print()
-        prompt(MESSAGES['start_game'])
-        input()
+    prompt(MESSAGES['rules']['general'])
+    prompt(MESSAGES['rules']['rock'])
+    prompt(MESSAGES['rules']['paper'])
+    prompt(MESSAGES['rules']['scissors'])
+    prompt(MESSAGES['rules']['lizard'])
+    prompt(MESSAGES['rules']['spock'])
+    prompt(MESSAGES['start_game'])
+    input()
     os.system('clear')
 
 def display_options():
     for k, v in OPTIONS_DICT.items():
         print(f'{k} for {v}')
+
+def display_current_scores():
+    prompt(f'{MESSAGES['current_scores']}\n{get_scores()}')
+
+def get_scores():
+    return (f'Round: {scores['Round']}\n'
+            f'You: {scores['Player']}\n'
+            f'Computer: {scores['Computer']}')
+
+def get_user_choice():
+    prompt(MESSAGES['user_prompt'])
+    user_input = input().casefold()
+
+    while user_input not in OPTIONS_ABBREVIATED:
+        if user_input == 's':
+            prompt(MESSAGES['scissors_or_spock'])
+        else:
+            prompt(MESSAGES['invalid_choice'])
+        user_input = input().casefold()
+    return user_input
 
 def decide_winner_round(player, computer):
     if computer in WINNING_OUTCOMES[player]:
@@ -62,13 +76,10 @@ def display_winner_round(winner):
     match winner:
         case 'player_wins':
             prompt(MESSAGES['player_win_round'])
-            print()
         case 'computer_wins':
             prompt(MESSAGES['computer_win_round'])
-            print()
         case 'tie':
             prompt(MESSAGES['tie_round'])
-            print()
 
 def decide_winner_match():
     if scores['Computer'] == WINNING_SCORE:
@@ -84,32 +95,11 @@ def display_winner_match(winner):
         case 'computer_wins':
             prompt(MESSAGES['computer_win_match'])
 
-def get_scores():
-    return (f'You: {scores['Player']} \nComputer: '
-            f'{scores['Computer']}\nRounds: {scores["Rounds"]}')
-
-def display_current_scores():
-    prompt(f'{MESSAGES['current_scores']}\n{get_scores()}')
-
 def display_final_scores():
     prompt(f'{MESSAGES['final_scores']}\n{get_scores()}')
     print()
-    prompt(MESSAGES['thanks'])
-
-def get_user_choice():
-    prompt(MESSAGES['user_prompt'])
-    user_input = input().casefold()
-
-    while user_input not in OPTIONS_ABBREVIATED:
-        if user_input == 's':
-            prompt(MESSAGES['scissors_or_spock'])
-        else:
-            prompt(MESSAGES['invalid_choice'])
-        user_input = input().casefold()
-    return user_input
 
 def display_end_game():
-    os.system('clear')
     prompt(f'{MESSAGES['quit']}\n{get_scores()}')
 
 with open('rps_bonus_messages.json', 'r') as file:
@@ -119,13 +109,14 @@ with open('rps_bonus_messages.json', 'r') as file:
 
 os.system('clear')
 display_welcome()
-print()
-display_rules()
-print()
+prompt(MESSAGES['view_rules'])
+rules_or_play = input().casefold()
+if rules_or_play == 'rules':
+    display_rules()
 
 scores = {'Player' : 0,
           'Computer' : 0,
-          'Rounds': 0}
+          'Round': 0}
 while True:
     prompt(MESSAGES['user_choice'])
     display_options()
@@ -137,26 +128,25 @@ while True:
     computer_choice = random.choice(OPTIONS_ABBREVIATED)
 
     round_winner = decide_winner_round(user_choice, computer_choice)
-    if round_winner:
-        scores['Rounds'] += 1
-    display_winner_round(round_winner)
+    scores['Round'] += 1
 
     prompt(f'You chose: {OPTIONS_DICT.get(user_choice)}')
     prompt(f'Computer chose: {OPTIONS_DICT.get(computer_choice)}')
-    print()
+
+    display_winner_round(round_winner)
 
     match_winner = decide_winner_match()
-    display_winner_match(match_winner)
 
     if match_winner:
-        print()
         display_final_scores()
+        display_winner_match(match_winner)
         break
 
     prompt(MESSAGES['play_again'])
     play_again = input().casefold()
 
     if play_again == 'exit':
+        print()
         display_end_game()
         break
 

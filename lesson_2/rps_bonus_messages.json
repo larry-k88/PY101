@@ -1,26 +1,25 @@
 {
-    "welcome" : "Welcome to Rock, Paper, Scissors, Lizard, Spock!",
+    "welcome" : "Welcome to Rock, Paper, Scissors, Lizard, Spock!\n",
     "view_rules" : "Type 'rules' to view the rules of the game, or press Enter to start",
-    "rules" : {"general" : "GAME RULES\nWhen prompted, select your choice from the list\n1 point to the winner of each round, 0 if it's a draw.\nFirst to 3 points wins the match!\nType 'exit' to quit",
+    "rules" : {"general" : "GAME RULES\nWhen prompted, select your choice from the list\n1 point to the winner of each round, 0 if it's a draw\nFirst to 3 points wins the match!\n",
                 "rock" : "Rock breaks scissors and crushes lizard",
                 "paper" : "Paper covers rock and disproves Spock",
                 "scissors" : "Scissors cut paper and decapitates lizard",
                 "lizard" : "Lizard eats paper and poisons Spock",
-                "spock" : "Spock smashes scissors and vaporizes rock"
+                "spock" : "Spock smashes scissors and vaporizes rock\n"
             },
     "start_game" : "Press Enter to start",        
-    "player_win_round" : "You win the round: 1 point to you!",
-    "computer_win_round" : "Computer wins the round: 1 point to them!",
-    "player_win_match" : "You win the match!",
-    "computer_win_match" : "Computer wins the match!",
-    "tie_round" : "This round is a tie: no points awarded",
+    "player_win_round" : "You win the round: 1 point to you!\n",
+    "computer_win_round" : "Computer wins the round: 1 point to them!\n",
+    "tie_round" : "This round is a tie: no points awarded\n",
+    "player_win_match" : "You win the match - thank you for playing!",
+    "computer_win_match" : "Computer wins the match - thank you for playing!",
     "user_choice" : "To make your choice, type one of the following:",
     "user_prompt" : "Select an option and press Enter:",
     "scissors_or_spock" : "Please select 'sc' for scissors or 'sp' for Spock",
     "invalid_choice" : "That's not a valid choice, please try again",
     "current_scores" : "First to 3 - current scores:",
     "final_scores" : "Final scores:",
-    "quit" : "Game ended early - current scores:",
-    "play_again" : "Press Enter to play the next round, or type 'exit' to quit",
-    "thanks" : "Thank you for playing!"
+    "quit" : "Game ended early - scores:",
+    "play_again" : "Press Enter to play the next round, or type 'exit' to quit"
 }
