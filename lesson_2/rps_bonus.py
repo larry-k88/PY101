@@ -22,6 +22,9 @@ WINNING_OUTCOMES = {
 
 WINNING_SCORE = 3
 
+with open('rps_bonus_messages.json', 'r') as file:
+    MESSAGES = json.load(file)
+
 def prompt(message):
     print(f'==> {message}')
 
@@ -101,9 +104,6 @@ def display_final_scores():
 
 def display_end_game():
     prompt(f'{MESSAGES['quit']}\n{get_scores()}')
-
-with open('rps_bonus_messages.json', 'r') as file:
-    MESSAGES = json.load(file)
 
 # Game starts here
 
