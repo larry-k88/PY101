@@ -46,10 +46,10 @@ def display_options():
     for k, v in OPTIONS_DICT.items():
         print(f'{k} for {v}')
 
-def display_current_scores():
-    prompt(f'{MESSAGES['current_scores']}\n{get_scores()}')
+def display_current_scores(scores):
+    prompt(f'{MESSAGES['current_scores']}\n{get_scores(scores)}')
 
-def get_scores():
+def get_scores(scores):
     return (f'Round: {scores['Round']}\n'
             f'You: {scores['Player']}\n'
             f'Computer: {scores['Computer']}')
@@ -66,7 +66,7 @@ def get_user_choice():
         user_input = input().casefold()
     return user_input
 
-def decide_winner_round(player, computer):
+def decide_winner_round(player, computer, scores):
     if computer in WINNING_OUTCOMES[player]:
         scores['Player'] += 1
         return 'player_wins'
@@ -84,7 +84,7 @@ def display_winner_round(winner):
         case 'tie':
             prompt(MESSAGES['tie_round'])
 
-def decide_winner_match():
+def decide_winner_match(scores):
     if scores['Computer'] == WINNING_SCORE:
         return 'computer_wins'
     if scores['Player'] == WINNING_SCORE:
@@ -98,12 +98,12 @@ def display_winner_match(winner):
         case 'computer_wins':
             prompt(MESSAGES['computer_win_match'])
 
-def display_final_scores():
-    prompt(f'{MESSAGES['final_scores']}\n{get_scores()}')
+def display_final_scores(scores):
+    prompt(f'{MESSAGES['final_scores']}\n{get_scores(scores)}')
     print()
 
-def display_end_game():
-    prompt(f'{MESSAGES['quit']}\n{get_scores()}')
+def display_end_game(scores):
+    prompt(f'{MESSAGES['quit']}\n{get_scores(scores)}')
 
 # Game starts here
 
@@ -114,31 +114,31 @@ rules_or_play = input().casefold()
 if rules_or_play == 'rules':
     display_rules()
 
-scores = {'Player' : 0,
+counter = {'Player' : 0,
           'Computer' : 0,
           'Round': 0}
 while True:
     prompt(MESSAGES['user_choice'])
     display_options()
     print()
-    display_current_scores()
+    display_current_scores(counter)
     print()
 
     user_choice = get_user_choice()
     computer_choice = random.choice(OPTIONS_ABBREVIATED)
 
-    round_winner = decide_winner_round(user_choice, computer_choice)
-    scores['Round'] += 1
+    round_winner = decide_winner_round(user_choice, computer_choice, counter)
+    counter['Round'] += 1
 
     prompt(f'You chose: {OPTIONS_DICT.get(user_choice)}')
     prompt(f'Computer chose: {OPTIONS_DICT.get(computer_choice)}')
 
     display_winner_round(round_winner)
 
-    match_winner = decide_winner_match()
+    match_winner = decide_winner_match(counter)
 
     if match_winner:
-        display_final_scores()
+        display_final_scores(counter)
         display_winner_match(match_winner)
         break
 
@@ -147,7 +147,7 @@ while True:
 
     if play_again == 'exit':
         print()
-        display_end_game()
+        display_end_game(counter)
         break
 
     os.system('clear')
