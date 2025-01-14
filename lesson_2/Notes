@@ -555,6 +555,7 @@ Intentional use of a built-in function to covert one to another:
 + Use descriptive names for functions:
   + Those with outputs could have the prefix `display_` or `print_` - this will tell you it outputs something visual rather than returns a value
 + They should do one thing, and be relatively short (10 or so lines)
++ The parameters (if any) are placeholders for the real values you intend to pass as arguments later - name the parameters differently to the arguments
 + Their names should hint at what they do, mutate or return. E.g.
   
         def updated_cards(total, cards)
