@@ -1,0 +1,116 @@
+'''
+Write a program that asks the user to enter an integer greater than 0,
+then asks whether the user wants to determine the sum or the product of
+all numbers between 1 and the entered integer, inclusive.
+
+Problem:    Ask user for an input (integer above 0)
+            Ask user for am operation (sum or product)
+            Check and perform the operation
+            Return the output (f-string)
+            Input - int > 0 
+            Input - 's' or 'p'
+            Calculation
+            Output - f-string
+            Requirements:
+                integer, > 0 (catch errors?)
+                's' or 'p' only (catch errors?)
+            START
+            GET/SET integer
+            GET task
+            Operate on input
+            PRINT outputs (interpolate)
+            END
+
+Examples:   Please enter an integer greater than 0: 5
+            Enter "s" to compute the sum, or "p" to compute the product. s
+
+            The sum of the integers between 1 and 5 is 15.
+
+            Please enter an integer greater than 0: 6
+            Enter "s" to compute the sum, or "p" to compute the product. p
+
+            The product of the integers between 1 and 6 is 720.
+
+Data:       input() to get the 2 pieces of data
+            if or match statements to determine operation
+            print to output to the user using f-strings
+
+Algorithm:  Ask for inputs x2
+            SET integer = input_1
+            SET operation = input_2
+            SET output_s = sum of range
+            SET output_p = product of range
+            READ input_1 and input_2
+            IF input_2 is 's' or 'p'
+                PRINT The {operation} of numbers CONST to {input} = {output} 
+
+'''
+import os
+
+def invalid_number(input_number):
+    try:
+        int(input_number)
+    except ValueError:
+        return True
+    if int(input_number) <= 0:
+        return True
+    return False
+
+def invalid_operation(input_operation):
+    if input_operation not in OPERATION_OPTIONS:
+        return True
+    return False
+
+def get_number():
+    user_input_number = input('Please enter an integer greater than 0: ')
+    while invalid_number(user_input_number):
+        user_input_number = input('Value must be an integer greater than 0. '
+                            ' Please try again: ')
+    return int(user_input_number)
+
+def get_operation():
+    user_input_operation = input('Enter "s" to compute the sum, '
+                        'or "p" to compute the product: ').casefold()
+    while invalid_operation(user_input_operation):
+        user_input_operation = input('Enter "s" to compute the sum, '
+                                'or "p" to compute the product: ' ).casefold()
+    return user_input_operation
+
+def compute_sum(start, stop):
+    return sum(range(start, stop + 1))
+
+def compute_product(start, stop):
+    result = 1
+    for i in range(start, stop + 1):
+        result *= i
+    return result
+
+def s_or_p(input_operation):
+    match input_operation:
+        case 's':
+            return compute_sum(LOWER_BOUND, user_number_int)
+        case 'p':
+            return compute_product(LOWER_BOUND, user_number_int)
+
+def display_result(operation, start, user_input, result):
+    print()
+    print(f'The {operation} of the integers between {start} '
+          f'and {user_input} is {result}')
+
+LOWER_BOUND = 1
+OPERATION_OPTIONS = {'s' : 'sum', 'p' : 'product'}
+
+# Main program starts here
+
+os.system('clear')
+
+user_number_int = get_number()
+user_operation = get_operation()
+
+output = s_or_p(user_operation)
+display_result(
+    OPERATION_OPTIONS.get(user_operation),
+    LOWER_BOUND,
+    user_number_int,
+    output
+    )

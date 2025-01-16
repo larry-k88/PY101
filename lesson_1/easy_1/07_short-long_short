@@ -1,0 +1,63 @@
+'''
+Write a function that takes two strings as arguments,
+determines the length of the two strings, and then returns the result
+of concatenating the shorter string, the longer string,
+and the shorter string once again.
+You may assume that the strings are of different lengths.
+
+Problem:    Function takes 2 arguments (both strings)
+            Checks length of strings and assigns to 2 variables
+            Concatenates short, long, short
+            Output - returns the concatenation result
+            Requirements:
+                function, 2 strings of different length
+                len() to check and assign shorter/longer
+                empty strings have len = 0
+
+Examples:   These examples should all print True:
+
+            print(short_long_short('abc', 'defgh') == "abcdefghabc")
+            print(short_long_short('abcde', 'fgh') == "fghabcdefgh")
+            print(short_long_short('', 'xyz') == "xyz")
+
+Data:       assume both arguments are strings
+            characters in the string shouldn't be relevant
+            + to join the resultant variables into the output
+
+Algorithm:  START
+            IF len(string_1) > len(string_2)
+                SET string_1 = longest
+                SET string_2 = shortest
+            ELSE
+                SET string_1 = shortest
+                SET string_2 = longest
+            SET result to shortest + longest + shortest
+            RETURN result
+            END
+            
+
+This was my original - no need to set variables before returning
+
+def short_long_short(string_1, string_2):
+    if len(string_1) > len(string_2):
+        longest = string_1
+        shortest = string_2
+    else:
+        longest = string_2
+        shortest = string_1
+    result = shortest + longest + shortest
+    return result
+
+'''
+
+def short_long_short(string_1, string_2):
+    if len(string_1) > len(string_2):
+        return string_2 + string_1 + string_2
+    return string_1 + string_2 + string_1
+
+print(short_long_short('abc', 'defgh') == "abcdefghabc")
+print(short_long_short('abcde', 'fgh') == "fghabcdefgh")
+print(short_long_short('', 'xyz') == "xyz")
+
+# NB - sorted([string_1, string_2], key=len) creates a list in length order
+# Then can index in to the [0] and [1] positions to return the result 

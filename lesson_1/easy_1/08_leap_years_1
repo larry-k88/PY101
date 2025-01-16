@@ -1,0 +1,84 @@
+'''
+Write a function that takes any year greater than 0 as input and returns
+True if the year is a leap year, or False if it is not.
+
+For simplicity, this exercise assumes that the Gregorian calendar
+has been in continuous use since the year 1.
+We'll address that assumption in the next exercise that follows this one
+
+To determine whether a given year is a leap year,
+use the rules of the Gregorian calendar:
+
+If the year is divisible by 400, it is a leap year.
+If the year is divisible by 100 but not by 400, it is not a leap year.
+If the year is divisible by 4 but not by 100, it is a leap year.
+All other years are not leap years.
+
+Problem:    Perform various tests on the input (year)
+            Return True/False based on those results
+            Input must be an integer greater than 0
+            Output - boolean
+            Requirements:
+                Assume integer and > 0 (as not using user input)
+                assume False unless one of the criteria applies
+
+Examples:   These examples should all print True:
+
+            print(is_leap_year(1) == False)
+            print(is_leap_year(2) == False)
+            print(is_leap_year(3) == False)
+            print(is_leap_year(4) == True)
+            print(is_leap_year(1000) == False)
+            print(is_leap_year(1100) == False)
+            print(is_leap_year(1200) == True)
+            print(is_leap_year(1300) == False)
+            print(is_leap_year(1751) == False)
+            print(is_leap_year(1752) == True)
+            print(is_leap_year(1753) == False)
+            print(is_leap_year(1800) == False)
+            print(is_leap_year(1900) == False)
+            print(is_leap_year(2000) == True)
+            print(is_leap_year(2023) == False)
+            print(is_leap_year(2024) == True)
+            print(is_leap_year(2025) == False)
+
+Data:       Assume Int and > 0
+            If statements to determine True/False
+            % = 0 shows divisibility
+
+Algorithm:  START
+            IF year % 400 = 0
+                TRUE
+            IF year % 100 = 0 AND year % 400 != 0
+                FALSE 
+            IF year % 4 and year % 100 != 0
+                TRUE
+            RETURN FALSE
+            END
+ 
+'''
+
+def is_leap_year(year):
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    return year % 4 == 0
+
+print(is_leap_year(1) == False)
+print(is_leap_year(2) == False)
+print(is_leap_year(3) == False)
+print(is_leap_year(4) == True)
+print(is_leap_year(1000) == False)
+print(is_leap_year(1100) == False)
+print(is_leap_year(1200) == True)
+print(is_leap_year(1300) == False)
+print(is_leap_year(1751) == False)
+print(is_leap_year(1752) == True)
+print(is_leap_year(1753) == False)
+print(is_leap_year(1800) == False)
+print(is_leap_year(1900) == False)
+print(is_leap_year(2000) == True)
+print(is_leap_year(2023) == False)
+print(is_leap_year(2024) == True)
+print(is_leap_year(2025) == False)

@@ -1,0 +1,50 @@
+'''
+Write a function that computes the sum of all numbers between 1 and
+some other number, inclusive, that are multiples of 3 or 5.
+For instance, if the supplied number is 20, the result should be 98
+(3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 + 20).
+
+You may assume that the number passed in is an integer greater than 1.
+
+Problem:    Determine the numbers that are factors of 3 or 5
+            Sum these numbers and return the output
+        
+Examples:   These examples should all print True:
+       
+            print(multisum(3) == 3)
+            print(multisum(5) == 8)
+            print(multisum(10) == 33)
+            print(multisum(1000) == 234168)
+            
+
+Data:       Assume number is valid (int and > 1)
+            List to store multiples
+            Range to iterate through numbers
+            % to determine factors
+            If to determine factors
+            Append to list if a factor
+            Ternary to produce the output
+
+Algorithm:  START
+            SET multiples as a list of numbers
+            FOR number in range:
+                IF number % 3 == 0
+                    append
+                ELIF number % 5 == 0
+                    append
+            SUM FOR number in list
+            END
+ 
+'''
+
+def multisum(number):
+    multiples = []
+    for i in range(number + 1):
+        if i % 3 == 0 or i % 5 == 0:
+            multiples.append(i)
+    return sum(multiples)
+
+print(multisum(3) == 3)
+print(multisum(5) == 8)
+print(multisum(10) == 33)
+print(multisum(1000) == 234168)

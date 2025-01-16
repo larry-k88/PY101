@@ -1,0 +1,60 @@
+'''
+Write a function that determines and returns the UTF-16 string value
+of a string passed in as an argument.
+The UTF-16 string value is the sum of the UTF-16 values of every
+character in the string.
+(You may use ord to determine the UTF-16 value of a character.)
+
+Problem:    Take a string, find the UTF value of each character and then
+            sum these valuesDetermine the numbers that are factors of 3 or 5
+            Sum these numbers and return the output
+            Input - a string, but any character within it is important
+            Output - an integer
+            Requirements:
+                string input
+                include all characters, even white space (though value is 0)
+        
+Examples:   These examples should all print True:   
+
+            print(utf16_value('Four score') == 984)
+            print(utf16_value('Launch School') == 1251)
+            print(utf16_value('a') == 97)
+            print(utf16_value('') == 0)
+            
+Data:       Assume input is a string
+            ord() to find the value
+            For loop to iterate over the string
+            Append the values to a list (or just sum as you go)
+        
+Algorithm:  START
+            SET sum = 0
+            FOR x in string:
+                sum += ord(x)
+            return sum
+            END
+ 
+'''
+
+def utf16_value(string):
+    sum_ = 0 # _ added to avoid shadowing the built-in sum() function
+    for x in string:
+        sum_ += ord(x)
+    return sum_
+
+# Alternative solution using a list comprehension 
+# def utf16_value(string):
+#    return sum([ord(char) for x in string])
+
+print(utf16_value('Four score') == 984)
+print(utf16_value('Launch School') == 1251)
+print(utf16_value('a') == 97)
+print(utf16_value('') == 0)
+
+
+# The next three lines demonstrate that the code
+# works with non-ASCII characters from the UTF-16
+# character set.
+
+OMEGA = "\u03A9"              # UTF-16 character 'Ω' (omega)
+print(utf16_value(OMEGA) == 937)
+print(utf16_value(OMEGA + OMEGA + OMEGA) == 2811)
