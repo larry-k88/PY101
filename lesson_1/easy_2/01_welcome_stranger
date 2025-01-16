@@ -1,0 +1,44 @@
+'''
+Create a function that takes 2 arguments, a list and a dictionary.
+The list will contain 2 or more elements that, when joined with spaces,
+will produce a person's name.
+The dictionary will contain two keys, "title" and "occupation",
+and the appropriate values. Your function should return a greeting
+that uses the person's full name, and mentions the person's title.
+
+Problem:    Take a list and dictionary (which has 2 keys) and pass them 
+            into the function
+            The elements in the list need to be joined together with a space
+            The output will also reference the values in the dictionary
+            Input - 1x list, 1x dictionary
+            Output - F-string, interpolating the concatenated list and 
+                    the dictionary values
+            Requirements:
+                list input - 2+ values
+                dictionary - 2 keys, need to access values for output
+        
+Examples:   greeting = greetings(
+                ["John", "Q", "Doe"],
+                {"title": "Master", "occupation": "Plumber"},
+            )
+            print(greeting)
+            # Hello, John Q Doe! Nice to have a Master Plumber around.
+
+Data:       join() method to concat the list
+            dict.get() to give values
+        
+Algorithm:  START
+            ' '.join(name)
+            END
+ 
+'''
+
+def greetings(name, job):
+    return (f'Hello, {' '.join(name)}! '
+            f'Nice to have a {job.get('title')} {job.get('occupation')} '
+            'around.')
+
+greeting = (greetings(["John", "Q", "Doe"],
+                {"title": "Master", "occupation": "Plumber"}))
+
+print(greeting)

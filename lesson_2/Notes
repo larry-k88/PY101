@@ -548,6 +548,16 @@ Intentional use of a built-in function to covert one to another:
         # 2: Got a name!
     + The `index, _` assigns each part of the tuple to the variables `index` and `_` respectively, indicating that we aren't using the value
 
+### F-Strings
+
++ If code is to be split over multiple lines, brackets are needed around f-strings, as well as `f'` at the start of each line and `'` at the end
+   
+        return(f'Hello, nice to have a '
+               f'{status['title']} {status['occupation']} '
+                'around.) # doesn't need the f as no interpolation in the line
+        
+    + Best to keep spaces at the end of lines
+
 ### Functions
 
 #### Guidelines

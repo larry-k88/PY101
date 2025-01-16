@@ -1,0 +1,48 @@
+'''
+Using the multiply function from the "Multiplying Two Numbers" exercise,
+write a function that computes the square of its argument
+(the square is the result of multiplying a number by itself).
+
+Problem:    This function has one argument - when it's passed in, it needs
+            to be passed to the multiply function, where it serves as 
+            both arguments. 
+            Input - validate for floats or integers
+            Output - return the result of multiply()
+            Requirements:
+                One integer
+                        
+Examples:   print(square(5) == 25)   # True
+            print(square(-8) == 64)  # True
+
+Data:       argument from outer function is both args for inner
+            if statement with isinstance() to check input
+
+Algorithm:  START
+            IF arguments int or float
+                do multiply(arg)
+            ELSE
+                'Argument must be integer or decimal'
+            END
+ 
+'''
+
+def multiply(num_1, num_2):
+    if isinstance(num_1 and num_2, (int, float)):
+        return num_1 * num_2
+    return 'Both arguments must be integers or floats'
+
+def to_the_power(num, power):
+    if not isinstance(power, int):
+        return 'Power must be integer'
+    if isinstance(num, (int, float)):
+        result = 1
+        for _ in range(power):
+            result =  multiply(result, num)
+        return result
+    return 'Argument must be integer or decimal'
+
+
+print(to_the_power(5, 2) == 25)
+print(to_the_power(-8, 2) == 64)
+
+print(to_the_power(5, -2))

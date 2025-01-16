@@ -1,0 +1,42 @@
+'''
+Write a program that asks for user's name, then greets the user.
+If the user appends a ! to their name,
+the computer will yell the greeting (print it using all uppercase).
+
+Problem:    Ask user for their name, check if that name as an ! at the end
+            If so, respond in caps, if not, respond by greeting
+            Input - User enters string
+            Output - f-string, based on input. In caps if ! in the name
+            Requirements:
+                string input - no validation needed
+                        
+Examples:   What is your name? Sue
+            Hello Sue.
+
+            What is your name? Bob!
+            HELLO BOB! WHY ARE WE YELLING?
+
+Data:       input() to get the name
+            endswith() to check for !
+            if statement (or ternary) to produce output
+            str.upper() for first part of greeting 
+        
+Algorithm:  START
+            GET name from user
+            SET greet = f'Hello {name}
+            IF name endswith !:
+                PRINT greet.upper() + WHY ARE WE YELLING
+            PRINT greet
+            END
+ 
+'''
+
+def greeting():
+    name = input('What is your name? ')
+    greet = f'Hello {name}.'
+    if name.endswith('!'):
+        print (greet.replace('.', '').upper() + ' WHY ARE WE YELLING?')
+    else:
+        print (greet)
+
+greeting()

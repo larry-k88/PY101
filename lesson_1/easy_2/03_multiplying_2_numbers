@@ -1,0 +1,30 @@
+'''
+Create a function that takes two arguments, multiplies them together,
+and returns the result.
+
+Problem:    Take two arguments, perform multiplication and return the result
+            Input - validate for floats or integers
+            Output - return the result
+            Requirements:
+                two integers, no strings
+                        
+Examples:   print(multiply(5, 3) == 15)  # True
+
+Data:       * operator for result
+            if statement with isinstance() to check input
+
+Algorithm:  START
+            IF both arguments are int or float
+                return* together
+            ELSE
+                'Arguments must be integers or decimals'
+            END
+ 
+'''
+
+def multiply(num_1, num_2):
+    if isinstance(num_1 and num_2, (int, float)):
+        return num_1 * num_2
+    return 'Both arguments must be integers or floats'
+
+print(multiply(5, 3) == 15)
