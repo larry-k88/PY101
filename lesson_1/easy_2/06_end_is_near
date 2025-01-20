@@ -1,0 +1,51 @@
+'''
+Write a function that returns the next to last word in the string
+argument.
+
+Words are any sequence of non-blank characters.
+
+You may assume that the input string will always contain at least two
+words.
+
+Problem:    Take a string (min 2 words) and return the penultimate word
+            Input - 2 or more words as a string
+            Output - single string
+            Requirements:
+                No validation necessary
+                Words don't have to be letters - anything not blank
+                        
+Examples:   These examples should print True:
+            print(penultimate("last word") == "last")
+            print(penultimate("Launch School is great!") == "is")
+
+Data:       Length() of string.split()
+            Return [len-1] of string.split
+
+Algorithm:  START
+            SET number_of_words = len(string.split())
+            PRINT number_of_words[number_of_words -1]
+            END
+ 
+'''
+
+# def penultimate(phrase):
+#     return phrase.split()[- 2]
+
+# print(penultimate("last word") == "last")
+# print(penultimate("Launch School is great!") == "is")
+
+def middle(phrase):
+    number_of_words = len(phrase.split())
+    middle_index = number_of_words // 2
+    if number_of_words == 0:
+        return 'Empty string'
+    if number_of_words % 2 == 1:
+        return phrase.split()[middle_index]
+    if number_of_words % 2 == 0:
+        return phrase.split()[middle_index -1], phrase.split()[middle_index]
+    return None
+
+print(middle("last word"))
+print(middle("Launch School is so great!"))
+print(middle(''))
+print(middle('test'))

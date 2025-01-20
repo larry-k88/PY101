@@ -1,41 +1,53 @@
 '''
-Using the multiply function from the "Multiplying Two Numbers" exercise,
-write a function that computes the square of its argument
-(the square is the result of multiplying a number by itself).
+Write a program that prompts the user for two positive numbers
+(floating-point), then prints the results of the following operations
+on those two numbers: addition, subtraction, product,
+quotient, floor quotient, remainder, and power.
+Do not worry about validating the input.
 
-Problem:    This function has one argument - when it's passed in, it needs
-            to be passed to the multiply function, where it serves as 
-            both arguments. 
-            Input - validate for floats or integers
-            Output - return the result of multiply()
+Problem:    Prompt for two inputs and then perform various arithmetic 
+            calculations on them
+            Input - floats (no need to validate)
+            Output - floats
             Requirements:
-                One integer
+                floats
                         
-Examples:   print(square(5) == 25)   # True
-            print(square(-8) == 64)  # True
+Examples:   ==> Enter the first number:
+            3.141529
+            ==> Enter the second number:
+            2.718282
+            ==> 3.141529 + 2.718282 = 5.859811
+            ==> 3.141529 - 2.718282 = 0.42324699999999993
+            ==> 3.141529 * 2.718282 = 8.539561733178
+            ==> 3.141529 / 2.718282 = 1.1557038600115808
+            ==> 3.141529 // 2.718282 = 1.0
+            ==> 3.141529 % 2.718282 = 0.42324699999999993
+            ==> 3.141529 ** 2.718282 = 22.45792517468373
 
-Data:       argument from outer function is both args for inner
-            if statement with isinstance() to check input
+Data:       input() to get the values (floats)
+            + - * / % // **
+            f-strings
 
 Algorithm:  START
-            IF arguments int or float
-                do multiply(arg)
-            ELSE
-                'Argument must be integer or decimal'
+            GET = SET num_1 from user
+            GET = SET num_2 from user
+            PRINT f-strings for each operation
             END
  
 '''
 
-def multiply(num_1, num_2):
-    if isinstance(num_1 and num_2, (int, float)):
-        return num_1 * num_2
-    return 'Both arguments must be integers or floats'
-
-def square(num):
-    if isinstance(num, (int, float)):
-        return multiply(num, num)
-    return 'Argument must be integer or decimal'
+def prompt(message):
+    print(f'==> {message}')
 
 
-print(square(5) == 25)
-print(square(-8) == 64)
+prompt('Enter the first number: ')
+num_1 = float(input())
+prompt('Enter the second number: ')
+num_2 = float(input())
+prompt(f'{num_1} + {num_2} = {num_1 + num_2}')
+prompt(f'{num_1} - {num_2} = {num_1 - num_2}')
+prompt(f'{num_1} * {num_2} = {num_1 * num_2}')
+prompt(f'{num_1} / {num_2} = {num_1 / num_2}')
+prompt(f'{num_1} // {num_2} = {num_1 // num_2}')
+prompt(f'{num_1} % {num_2} = {num_1 % num_2}')
+prompt(f'{num_1} ** {num_2} = {num_1 ** num_2}')

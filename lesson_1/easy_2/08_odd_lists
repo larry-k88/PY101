@@ -1,0 +1,51 @@
+'''
+Write a function that returns a list that contains every other element
+of a list that is passed in as an argument.
+The values in the returned list should be those values that are in the
+1st, 3rd, 5th, and so on elements of the argument list.
+
+Problem:    Function takes a list as an argument and returns the odd values
+            Requirements:
+                Empty list returns empty list
+                Any other list returns odd values only
+                        
+Examples:   print(oddities([2, 3, 4, 5, 6]) == [2, 4, 6])  # True
+            print(oddities([1, 2, 3, 4]) == [1, 3])        # True
+            print(oddities(["abc", "def"]) == ['abc'])     # True
+            print(oddities([123]) == [123])                # True
+            print(oddities([]) == [])                      # True
+
+Data:       Len() of the list and then range() with the list, gap = 2
+
+Algorithm:  START
+            SET length = len(list)
+            FOR i in range(0, len, 2)
+                return list [i]
+            END
+ 
+'''
+
+# def oddities(input_list):
+#     output = []
+#     for i in range(0, len(input_list), 2):
+#         output.append(input_list[i])
+#     return output
+
+# Using slicing - s[i:j:k] (i to j with step k)
+def oddities(input_list):
+    return input_list[::2]
+
+def evenities(input_list):
+    output = []
+    for i in range(len(input_list)):
+        if i % 2 == 1:
+            output.append(input_list[i])
+    return output
+
+print(oddities([2, 3, 4, 5, 6]) == [2, 4, 6])  # True
+print(oddities([1, 2, 3, 4]) == [1, 3])        # True
+print(oddities(["abc", "def"]) == ['abc'])     # True
+print(oddities([123]) == [123])                # True
+print(oddities([]) == [])                      # True
+
+print(evenities([2, 3, 4, 5, 6]))

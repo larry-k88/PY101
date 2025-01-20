@@ -1,0 +1,51 @@
+'''
+The or operator returns a truthy value if either or both of its operands
+are truthy, a falsy value if both operands are falsy.
+The and operator returns a truthy value if both of its operands are
+truthy, and a falsy value if either operand is falsy.
+This works great until you need only one of two conditions to be truthy,
+the so-called exclusive or, also known as xor (pronounced "ECKS-or").
+
+In this exercise, you will write an xor function that takes two
+arguments, and returns True if exactly one of its arguments is truthy,
+False otherwise.
+
+Problem:    Function takes 2 arguments and assess them for truthiness
+            If both or neither are truthy, return False
+            If both or neither are falsy, return False
+            Requirements:
+                All arguments will be either truthy or falsy
+                        
+Examples:   print(xor(5, 0) == True)
+            print(xor(False, True) == True)
+            print(xor(1, 1) == False)
+            print(xor(True, True) == False)
+
+Data:       Use `is` to determine truthiness
+            If statements, or match/case 
+
+Algorithm:  START
+            GET truthiness of arg_1
+            GET truthiness of arg_2
+            MATCH truthiness 
+            END
+ 
+'''
+
+# def xor(arg_1, arg_2):
+#     if (arg_1 and not arg_2) or (arg_2 and not arg_1):
+#         return True
+
+#     return False
+
+def xor(arg_1, arg_2): # This is much cleaner
+    return bool(arg_1) != bool(arg_2)
+
+print(xor(5, 0) == True)
+print(xor(False, True) == True)
+print(xor(1, 1) == False)
+print(xor(True, True) == False)
+
+# Short circuiting occurs (but doesn't affect logic) eg.:
+# arg_1 is True and arg_2 is False:
+#   (T and not F) -- > True, therefore doesn't evaluate (arg_2 and not arg_1) 

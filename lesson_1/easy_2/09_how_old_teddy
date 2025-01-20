@@ -1,0 +1,28 @@
+'''
+Build a program that randomly generates and prints Teddy's age.
+To get the age, you should generate a random number between 20 and 100,
+inclusive.
+
+Problem:    Not a function. Generate a random number
+            between 20 - 100, and interpolates it into a f-string
+            Requirements:
+                20 - 100 inclusive
+                Must import random
+                        
+Examples:   Teddy is 69 years old!
+
+Data:       F-string for the output
+            random.randint() to get the number
+
+Algorithm:  START
+            SET age = random number generator
+            PRINT f-string with {age}
+            END
+ 
+'''
+import random
+
+name = input('Please type a name: ') or 'Teddy'
+age = random.randint(20, 100)
+
+print(f'{name} is {age} years old!')
