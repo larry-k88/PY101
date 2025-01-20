@@ -1,0 +1,37 @@
+'''
+Build a program that displays when the user will retire and how many
+years she has to work till retirement.
+
+Problem:    Not a function. Input from user (age) and then calculate how
+            long until retirement (a second user input)
+            Import time to get current year
+            Requirements:
+                User input must be integer (age and retirement)
+                        
+Examples:   What is your age? 30
+            At what age would you like to retire? 70
+
+            It's 2024. You will retire in 2064.
+            You have only 40 years of work to go!
+
+Data:       input x2 (int, not string)
+            - operation
+            f-string for the output
+            
+
+Algorithm:  START
+            GET/SET age from user
+            GET/SET retirement age from user
+            PRINT f-string with {age}
+            END
+ 
+'''
+from datetime import datetime
+
+user_age = int(input('What is your age? '))
+retire_age = int(input('At what age would you like to retire? '))
+current_year = datetime.now().year
+retire_year = current_year + (retire_age - user_age)
+
+print(f'It\'s {current_year}. You will retire in {retire_year}.\n'
+      f'You have only have {retire_age - user_age} years of work to go!')

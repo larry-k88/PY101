@@ -1,0 +1,33 @@
+'''
+Write a function that takes a number as an argument. If the argument is
+a positive number, return the negative of that number.
+If the argument is a negative number, return it as-is.
+
+Problem:    Take a number: return it if it's < 0
+            Make it negative if it's > 0
+            Requirements:
+                Zero treated as < 0 
+                        
+Examples:   print(negative(5) == -5)      # True
+            print(negative(-3) == -3)     # True
+            print(negative(0) == 0)       # True           
+
+Data:       if to determine the value of the number
+            <= 0 and > 0            
+
+Algorithm:  START
+            IF number <= 0:
+                return number
+            IF number >0:
+                return -number
+            END
+            ** abs(x) always returns the absolute value,
+            therefore -abs(x) returns negative representation of a number
+ 
+'''
+def negative(number):
+    return -abs(number)
+
+print(negative(5) == -5)      # True
+print(negative(-3) == -3)     # True
+print(negative(0) == 0)       # True

@@ -1,0 +1,46 @@
+'''
+Write a function that takes a non-empty string argument and returns the
+middle character(s) of the string. If the string has an odd length,
+you should return exactly one character.
+If the string has an even length, you should return exactly two
+characters.
+
+Problem:    Take a string argument and return the middle character
+            If even length string, return middle two character
+            Requirements:
+                Argument is non-empty
+                        
+Examples:   print(center_of('I Love Python!!!') == "Py")    # True
+            print(center_of('Launch School') == " ")        # True
+            print(center_of('Launchschool') == "hs")        # True
+            print(center_of('Launch') == "un")              # True
+            print(center_of('Launch School is #1') == "h")  # True
+            print(center_of('x') == "x")                    # True
+
+Data:       len() and % to determine even/odd. 
+            // operation to determine mid-point
+            reference the string using index[] 
+            
+Algorithm:  START
+            SET length = len(input)
+            SET mid-point = length // 2
+            IF length is even:
+                RETURN slice
+            RETURN input[mid-point] 
+            END
+ 
+'''
+def center_of(input_string):
+    string_length = len(input_string)
+    mid_point = string_length // 2
+    if string_length % 2 == 0:
+        return input_string[mid_point - 1:mid_point + 1]
+
+    return input_string[mid_point]
+
+print(center_of('I Love Python!!!') == "Py")    # True
+print(center_of('Launch School') == " ")        # True
+print(center_of('Launchschool') == "hs")        # True
+print(center_of('Launch') == "un")              # True
+print(center_of('Launch School is #1') == "h")  # True
+print(center_of('x') == "x")                    # True
