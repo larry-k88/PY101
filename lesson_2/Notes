@@ -459,6 +459,16 @@ Intentional use of a built-in function to covert one to another:
 + Combining a string with a number will raise a `TypeError`
 + This is different in the `print()` function which converts integers to strings before printing (not considered coercion as it takes place behind the scenes)
 
+### Confirming Data Structures
+
++ To check/confirm what data type you have, use the `isinstance()` function, rather than `is` - it also checks whether it is a subclass
++ `is` doesn't check for subclasses matches and therefore may not be accurate (especially when you create your own classes) 
++ Avoid using the `==` operator unless checking the value of a variable
+
+        numbers = [1, 2, 3, 4]
+        isinstance(numbers, list) # True
+        isinstance(numbers, str) # False
+
 ## Tips
 
 ### Naming Things
