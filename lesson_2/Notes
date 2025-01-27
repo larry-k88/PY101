@@ -11,6 +11,7 @@
 + [Type Conversions](#type-conversions)
 + [Tips](#tips)
 + [Variables and Functions](#variables-and-functions)
++ [NaN](#nan)
 
 ## Truthiness
 
@@ -697,3 +698,14 @@ Intentional use of a built-in function to covert one to another:
  
   + `nonlocal` - only in nested functions, looks in the outer function
     + Not possible to create one if it doesn't exist already
+
+## NaN
+
++ "Not a Number" - represents missing/unidentified data
++ It is a floating-point value represented by `float('nan')`
++ In order to determine if something is `nan`, we can't use `==`. Instead we, import math and use `math.isnan()`:
+
+        import math
+        
+        nan_value = float('nan')
+        math.isnan(nan_value) # True
