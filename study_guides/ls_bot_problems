@@ -1,0 +1,245 @@
+# Nested Collections and List Methods
+
+fruits = [['apple', 'banana'], ['cherry', 'date'], ['elderberry', 'fig']]
+fruits[1].append('grape')
+fruits[0].extend(['honeydew', 'kiwi'])
+print(fruits)
+print(len(fruits))
+print(len(fruits[0]))
+
+'''
+fruits is a list of 3x nested lists, each of which has 2 elements which
+are strings
+
+fruits[1] accesses the 2nd nested list - ['cherry', 'date'] - and then 
+appends 'grape' to the end of that list --> ['cherry', 'date', 'grape']
+
+fruits[0] accesses the 1st nested list - ['apple', 'banana'] - and 
+merges it with ['honeydew', 'kiwi'] which is added to the end
+--> ['apple', 'banana', 'honeydew', 'kiwi']
+
+these 2 methods (append and extend) are mutating so when fruits is
+printed, we get:
+[
+    ['apple', 'banana', 'honeydew', 'kiwi'],
+    ['cherry', 'date', 'grape'],
+    ['elderberry', 'fig'],
+]
+
+len(fruits) remains at 3
+len(fruits[0]) is now 4
+'''
+
+# String Methods and Truthiness:
+
+def process_string(text):
+    if text.strip():
+        return text.split()[::-1]
+    return "Empty input"
+
+print(process_string("  Hello  World  "))
+print(process_string(""))
+print(process_string("  "))
+
+'''
+the function takes an argument and checks if it contains anything other
+than whitespace. If not, it returns "Empty Input" but if so, it returns
+the argument, split (by default) by whitespace as a list, but in reverse
+
+1. ['World', 'Hello']
+2. "Empty input"
+3. "Empty input"
+'''
+
+# Nested Functions and Variable Scope:
+
+def outer_function(x):
+    def inner_function(y):
+        return x + y
+    return inner_function
+
+result = outer_function(5)
+print(result(3))
+print(result(7))
+
+'''
+outer function takes an argument and then calls an inner function before 
+returning the result of the inner function
+
+inner function takes an argument and adds it to a variable, before 
+returning the result of that expression
+
+variable y is accessible in the inner function only, variable x is not
+defined in inner function, so it looks in the next scope and find it in 
+the outer function's scope
+
+result is set to the return value of calling outer function on the
+argument '5'. the result is therefore set to 'inner_function(y)'
+which currently has no return (as no argument provided)
+
+result(3) passes the value of y as 3, therefore returning 8
+result(7) passes the value of y as 7, therefore returning 12
+'''
+
+# string methods
+
+text = "python"
+result = ""
+for char in text:
+    result = char + result
+print(result)
+
+
+'''
+variable text is assigned the value 'python'
+variable result is an empty string
+for loop iterates over each character in text and concatenates the
+character to the start of the string referenced by result
+result is then printed
+
+output is "nohtyp"
+print(text[::-1]) does the same thing
+
+'''
+
+s = "LaunchSchool"
+print(s.lower().count('o'))
+
+'''
+variable s is assigned the value "LaunchSchool"
+lower() is called on the variable s which returns "launchschool" (does
+not mutate original)
+count() returns the number of times 'o' appears in the lowercase string
+the value is output to terminal using print() function
+
+output is 2
+.lower() is redundant in this specific example
+print(s) confirms original is unchanged
+'''
+   
+text = "Hello, World!"
+result = text.replace("o", "0").split(",")
+print(result)
+
+'''
+variable text is assigned to the value "Hello, World!"
+replace() finds occurrences of 'o' and changes then to '0' resulting in
+"Hell0, W0rld!"
+split(',') uses the comma as a delimiter and creates a list of the 2 
+strings --> ['Hell0', ' W0rld!']
+variable result is assigned this value (original text is unchanged)
+'''
+
+s = "  python  "
+print(len(s.strip()))
+
+'''
+variable s is assigned to the value "  python  " (NB the whitespace)
+strip(), by default, removes leading and trailing whitespace, leaving
+"python"
+len() function is called on the result of the above, yielding 6
+that value is then printed to the terminal
+
+output is 6
+'''
+
+text = "Python is awesome"
+words = text.split()
+result = ".".join(word[0].upper() for word in words)
+print(result)
+
+'''
+text is assigned the value "Python is awesome"
+split() will return a list of strings, split, by default, by whitespace
+--> ["Python", "is", "awesome"]
+words is assigned this value
+word is a variable defined in the for loop and takes the value of each 
+element in words as they are iterated over
+word[0] references the first character in each of the strings
+upper() is called upon word[0] - changes the first character to a
+capital
+join() takes the capitalised first letters and joins them with a .
+
+output is 'P.I.A'
+'''   
+
+s = "hello"
+i = 0
+while i < len(s):
+    print(s[i:])
+    i += 1
+
+'''
+variable s is assigned the value of 'hello'
+variable i is set to 0
+len(s) is an expression that evaluates to 5
+while statement means the loop runs whilst i is less than 5
+s[i:] is a slice from index i to the end of the word
+this slice is printed and then i is increased by 1 (augmented
+assignment) each loop
+
+output =    hello
+            ello
+            llo
+            lo
+            o
+'''   
+
+text = "Python3.9"
+print(text.rstrip('0123456789.'))
+
+'''
+variable text is assigned to the value "Python3.9"
+rstrip() removes trailing characters as specified in the argument
+the characters are not substrings, so will be removed if they feature
+what remains is printed to the terminal via the print() function
+
+output = 'Python'
+'''
+
+text = "Launch School is great!"
+# result = text.lower().replace('a', '@').split()[-1]
+result = text.split()[-1].replace('a', '@').lower()
+print(result)
+
+'''
+variable text is assigned the value above
+lower() is called on text and replaces all capitals with lower case -->
+'launch school is great!'
+replace() then swaps 'a' for '@' --> 'l@unch school is gre@t!'
+split() will split the string into a list of strings --> 
+['l@unch', 'school', 'is', gre@t!']
+[-1] references the final element in the list: 'gre@t!'
+result is assigned to the above value
+
+output is 'gre@t!'
+Commented-out line splits and retrieves the single word first, so is
+marginally more efficient
+'''
+
+s = "pythonpython"
+print(s.find('n'), s.rfind('n'))
+
+'''
+s is assigned the value as above
+find() returns the index of the first occurrence of the letter 'n' --> 5
+rfind() returns the index of the last occurrence of the letter 'n' --> 11
+
+output is '5, 11'
+'''
+
+text = "Hello, World!"
+result = "".join(char.lower() if text.index(char) % 2 else char.upper() for char in text)
+print(result)
+
+'''
+variable text is assigned value as above
+for char in text will iterate over each character
+join() will concatenate each of those characters with each other (no
+space between) depending on the if statement
+the character will be lower case if the index of the character in the
+string is odd, upper case if it's even
+variable result is assigned the above value
+
+output is 'HeLlO, wOrLd!'
+'''
