@@ -640,8 +640,8 @@ Intentional use of a built-in function to covert one to another:
         def my_func():
             my_var[0] = 2 
 
-        my_func() # reassigns first element to '2'
-        print(my_var) # Output: 2
+        my_func() # reassigns first element to '2', but mutates the list itself
+        print(my_var) # Output: [2]
 
 + The `append()` function mutates the object passed as an argument (`my_var`):
 

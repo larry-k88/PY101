@@ -39,7 +39,9 @@
   - [variables](#variables)
     - [naming conventions](#naming-conventions)
     - [initialization, assignment, and reassignment](#initialization-assignment-and-reassignment)
-    - [scope](#scope)
+    - [Scope](#scope)
+      - [Global](#global)
+      - [Local](#local)
     - [global keyword](#global-keyword)
     - [variables as pointers](#variables-as-pointers)
     - [variable shadowing](#variable-shadowing)
@@ -543,6 +545,7 @@ b) Tree format:
 
 ### String operators: +
 
++ will be reassignment
 + looks like addition and/or multiplication:
 
         '1' + '2' --> '12'
@@ -550,7 +553,8 @@ b) Tree format:
 
 ### List operators: +
 
-+ this will combine the lists:
++ will be reassignment
++ this will combine the lists
 
         list1 = [1, 2, 3]
         list2 = [4, 5, 6]
@@ -747,27 +751,126 @@ b) Tree format:
 
 ### naming conventions
 
-+ 
++ make it easy for other programmers (and your future self)
++ accurate, descriptive and understandable
++ 'identifiers' includes names of variables, constants, functions, methods, classes, parameters and modules
++ see [here](#naming-conventions-legal-vs-idiomatic-illegal-vs-non-idiomatic) for more general rules for naming identifiers, but variables should be in snake_case
 
 ### initialization, assignment, and reassignment
 
++ creating and initialisation are the same thing, it's the process of giving the variable a value
++ it happens during an assignment statement:
 
+        name = 'Boris' 
+        # the variable `name` is assigned the string 'Boris'
 
-### scope
++ reassignment is the process of giving the variable a new value
+  
++ when assigning a variable, the expression on the RHS is evaluated first
 
++ augmented assignment (statement, not expression):
+  + ****generally, using `a = a + b` will be reassignment. `a += b` will be reassignment too, unless a is mutable**
+  + simply shorthand for reassigning a value based on a previous one
 
+            number = 100
+ 
+            number = number + 10 # this is reassignment
+            number += 10 # does the same thing - augmented assignment
+        
+    + works with any data type that supports the operators (will be mutating with a mutable data type, reassignment if immutable)
+
+### Scope
+
++ Scope is the part of the program that can access a particular identifier, "global" or "local":
+
+#### Global
+
++ if the variable is initialised in the global (outermost) scope (i.e. not inside a function), it will be accessible anywhere (even inside functions)
+  
+#### Local
+  
++ if the variable is initialised inside a function, it is only accessible from inside that function - it has local (function) scope and nothing outside the function can access it
+
++ Rule 1:
+  + Variables defined in a function are local to it (cannot be accessed in outer scope)
++ Rule 2:
+  + Variables defined in a function are local unless marked `global` or `nonlocal`
++ Rule 3:
+  + Variables used (accessed) but not reassigned may be kept in the outer scope (reassigning will create a new variable)
++ Rule 4:
+  + Peer scopes do not conflict - two functions with the same variable can exist, each with different values 
++ Rule 5: 
+  + Nested function have their own scope - inner scopes can access outer scopes, but not the other way round
+  
++ NB variables defined in blocks, like `if` or `while` loops do not have their own scope in the same way that functions do
++ functions can access variables *outside* of its location, but not *inside*
+  + python searches the **lexical** scope (i.e. outer scopes) to find the nearest variable
+
+        greeting = 'Salutations'
+
+        def well_howdy(who):
+            print(f'{greeting}, {who}') # variable is not in the function, so it looks outside to find it
+
+        well_howdy('Angie')
+        print(greeting)
+
+        --> Salutations, Angie  # from the function
+        --> Salutations         # from the print statement
+
++ sometimes, variables are in scope, but unassigned:
+
+        def scope_test():
+        if True:
+            foo = 'Hello'
+        else:
+            bar = 'Goodbye'
+
+        print(foo)
+        print(bar)
+
+        scope_test()
+        --> Hello               # if branch runs
+        --> UnboundLocalError   # else branch never runs, but bar is "in scope"
 
 ### global keyword
 
++ `global` - tells Python to look in the global scope (instead of creating a new one)
++ If it doesn't exist already, it simply creates the variable
+  
+          greeting = 'Salutations'
 
+          def well_howdy(who):
+              global greeting # rather than creating a new variable that shadows the outermost one, this re-assigns the global variable
+              greeting = 'Howdy'
+              print(f'{greeting}, {who}')
+          
+          well_howdy('Angie')
+          print(greeting)
+
+          --> Howdy, Angie
+          --> Howdy
 
 ### variables as pointers
 
++ initialisation creates the variable name in Python
+  + this points to memory address (usually in the stack)
+  + at that memory address, there is another pointer to an address (usually in the heap) where the object is stored
++ reassignment simply creates a new object in the heap and the memory address in the stack changes from pointing at the old object, to the new one
 
 
 ### variable shadowing
 
++ occurs when identifiers (variables) share the same name in different scopes
++ it is the temporary hiding of the variable of the same name in the outer scope.
+  
+        greeting = 'Salutations' # this will be shadowed/hidden
 
+        def well_howdy(who):
+            greeting = 'Howdy' # this variable "shadows" the one above
+            print(f'{greeting}, {who}')
+
+        well_howdy('Angie')
+        print(greeting) # this refers to the outer (first) variable
 
 ## conditionals and loops
 
