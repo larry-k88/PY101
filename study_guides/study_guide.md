@@ -29,6 +29,9 @@
     - [List operators: +](#list-operators-)
     - [Comparison: ==, !=, \<, \>, \<=, \>=](#comparison------)
     - [Logical: and, or, not](#logical-and-or-not)
+      - [and](#and)
+      - [or](#or)
+      - [not](#not)
     - [Identity: is, is not](#identity-is-is-not)
     - [operator precedence](#operator-precedence)
   - [mutability and immutability](#mutability-and-immutability)
@@ -66,9 +69,9 @@
 + General Conventions for all **identifiers** (except Constants and Classes):
   + 'snake_case': lowercase letters, digits and underscores
   + start with a letter, separate words with underscores
-  + __ (double underscore) has a special meaning
+  + `__` (double underscore) has a special meaning
   + letters and digits must be from standard ASCII (7-bit)
-    + NB 8-bit ASCII is 'extended ASCII' and Unicode is variable 8-bit. 16-bit or 32-bit 
+    + NB 8-bit ASCII is 'extended ASCII' and Unicode is variable (8-bit, 16-bit or 32-bit)
   
 + Constants: 
   + SCREAMING_SNAKE_CASE: uppercase letters, digits and underscores
@@ -145,10 +148,12 @@ b) Tree format:
 + Implicit coercion performs it without specifying it:
   + `print()` implicitly coerces to a string before printing it
   + mixing number types in an [expression](#expressions-and-statements):
-    + Adding an integer and a float outputs a float
+    + Adding an integer to a float outputs a float
   + Booleans are coerced to integer values of 1 or 0 in arithmetic expressions:
  
-        print(True + True + True) # outputs 3
+        print(True + True + True)
+        --> output is 3
+
   + Truthiness of any value (regardless of type) in conditional expressions:
 
         has_value = 3
@@ -168,11 +173,13 @@ b) Tree format:
 + Large numbers are handled differently depending on the number type:
   + Floats - printed using scientific notation
   
-        3.14 * (10 ** 7) # 3.14e+7
+        3.14 * (10 ** 7)
+        --> 3.14e+7
 
   + Integers - to display a large integer using scientific notation
 
-        int(3e+7) # 30000000
+        int(3e+7)
+        --> 30000000
 
 ## strings
 
@@ -185,12 +192,17 @@ b) Tree format:
 + indexing must be one less that the length and negative numbers access from the end:
 
         my_str = 'abc'
-        my_str[1] # b
-        my_str[-1] # c (i.e. the last)
+        my_str[1]
+        --> b
+        my_str[-1]
+        --> c (i.e. the last character)
 + 'raw' strings prefix the literal with `r` and doesn't recognise backslashes:
 
-        print('This backslash \\ is dope') # This backslash \ is dope
-        print(r'This backslash \ is dope') # This backslash \ is dope
+        print('This backslash \\ is dope')
+        --> This backslash \ is dope
+        print(r'This backslash \ is dope')
+        --> This backslash \ is dope
+
     + NB special case: cannot end with a single, unescaped `\`, even though they are not interpreted as escape sequences
 
 ## f-strings
@@ -225,7 +237,7 @@ b) Tree format:
 
 ### isalpha, isdigit, isalnum, islower, isupper, isspace
 
-+ **isalpha()** - True if string has at least 1 character, and all are alphabetic, False otherwise. (and `isascii()` if you need to exclude non-ASCII characters)
++ **isalpha()** - True if string has at least 1 character, and all are alphabetic, False otherwise. (add `isascii()` if you need to exclude non-ASCII characters)
 + **isdigit()** - True if string has at least 1 character, and all are digits, False otherwise
 + **isalnum()** - True if string has at least 1 character, and all are alphanumeric (i.e. at least one of the following is True isalpha, isdecimal, isdigit or isnumeric), False otherwise
 + **islower()** - True if string has at least 1 character, and all characters are lowercase, False otherwise
@@ -235,35 +247,35 @@ b) Tree format:
 
 ### strip, rstrip, lstrip, replace
 
-+ These all take arguments:
++ These can all take arguments:
 + **strip(characters)** - removes *leading* or *trailing* characters
   + default is whitespace
 
         string = '   3 spaces either side   '
         string.strip()
-        # '3 spaces either side'
+        --> '3 spaces either side'
 
   + characters must be either leading/trailing to be removed
 
         string = '?-*-mixture-*-?'
         string.strip('*')
-        # '?-*-mixture-*-?'
+        --> '?-*-mixture-*-?'
 
   + `?` is removed
     
         string = '?-*-mixture-*-?'
         string.strip('?')
-        # '-*-mixture-*-' 
+        --> '-*-mixture-*-' 
 
-  + characters is just a list of characters, not a specific combination:
+  + the argument is just a list of characters, not a specific combination:
 
         string = 'www.rightmove.com'
         string.strip('w.ocm')
-        # 'rightmove'
+        --> 'rightmove'
 
-+ **rstrip(characters)** - as above but for *trailing* characters only.   (removesuffix() will remove a single suffix, not a set of characters)
-+ **lstrip(characters)** - as above but for *leading* characters only.   (removeprefix() will remove a single prefix, not a set of characters)
-+ **replace(old, new, count=-1)** - old occurrences replaced by new, specified by the count (from left to right). Default is all (notation: `-1`)
++ **`rstrip(characters)`** - as above but for *trailing* characters only.   (`removesuffix()` will remove a single suffix, not a set of characters)
++ **`lstrip(characters)`** - as above but for *leading* characters only.   (`removeprefix()` will remove a single prefix, not a set of characters)
++ **`replace(old, new, count=-1)`** - `old` occurrences replaced by `new`, specified by the count (from left to right). Default is all (notation: `-1`)
 
 ### split, find, rfind
 
@@ -296,20 +308,20 @@ b) Tree format:
 
         string = ''
         string.split()
-        # []
+        --> []
 
   + if a string has no delimiters, it returns the string:
 
         string = 'abcde'
         
         string.split()
-        # 'abcde'
+        --> 'abcde'
 
         string.split('.')
-        # 'abcde'
+        --> 'abcde'
 
         list(string) # to separate them
-        # ['a', 'b', 'c', 'd', 'e']
+        --> ['a', 'b', 'c', 'd', 'e']
 
 + **find(sub, start, end)**
   + returns the index of the 1st character in the substring
@@ -319,14 +331,14 @@ b) Tree format:
 
 + **rfind(sub, start, end)**
   + as above but returns the highest index (i.e. furthest to the right), rather than the 1st
-  + if sub not found$$, returns -1 
+  + if sub not found, returns -1 
 
 + Note the difference between taking a slice (a new string) and finding a substring within that (shorter) slice (1st example); and finding a substring within a sliced argument relative to the original string (2nd example):
 
         text = 'abc abc def abc'
 
-        print(text[3:10].find('c'))     # 3
-        print(text.find('c', 3, 10))    # 6
+        print(text[3:10].find('c'))     --> 3
+        print(text.find('c', 3, 10))    --> 6
 
 ## boolean vs. truthiness
 
@@ -343,11 +355,12 @@ b) Tree format:
 
         if 'a':
             print('hi')
-        # prints 'hi' as 'a' is truthy (but not True)
+        --> prints 'hi' as 'a' is truthy (but not True)
 
         if '':
             print('hi')
-        # prints nothing as '' is falsy (but not False)
+        --> prints nothing as '' is falsy (but not False)
+
 + *Falsy* values are as follows:
     + `False`
     + `None`
@@ -363,22 +376,22 @@ b) Tree format:
 + truthiness can be combined with short-circuiting as follows:
   + logical operators don't always return True or False - they care about the truthiness and return the final expression they evaluate:
 
-        3 and 'foo'     # 'foo'
-        0 and 3         # 0
-        'foo' and 0      # 0
+        3 and 'foo'    --> 'foo'
+        0 and 3        --> 0
+        'foo' and 0    --> 0
 
-        3 or 'foo'     # 3
-        0 or 3         # 3
-        'foo' or 0      # 'foo'
+        3 or 'foo'     --> 3
+        0 or 3         --> 3
+        'foo' or 0     --> 'foo'
 
 ## None
 
-+ This is the absence of a value (not `0` or something empty/false/False)
++ This is the absence of a value (not `0` or something empty/falsey/False)
 + The only member of the `NoneType` class
 
 ## ranges
 
-+ range is type; `range()` calls the constructor to create a range object - this object is an immutable sequence that contains integers (homogeneous) between 2 points
++ range is a type; `range()` calls the constructor to create a range object - this object is an immutable sequence that contains integers (homogeneous) between 2 points
 + `range(start, end, step)`
 + if `start` is omitted, default is 0
 + `start` is inclusive, `end` is non-inclusive
@@ -387,13 +400,13 @@ b) Tree format:
 + is it a lazy sequence - the object doesn't store all the numbers in the range (only the 3 values) until it is expanded/materialised
 + creating ranges requires them to be iterated over and put into a data structure:
 
-        range(5, 10)            # returns range(5, 10)
-        list(range(5, 10))      # [5, 6, 7, 8, 9]
-        tuple(range(10, 5, -1)) # (10, 9, 8, 7, 6)
+        range(5, 10)            --> range(5, 10)
+        list(range(5, 10))      --> [5, 6, 7, 8, 9]
+        tuple(range(10, 5, -1)) --> (10, 9, 8, 7, 6)
 
 + ranges can be indexed (before expanding/materialising the range):
 
-        range(5, 10)[1]         # 6
+        range(5, 10)[1]         --> 6
 
 
 ## list and dictionary syntax
@@ -406,12 +419,12 @@ b) Tree format:
 ### list
 
 + `list()` creates an empty list
-+ `list(iterable)` creates a list of the objects - can be used to create a shallow copy of the list (1st nested layer copies, inner layers copy the pointers):
++ `list(iterable)` creates a list of the objects - can be used to create a shallow copy of the list (1st nested layer copies, inner layers copy the pointers only):
 
         list_1 = [1, 2, 3]
         list_2 = list(list_1)
-        list_1 == list_2 # True, same value
-        list_1 is list_2 # False, different objects
+        list_1 == list_2 --> True, same value
+        list_1 is list_2 --> False, different objects
 
 + ordered
 + objects accessed/reassigned via indexing (0 up to 1 less than the list length)
@@ -419,7 +432,7 @@ b) Tree format:
 
         numbers = [1, 2, 3]
         numbers[1] = 42
-        # numbers is now: [1, 42, 3]
+        --> numbers is now: [1, 42, 3]
 
 + IndexError if the index is out of range (applies to accessing and reassigning)
 
@@ -438,12 +451,12 @@ b) Tree format:
                                 'two' : 2,
                                 }
 
-+ `KeyError` if key doesn't exist (when accessing); but creates new key/value pair if using assignment
++ `KeyError` if key doesn't exist (when accessing). NB it creates new key/value pair if trying to assign to a key that doesn't exist
 + keys must be 'hashable' (usually similar to immutable) - e.g. strings, tuples
-+ `del` keyword removes the pair:
++ `del` keyword removes the pair (`del variable` deletes the variable totally):
 
-        del number_pairs['one]
-        # number_pairs is now: {'two': 2}
+        del number_pairs['one']
+        --> number_pairs is now: {'two': 2}
 
 ## list methods: len(list), list.append(), list.pop(), list.reverse()
 
@@ -455,16 +468,16 @@ b) Tree format:
 
           list1 = [5, 7, 8]
           list1.insert(1, 6)
-          # list 1 is now: [5, 6, 7, 8] i.e. inserts before position 1
+          --> list 1 is now: [5, 6, 7, 8] i.e. inserts before position 1
 
   + `list.pop(i)` - removes and returns element at position i, or the last element if left blank (IndexError if out of range)
     + `list.remove()` - searches for the object and removes the first occurrence (ValueError if no such object)
-    + `list.clear()` - empties the sequence
+    + `list.clear()` - empties the sequence (works with dicts)
   + `list.reverse()` - reverses the sequence (use when you don't need to preserve the original list order):
 
         list1 = [1, 2, 3]
         list1.reverse()
-        # list1 is now: [3, 2, 1]
+        --> list1 is now: [3, 2, 1]
 
 ## dictionary methods: dict.keys(), dict.values(), dict.items(), dict.get()
 
@@ -477,7 +490,7 @@ b) Tree format:
 + `dict.get(key)` used instead of key access if unsure if the key exists as this returns `None` by default if not present (can be set as a parameter):
 
         number_pairs.get('three','Does Not Exist')
-        # 'Does Not Exist'
+        --> 'Does Not Exist'
 
 ## slicing (strings, lists, tuples)
 
@@ -499,7 +512,7 @@ b) Tree format:
 
         seq = [1, 3, 5, 6, 8]
         seq[3:5] = [7, 9]
-        # seq is now: [1, 3, 5, 7, 9]
+        --> seq is now: [1, 3, 5, 7, 9]
 
 ## operators
 
@@ -537,39 +550,204 @@ b) Tree format:
 
 ### List operators: +
 
-+ 
++ this will combine the lists:
+
+        list1 = [1, 2, 3]
+        list2 = [4, 5, 6]
+        list1 + list2       # not mutating, this result would need assigning to a variable to use it
+        --> [1, 2, 3, 4, 5, 6]
+
++ similar to the `extend()` method, except this *is* mutating:
+
+        list1.extend(list2) # this mutates list1 (i.e. modifies in place)
+        --> [1, 2, 3, 4, 5, 6]
+
+    + this is equivalent to `list1 += list2` which is also mutating, not reassignment despite being called 'augmented assignment'. If left-hand operand was immutable, this would just be reassignment:
+
+            list1 = [1, 2, 3]
+            list2 = [4, 5, 6]
+            id(list1) = # 12345678
+
+            list1.extend(list2) # mutating, id numbers match
+            id(list1) = # 12345678 
+
+            list1 += list2 # mutating, id numbers match
+            id(list1) # 12345678
+
+            tuple1 = (1, 2, 3)
+            tuple2 = (4, 5, 6)
+            id(tuple1) = 87654321
+
+            tuple1 += tuple2 # reassignment as tuples are immutable
+            id(tuple1) = 99999999
 
 ### Comparison: ==, !=, <, >, <=, >=
 
++ compares value equality of its operands and return Boolean values
++ if the types of the operands are different, it returns `False`, except numbers:
 
+        5 = '5'
+        --> False (different types)
+
+        1 == 1.0
+        --> True (`int` and `float` with same value)
+        NB large floats (> 18 sig figs) lack precision so may get unexpected False
+
++ for more/less than, strings are compared "lexicographically" which is character by character from left to right
+
+        '24' < '3'
+        --> True (the character '2' comes before '3')
+
++ Note that uppercase are 'smaller' than lowercase (order in ASCII table) - use `upper()` or `lower()` (or `casefold()`) methods to achieve case-insensitive comparison
++ as soon as the decision can be made, it returns:
+
+        'abcdef' > 'abc'
+        --> True (unable to continue taking character from shorter string, therefore longer string must be bigger)
+
++ For sets:
+  + determines if it is a subset or superset:
+
+        {3, 1, 2} < {2, 4, 3, 1}
+        --> True, LHS is a subset of the RH
+
+        {2, 4, 3, 1} > {3, 1, 2}
+        --> True, LHS is a superset of the RHS
+
++ For lists/tuples:
+  + goes element by element and compares them:
+
+        [1, 2, 3] < [1, 2, 3, 4]
+        --> True, LHS is shorter than the RHS so it stops comparing and assumes LHS is smaller
+
+        (1, 4, 3) < (1, 3, 3)
+        --> False, second element of LHS is 4, versus 3 on the RHS
 
 ### Logical: and, or, not
 
+#### and
 
++ returns `True` if both operands are truthy
++ [short-circuiting applies](#short-circuiting)
+
+#### or
+
++ returns `True` if either operand is truthy
++ [short-circuiting applies](#short-circuiting)
+
+#### not
+
++ returns `True` when the operand is falsy and vice versa:
+
+        not(4 == 4) # evaluates (4 == 4) first (True), then negates it
+        --> False
++ parentheses are not necessary but they make it clearer
++ `not` takes a single operand - known as a **unary operator**
 
 ### Identity: is, is not
 
++ these compare the objects that the variables point at:
+  + if they point to the same object (and therefore have the same value), `is` will return `True` (they will also have identical id numbers)
+  + if they have the same value (i.e. satisfies the `==` operator), they are not necessarily the same object
++ NB 'interning' is a process which assigns a unique object to every value from -5 to 256 (and also some strings) - this means that their id will be the same even if the variables point to different objects:
 
+        x = 5
+        y = 5 (2 distinct objects, expect id to be different even though values are the same)
+        id(x) == id(y)
+        --> True
+
++ `is not` is simply the inverse
 
 ### operator precedence
 
++ terminology: operators with higher precedence "bind" more tightly to their operands
++ highest to lowest:
+    + `()`
+    + `**`, `*`, `/`, `//`, `%`, `+`, `-`
+    + `==`, `!=`, `<=`, `<`, `>`, `>=`
+    + `not`
+    + `and`
+    + `or`
++ if the operands are working with "non-values" (i.e. expressions), these need to be evaluated first:
 
+        def value(n):
+            print(n)
+            return n
+
+        print(value(3) + value(5) * value(7))
+
+    + `value(3)` evaluates first, printing `3` and returning `3`
+    + `value(5)` evaluates second, printing `5` and returning `5`
+    + `value(6)` evaluates third, printing `7` and returning `7`
+    + so we print 3, 5, 7 (on separate lines), then print the value of: (3 + 5 * 7), which is 3 + 35 = 38
+
++ short-circuiting makes it more complex:
+
+        1 or 2 and 3
+        --> 1 
+        # `and` expression evaluated first to yield `3'
+        # `1 or 3` short-circuits to 1
+
+        0 or 2 and 3
+        --> 3
+        # `and` expression evaluated first to yield `3'
+        # 0 or 3 evaluates to 3 (no short-circuiting)
+
+        5 and 1 / 0
+        --> ZeroDivisionError
+
+        5 or 1 / 0
+        --> 5 (1 / 0 never evaluated even though `/` has higher precedence than `or`)
+
++ some expressions will evaluate right-to-left (multiple assignments or multiple `**` operators) - they are **not** good practice:
+
+        a = b = c = 3
+        5 ** 3 ** 2 evaluates as 5 ** (3 ** 2), or 5 ** 9
+
++ make use of parentheses for clarity!
 
 ## mutability and immutability
 
-
-
++ see the [data types](#type-coercions-explicit-eg-using-int-str-and-implicit) table
++ mutation is the act of changing the value of the object in memory
++ you cannot do this to immutable objects, you will have to create a new object and change where the variable is pointing/referencing
+  
 ## pass by object reference
 
++ pass by value:
+  + the function has a copy of the original object 
+  + anything the function does to the copy does not affect the original 
++ pass by reference:
+  + the function has a reference to the original (a pointer)
+  + anything the function does to the object affects the original
++ Python appears to do both:
 
+        def change_name(name):
+            name = 'bob'
+
+        name = 'jim'
+        change_name(name)
+        print(name)
+        --> 'jim' (the variable `name` is only changed within the function)
+
+        def add_element(my_list):
+            my_list.extend([4])
+
+        my_list = [1, 2, 3]
+        add_element(my_list)
+        print(my_list)
+        --> [1, 2, 3, 4] (object has been mutated)
+
++ Python uses 'pass by object reference':
+  + we pass the reference to the object but whether the function modifies the original depends on the mutability of the object
+  + **if the operation within the function mutates the argument, it will affect the original object** 
 
 ## variables
 
-
++ They label data to aid understanding of the program - they identify objects that the program uses
 
 ### naming conventions
 
-
++ 
 
 ### initialization, assignment, and reassignment
 
