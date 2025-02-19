@@ -43,11 +43,18 @@
       - [Global](#global)
       - [Local](#local)
     - [global keyword](#global-keyword)
+    - [nonlocal keyword](#nonlocal-keyword)
     - [variables as pointers](#variables-as-pointers)
     - [variable shadowing](#variable-shadowing)
   - [conditionals and loops](#conditionals-and-loops)
+    - [if](#if)
+    - [match](#match)
+    - [Ternary Expressions](#ternary-expressions)
     - [for](#for)
+      - [zip](#zip)
+      - [Comprehensions](#comprehensions)
     - [while](#while)
+    - [nested loops](#nested-loops)
   - [print() and input()](#print-and-input)
   - [exceptions (when they will occur and how to handle them)](#exceptions-when-they-will-occur-and-how-to-handle-them)
   - [Functions:](#functions)
@@ -142,11 +149,32 @@ b) Tree format:
     + functions (**mutable**)
 
 + Coercion is the act of changing one data type into another (if is has to be specified, it's 'explicit' coercion)
+  
 + String to number:
-  + `int` and `float` (to integer and float respectively)
-+ Number to string:
-  + `str` (used to change most types to a string)
+  + `int()` and `float()` (to integer and float respectively)
+  + Will only work with 'numerical' strings, e.g.
+    + `int('500')` --> 500
+    + Byte-like objects (not discussed now)
+    + `ValueError` will be raised with non-numerical strings
+    + `TypeError` will be raised with any other type (e.g. `None` or `[]`)
+    + Floats have a special case called `nan` or 'not-a-number' arising from meaningless operations (e.g. infinity - infinity, 0 / 0 or log(-1))
+    + NB:
 
+            float('NaN')
+            --> nan
+            nan is not equal to itself
+
++ Values to string:
+  + `str()` (works with all built-in data types)
+  + `print()` coerces its arguments to strings, but prints them (rather than returning them) so isn't regarded as coercion in the same way
+    + string interpolation, however, does coerce the values in the expressions to strings
+  + `repr()` is similar but returns the string representation of the object:
+    + Note that when you use the `print()` function, it strips away the quotes:
+
+
++ Value to Boolean:
+  + `bool()` returns `True` or `False` depending on truthiness
+  
 + Implicit coercion performs it without specifying it:
   + `print()` implicitly coerces to a string before printing it
   + mixing number types in an [expression](#expressions-and-statements):
@@ -154,7 +182,7 @@ b) Tree format:
   + Booleans are coerced to integer values of 1 or 0 in arithmetic expressions:
  
         print(True + True + True)
-        --> output is 3
+        --> 3
 
   + Truthiness of any value (regardless of type) in conditional expressions:
 
@@ -164,7 +192,7 @@ b) Tree format:
     + `if has value` evaluates to `True` so the print statements executes
 
 + Literals are direct representations of objects in source code:
-  + `3.88` is a literal,whereas `range(0, 10)` is a type constructor
+  + `3.88` is a literal, whereas `range(0, 10)` is a type constructor
 
 ## numbers
 
@@ -850,6 +878,12 @@ b) Tree format:
           --> Howdy, Angie
           --> Howdy
 
+### nonlocal keyword
+
++ used for nested functions and accesses a variable in the nearest enclosing (outer) scope (but not the global scope)
++ the variable it refers to must already by bound (i.e. you cannot create one in the same way you can using `global`)
++ it allows for modification of the variable, not just access
+
 ### variables as pointers
 
 + initialisation creates the variable name in Python
@@ -857,6 +891,41 @@ b) Tree format:
   + at that memory address, there is another pointer to an address (usually in the heap) where the object is stored
 + reassignment simply creates a new object in the heap and the memory address in the stack changes from pointing at the old object, to the new one
 
++ With nested objects, python stores pointers to the nested object, not the objects themselves
+
+        a = [1, 2, ['a', 'b']]
+        # variable name 'a' is stored in Python's memory
+        # name is associated with a pointer to a stack address
+        # the stack address points to a heap address
+        # the heap address stores the outer items as values, but stores pointers to the inner items
+        
+    + with shallow copies (most common), the outer objects are copied but leaves pointers to the inner objects. Therefore, any changes to inner objects will be seen in the original AND the copy
+
+            original = [['hello', 'world'], 3, True]
+            # list containing 3 objects: a list, the number 3 and the boolean True
+
+            duplicate = original[:] # or list(original)
+            # shallow copy: `3` and `True` copied, but pointer to ['hello', 'world'] copied
+
+    + `original` and `duplicate` have same value but different id
+
+            original[2] = False
+            original 
+            --> [['hello', 'world'], 3, False]
+            duplicate
+            --> [['hello', 'world'], 3, True]
+
+    + `duplicate` unchanged as it's a different object (with different id)
+
+            original[0][0] = 'goodbye'
+            original
+            --> [['goodbye', 'world'], 3, False]
+            duplicate
+            --> [['goodbye', 'world'], 3, True]
+
+    + `duplicate` changed as `original[0][0]` reassigns the string 'hello' to 'goodbye' (thereby mutating the list at index 0) and the object named `duplicate` points to the original nested object
+
+    + deep copies (`from copy import deepcopy`), copy the values stored in all nested objects too which protects the original from any changes to the copy (in fact, it doesn't copy immutable objects as these can't be modified anyway)
 
 ### variable shadowing
 
@@ -874,27 +943,286 @@ b) Tree format:
 
 ## conditionals and loops
 
++ `continue` starts a new iteration of the loop (i.e. it skips the remainder of the block and starts again)
+  + can often be rewritten with `!=` conditionals
++ `break` exits the loop, often used if trying to find a specific value/item
 
+### if
+
++ tests multiple expressions with any condition
++ these are forks in code and usually use `if` with some comparison or logical operator
++ other forks can be taken with `elif` and `else` keywords
++ Python will run the code block if the condition evaluates is truthy (not necessarily `True`), but skips it otherwise
++ `else` block will be executed if no other blocks are
++ `if` blocks can be nested but this should be avoided, use `elif` in their place. `elif` must be after the `if` block and before the `else` block
++ the blocks can contain multiple statements and that statement can be to do nothing: `pass` (if you do this, best to add a comment as to why)
+
+### match
+
++ compares a single value against multiple values
+
+        name = 'Boris'
+
+        match name:
+            case 'Boris' | 'boris': # the bar catches multiple values
+                print('name is Boris')
+            case 'Carl' | 'carl':
+                print('name is Carl')
+            case _: # acts like an `else` statement
+                print('name is neither Boris not Carl')
+
+### Ternary Expressions
+
++ sometimes called conditional expressions or ternary operators:
+
+        value1 if condition else value2 
+
++ condition is evaluated and python returns `value1` if truthy or `value2` otherwise
++ useful for dealing with missing/invalid data:
+
+        print('N/A' if value == None else value)
+
++ only use if easy to read, they work best as expressions
 
 ### for
 
++ no need to index or increment a counter
++ work with all built-in collections (even strings)
 
+        for # variable in # collection:
+            do something
+
++ the variable is often temporary/not needed (can use `_`)
++ the collection can be anything iterable - list, string, set, dict
+  + with dict, it will iterate over the keys - if you want to iterate over the value or pairs:
+
+            my_dict = {'a' : 1, 'b' : 2}
+            for value in my_dict.values():
+                print(value)
+            --> 1
+            --> 2
+
+            my_dict = {'a' : 1, 'b' : 2}
+            for item in my_dict.items():
+                print(item)
+            --> ('a', 1)
+            --> ('b', 2)
+
+#### zip
+
++ to get data from 2 separate collections, we can use the `zip` function
++ it is a lazy sequence that acts like a list of tuples:
+
+        list_a = ['Bill', 'Ben']
+        list_b = ('is', 'was')
+        list_c = {'dead': 'd', 'alive' : 'a'}
+
+        for name, verb, status in zip(list_a, list_b, list_c.values()):
+            print(f'{name} {verb} {status}')
+    
++ collections can be anything iterable (if using a dict, `.values()` and `.items()` will work)
++ there is no issue with the length of the collections being different
+
+#### Comprehensions
+
++ they create mutable collections from iterable collections, based on optional selection
++ they are expressions but are similar to `for` and `while` loops (which are statements - [see here](#expressions-and-statements))
++ they are not meant to print values, but are often used as return value, function arguments or anywhere else that expressions can be used
+
++ List Comprehensions:
+  + generic example:
+
+        [ expression for element in iterable if condition ]
+
+    + 'expression' is the value that gets returned by each iteration (called a **transformation** if not just returning the element)
+    + 'for element in iterable' is the iterating part, similar to a `for` loop
+    + 'if condition' is selective (called a **selection**)
+  + the iterable can be a dict object and the return value will be the keys (unless you select `dict.values()` or `dict.items()` as the iterable)
+    + result is similar to dict.keys() except it's a proper list, not a dict view object
+  + you can have more than one selection criteria, just chain if statements (act like nested `if` statements or `and`-ed conditions)
+  + you can have more than one `for` part which act like nested for loops:
+
+            suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+            ranks = [
+                '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                'Jack', 'Queen', 'King', 'Ace',
+            ]
+
+            deck = [ f'{rank} of {suit}'
+                     for suit in suits
+                     for rank in ranks ]
+            print(deck)
+
++ Dict Comprehensions:
+  + created dictionary instead of a list
+  + use curly brackets, not square
+  + expression will be a key : value pair
+  + generic example:
+
+        { key: value for element in iterable if condition }
+
+        squares = { f'{number}-squared': number * number
+            for number in range(1, 6) }
+        print(squares)
+        
+        {
+            '1-squared': 1,
+            '2-squared': 4,
+            '3-squared': 9,
+            '4-squared': 16,
+            '5-squared': 25
+        }
+
+
++ Set Comprehensions:
+  + look similar to dict comprehensions (curly brackets) but have a single expression to the left of the `for`, not a key: value pair
+  + generic example:
+  
+        { expression for element in iterable if condition }
+
+        squares = { number * number for number in range(1, 6) }
+        print(squares)      # {1, 4, 9, 16, 25}
+
++ must be mutable data types to support the comprehensions (essentially, they start as empty collections and are appended upon each iteration)
 
 ### while
 
++ `while` keyword followed by an expression, a colon and then the block
++ the block will continue to run until the expression is no longer truthy
++ they need something to stop the loop, often a counter (which must be within the body)
++ in order to iterate over elements in a sequence and do something to each, a new variable to hold those changes needs to be created - this is done *outside* the loop (e.g. initialising a counter or index)
++ sometimes we want to execute some code, until a condition is satisfied - other languages call this a do/while loop but python doesn't have this. instead we use:
 
+        while True:
+            main()
+
+            answer = input('Play again? (y/n) ')
+            if answer = 'n':
+                break
+
+### nested loops
+
++ the outer loop starts and then the inner loop is processed in its entirety
++ the outer loops then iterates to the next item and the inner loop runs again
++ nesting 3 or more is unwise but possible. `for` and `while` loops can be mixed in nests
 
 ## print() and input()
 
++ `print()` can take multiple arguments and the objects will just be listed one after the other
++ separated by spaces by default, but can be changed using `sep` keyword:
 
+        print(1, 2, 3)
+        --> 1 2 3
+        
+        print(1, 2, 3, sep=',')
+        --> 1,2,3
+
++ what it ends with can also be changed using the `end` keyword (default is `\n` which is newline)
+
+        print(1, 2, end=''); print(3)
+        --> 1 23
+        # `;` is a way of writing multiple statements on a single line
+
++ `print()` just prints an empty new line
+
++ `input()` allows python to read input from the terminal
++ `input('Type here ')` allows you to accompany the function with a message (you can also end the message with `\n` for a newline)
++ `input()` will return strings, so be sure to coerce data types as necessary
 
 ## exceptions (when they will occur and how to handle them)
 
++ when code cannot continue to run, an *Exception Object* is created which describes the problem and stops the program
+  
++ `NameError`
+  + Using a variable or function that is undefined
+  
++ `TypeError`
+  + Using a value of the wrong type in an expression
 
+        word = 'hello'
+        word.find(42)
+        --> TypeError
+
+  + Calling an object that isn't callable
+
+        number = 42
+        number()
+        --> TypeError
+        
++ `SyntaxError`
+  + These are unique as they arises after loading the program, but *before* it runs
+  + Encounters code that break syntactic rules, e.g. missing trailing quote:
+
+        print('hello) 
+        --> SyntaxError
+
++ `ValueError`
+  + Using the correct data type, but the value is inappropriate for the operation
+
+        number = int('abc')
+        --> ValueError
+        number = int('45') # number reassigned to 45
+
++ `IndexError`
+  + Trying to access an index outside the range
+
+        numbers = [1, 2]
+        numbers[2]
+        --> IndexError
+
++ `KeyError`
+  + Trying to access a dictionary key that doesn't exist
+
+        dictionary = {'Barry': 5, 'Gary' : 4, 'Harry' : 5}
+        dictionary['Barry'] 
+        --> 5
+        dictionary['Larry']
+        --> KeyError
+
++ `ZeroDivisionError`
+  + Dividing by zero either using `/` or `%`
+
+        result_1 = 10 / 0 
+        -->  ZeroDivisionError: division by zero
+        result_2 = 10 % 0 
+        --> ZeroDivisionError: integer modulo by zero
+
++ Handling:
+  + `try`
+  + `except`
+  + `else`
+  + `finally`
+
++ Guide:
+
+1. The code that might raise the exception is placed inside the `try` block  
+   a. Python will monitor the block for exceptions
+2. If one is found, Python will look for a matching `except` block to handle the specific type of exception  
+   a. If a match is found, the code within the `except` block is run
+3. If no exceptions are in the `try` block are raised, code in `else` block runs
+4. Any code in the `finally` block runs regardless of any exceptions being raised 
+
+Example:
+
+    try:
+        num_str = input("Enter a number: ")
+        num = int(num_str)
+
+        result = 10 / num
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+    except ZeroDivisionError:
+        print("Cannot divide by zero.")
+    else:
+        print(f"Result: {result}")
+    finally:
+        print("Exception handling complete.")
+
++ This catches occurrences when use enters something that isn't an integer (such as a float, or string), or 0 
 
 ## Functions:
 
-
++
 
 ### definitions and calls
 
