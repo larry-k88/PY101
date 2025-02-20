@@ -168,9 +168,19 @@ b) Tree format:
   + `str()` (works with all built-in data types)
   + `print()` coerces its arguments to strings, but prints them (rather than returning them) so isn't regarded as coercion in the same way
     + string interpolation, however, does coerce the values in the expressions to strings
-  + `repr()` is similar but returns the string representation of the object:
-    + Note that when you use the `print()` function, it strips away the quotes:
+  + `str()` is created to represent an object in a readable format (e.g. in the `print()` function above)
+  + `repr()` is similar but returns a developer-friendly string representation of the object:
 
+        x = 'hello\nthere'
+        print(x)
+        --> hello
+            there
+        print(repr(x))
+        --> 'hello\nthere'
+
+  + From LSBot:
+    + The `repr()` function is used to create a detailed, unambiguous string representation of an object, often used for debugging and development.
+    + The `str()` function, on the other hand, is used to create a more concise, human-readable string representation of an object, typically used for display purposes.  
 
 + Value to Boolean:
   + `bool()` returns `True` or `False` depending on truthiness
@@ -1222,19 +1232,72 @@ Example:
 
 ## Functions:
 
-+
++ chunks of code that do a specific task - reduces repetition
++ naming:
+  + Those with outputs could have the prefix `display_` or `print_` - this will tell you it outputs something visual rather than returns a value
++ Their names should hint at what they do, mutate or return:
+  
+        def updated_cards(total, cards):
+            code here
+        # probably mutates one of the arguments, therefore the return value shouldn't be significant
+
++ They should do one thing, and be relatively short (10 or so lines)
+  + If they are longer, consider splitting into 2 functions
+
++ methods are similar, but are limited to specific objects
++ called by prepending an object with a `.` - known as method calls
++ all methods are functions but not all functions are methods
++ methods belong to a class, and can only be called on objects of the same class
++ sometimes the caller (the object calling the method) is mutated but the method (not possible if the caller is immutable):
+
+        odd_numbers = [1, 3, 5]
+        odd_numbers.pop() # pop() method mutates the caller
+        --> 5
+        odd.numbers
+        --> [1, 3]
+
++ in this example, it's a bit different:
+
+        def add_new_number(my_list):
+            my_list.append(9) # append() method mutates the caller - my_list
+
+        numbers = [1, 2, 3, 4, 5]
+        add_new_number(numbers) # the function mutates its argument - numbers
+        print(numbers) # [1, 2, 3, 4, 5, 9]
+
 
 ### definitions and calls
 
-
++ the definition is the `def` keyword and the indented block of code that makes it up, anything after the `return` keyword will not be executed
++ invoked/called by using `()`
++ they can take arguments, separated by commas (can be separated over several lines)
 
 ### return values
 
++ every function call will evaluate to a return value, even if one isn't explicitly specified (unless it raises an error)
++ `None` is the implicit return value
++ a function that always returns a Boolean is called a *predicate*:
 
+        def is_digit(char):
+            if char >= '0' and char <= '9':
+                return True
+
+            return False
 
 ### parameters vs. arguments
 
++ parameters (if any) are placeholders for the real values you intend to pass as arguments later - name the parameters differently to the arguments
++ arguments are the actual variables that are needed for the function to operate
++ default parameters can be set and used when the argument is omitted:
 
+        def say(text='hello'):
+            print(text + '!')
+        
+        say()
+        --> 'hello!'
+
++ if there are multiple parameters, defaults can be set but once one is specified, subsequent ones must also have defaults
++ they are called positional parameters the 1st is set to arg1, the 2nd to arg2 etc.
 
 ### nested functions
 
@@ -1242,7 +1305,32 @@ Example:
 
 ### output vs. return values, side effects
 
++ Most functions should *either* return a 'useful value' *or* have a side effect; not both (avoid `get_and_display_total()`, split it up)
+  + A 'useful value' has meaning to calling the code - something that returns an arbitrary number or the same value, like `None`, is not usually useful
++ There will be exceptions to this, such as reading from a database, writing to the terminal and also returning it
++ Function names should reflect the purpose:
+  + `display_total` implies it will print the total (i.e. a side effect)
+  + `compute_total` implies it will return the value of the calculation
++ Functions that display something could be prefixed with `print`, `say`, or `display` - these should not return values or mutate arguments, and probably use the `print()` function 
++ Learn when to use `while` loops, or generic `while True` loops
+  
++ Examples of **side effects** are:  
+    + Reassigning a non-local variable
+        + e.g. one in an outer scope
+    + Modifies value of a data structure passed as an argument, or accessed from an outer scope, e.g. appending an element to a list argument:
 
+            def add_to_list(target_list, value_to_append):
+                target_list.append(value_to_append)
+                return target_list
+                --> This returns a useful value AND has a side effect
+
+    + Reads or writes to a file, network connection, browser or system hardware, e.g. printing and reading input from the terminal:
+
+            def display_total(num1, num2):
+                print(num1 + num2)
+
+    + Raises an exception without handling it
+    + Calls another function which has side effects
 
 ## expressions and statements
 
