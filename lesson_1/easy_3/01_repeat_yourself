@@ -1,0 +1,35 @@
+'''
+Write a function that takes two arguments, a string and a positive
+integer, then prints the string as many times as the integer indicates.
+
+
+Problem:    Function takes 2 args, one string, one int
+            Prints the string int number of times
+            Input - 1x string, 1x int
+            Output - string on different lines
+            Requirements:
+                different lines for output
+        
+Examples:   repeat('Hello', 3)
+
+            Hello
+            Hello
+            Hello
+
+Data:       for loop
+            range()
+            print()
+            
+        
+Algorithm:  START
+            FOR _ in range(int):
+                PRINT string
+            END
+
+'''
+
+def repeat(string, integer):
+    for _ in range(integer):
+        print(string)
+
+repeat('Hello', 3)

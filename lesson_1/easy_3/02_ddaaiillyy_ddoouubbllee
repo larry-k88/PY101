@@ -1,0 +1,54 @@
+'''
+Write a function that takes a string argument and returns a new string
+that contains the value of the original string with all consecutive
+duplicate characters collapsed into a single character.
+
+Problem:    Function takes 1 string arg
+            Returns new string without consecutive duplicates
+            Input - 1x string
+            Output - return new string
+            Requirements:
+                only consecutive duplicates removed
+                returns original if no duplicates
+        
+Examples:   These examples should all print True:
+
+            print(crunch('ddaaiillyy ddoouubbllee') == 'daily double')
+            print(crunch('4444abcabccba') == '4abcabcba')
+            print(crunch('ggggggggggggggg') == 'g')
+            print(crunch('abc') == 'abc')
+            print(crunch('a') == 'a')
+            print(crunch('') == '')
+
+Data:       For loop - to iterate over the string
+            If - to check if the letter is the same as previous
+            If not, concatenate to a new string
+           
+        
+Algorithm:  START
+            FOR character in string:
+                current = empty string
+                new_string = empty string
+                IF _ != current:
+                    concatenate to new string 
+                update current
+            END
+
+'''
+def crunch(string):
+    current_character = 0
+    new_string = ''
+
+    for character in string:
+        if character != current_character:
+            new_string += character
+        current_character = character
+    return new_string
+
+
+print(crunch('ddaaiillyy ddoouubbllee') == 'daily double')
+print(crunch('4444abcabccba') == '4abcabcba')
+print(crunch('ggggggggggggggg') == 'g')
+print(crunch('abc') == 'abc')
+print(crunch('a') == 'a')
+print(crunch('') == '')

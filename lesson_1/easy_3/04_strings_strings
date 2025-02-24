@@ -1,0 +1,38 @@
+'''
+Write a function that takes one argument, a positive integer, and
+returns a string of alternating '1's and '0's, always starting with a
+'1'. The length of the string should match the given integer.
+
+Problem:    Function takes an integer and returns a string of that
+            length - the string will alternate 1 and 0
+            Input - 1x positive integer
+            Output - string
+            Requirements:
+                output must be a string
+
+Examples:   print(stringy(6) == "101010")           # True
+            print(stringy(9) == "101010101")        # True
+            print(stringy(4) == "1010")             # True
+            print(stringy(7) == "1010101")          # True
+
+Data:       pair 1 and 0 as a string
+            if - to determine odd/even (% or //)
+           
+        
+Algorithm:  START
+            READ integer
+            GET number of pairs
+            RETURN 01 * number or pairs
+            IF ODD, concat another 1 on the end
+            END
+
+'''
+
+def stringy(number):
+    return '10' * (number // 2) + '1' * (number % 2)
+
+
+print(stringy(6) == "101010")           # True
+print(stringy(9) == "101010101")        # True
+print(stringy(4) == "1010")             # True
+print(stringy(7) == "1010101")          # True

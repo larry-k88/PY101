@@ -1,0 +1,77 @@
+'''
+Write a function that takes a short line of text and prints it within a
+box.
+
+Problem:    Function 1 string arg and works out the length of the string
+            Creates a box of that length and height of 5 lines, printing
+            the string within
+            Input - 1x string
+            Output - 5x lines
+            Requirements:
+                Line 1 + 5: + at start and end
+                Line 2 + 4: | at start and end
+                Line 4: | at start and end, plus string
+
+Examples:   print_in_box('To boldly go where no one has gone before.')
+
+            +--------------------------------------------+
+            |                                            |
+            | To boldly go where no one has gone before. |
+            |                                            |
+            +--------------------------------------------+
+
+            print_in_box('')
+
+            +--+
+            |  |
+            |  |
+            |  |
+            +--+           
+
+Data:       for loops - print symbols for the length of the string
+            f-strings
+           
+        
+Algorithm:  START
+            GET length string
+            SET box_dimensions
+            SET index_positions for first and last chars
+            PRINT
+            END
+
+'''
+# def print_in_box(string):
+#     total_chars = len(string)
+#     line_1_5 = f'+-{total_chars * '-'}-+'
+#     line_3 = f'| {string} |'
+#     line_2_4 = f'| {total_chars * ' '} |'
+#     print(line_1_5)
+#     print(line_2_4)
+#     print(line_3)
+#     print(line_2_4)
+#     print(line_1_5)
+
+def print_in_box(message, max=float('inf')):
+    total_chars = len(message)
+    if total_chars <= max:
+        line_1_5 = f'+-{total_chars * '-'}-+'
+        line_3 = f'| {message} |'
+        line_2_4 = f'| {total_chars * ' '} |'
+        print(line_1_5)
+        print(line_2_4)
+        print(line_3)
+        print(line_2_4)
+        print(line_1_5)
+    else:
+        new_message = message[:max]
+        line_1_5 = f'+-{max * '-'}-+'
+        line_3 = f'| {new_message} |'
+        line_2_4 = f'| {max * ' '} |'
+        print(line_1_5)
+        print(line_2_4)
+        print(line_3)
+        print(line_2_4)
+        print(line_1_5)
+
+print_in_box('To boldly go where no one has gone before.', 15)
+print_in_box('', 50)
