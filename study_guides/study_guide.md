@@ -1301,7 +1301,19 @@ Example:
 
 ### nested functions
 
++ These are created/destroyed each time the outer function runs
++ They cannot be accessed from outside the function where it's defined (similar to variables)
++ NB when code is read, it first reads the function and saves it to memory (rather than running it) - it will only run the block when it's called
+  + it therefore doesn't matter if a function calls a function which hasn't yet been defined
 
+        def top():
+            bottom() 
+        
+        def bottom():
+            print('Hi)' 
+
+        --> tries to call bottom() which isn't yet defined but doesn't matter as Python first reads and saves top() and bottom() to memory, therefore when it executes top(), it already knows bottom() exists
+    
 
 ### output vs. return values, side effects
 
