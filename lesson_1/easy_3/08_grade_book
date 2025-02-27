@@ -1,0 +1,59 @@
+'''
+Write a function that determines the mean (average) of the three scores
+passed to it, and returns the letter associated with that grade.
+
+Numerical score letter grade list:
+
+90 <= score <= 100: 'A'
+80 <= score < 90: 'B'
+70 <= score < 80: 'C'
+60 <= score < 70: 'D'
+0 <= score < 60: 'F'
+
+Tested values are all between 0 and 100. There is no need to check for
+negative values or values greater than 100.
+
+Problem:    Get an average of three integers between 0 and 100
+            Return a grade based on that average
+            Input - 3x integers (no need to check)
+            Output - string
+            Requirements:
+                integers between 0 and 100
+                match average with boundaries
+
+Examples:   print(get_grade(95, 90, 93) == "A")      # True
+            print(get_grade(50, 50, 95) == "D")      # True
+
+Data:       mean/average function
+            match/case
+                
+Algorithm:  START
+            IMPORT mean
+            GET mean of 3 arguments, rounded to whole number
+            SET mean
+            MATCH mean:
+                CASE >= 90
+                    'A'
+                CASE >= 80
+                    'B'
+            END
+
+'''
+import statistics
+
+def get_grade(score_1, score_2, score_3):
+    score_list = list((score_1, score_2, score_3))
+    mean = statistics.mean(score_list)
+    if mean >= 90:
+        return 'A'
+    if mean >= 80:
+        return 'B'
+    if mean >= 70:
+        return 'C'
+    if mean >= 60:
+        return 'D'
+    return 'F'
+
+
+print(get_grade(95, 90, 93) == "A")      # True
+print(get_grade(50, 50, 95) == "D")      # True

@@ -1,0 +1,60 @@
+'''
+Write a function that takes a year as input and returns the century.
+The return value should be a string that begins with the century number,
+and ends with 'st', 'nd', 'rd', or 'th' as appropriate for that number.
+
+New centuries begin in years that end with 01. So, the years 1901 - 2000
+comprise the 20th century.
+
+Problem:    Take an integer and return the century it's in
+            Input - integer (year)
+            Output - string
+            Requirements:
+                output is a numerical string followed by st, nd etc.
+                years from 01 --> 00 inclusive
+
+Examples:   print(century(2000) == "20th")          # True
+            print(century(2001) == "21st")          # True
+            print(century(1965) == "20th")          # True
+            print(century(256) == "3rd")            # True
+            print(century(5) == "1st")              # True
+            print(century(10103) == "102nd")        # True
+            print(century(1052) == "11th")          # True
+            print(century(1127) == "12th")          # True
+            print(century(11201) == "113th")        # True
+
+Data:       if (to determine number of digits in year)
+            f-strings
+            str
+                
+Algorithm:  START
+            
+            END
+
+'''
+def century(year):
+    if year % 100 == 0:
+        return f'{year // 100}{suffix(year // 100)}'
+    return f'{year // 100 + 1}{suffix(year // 100 + 1)}'
+
+def suffix(year):
+    century_str = str(year)
+    if century_str.endswith(('11', '12', '13')):
+        return 'th'
+    if century_str.endswith('1'):
+        return 'st'
+    if century_str.endswith('2'):
+        return 'nd'
+    if century_str.endswith('3'):
+        return 'rd'
+    return 'th'
+
+print(century(2000) == "20th")          # True
+print(century(2001) == "21st")          # True
+print(century(1965) == "20th")          # True
+print(century(256) == "3rd")            # True
+print(century(5) == "1st")              # True
+print(century(10103) == "102nd")        # True
+print(century(1052) == "11th")          # True
+print(century(1127) == "12th")          # True
+print(century(11201) == "113th")        # True

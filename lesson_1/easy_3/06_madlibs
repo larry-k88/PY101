@@ -37,7 +37,15 @@ Algorithm:  START
 '''
 
 def madlibs():
-    pass
-
+    noun = input('Enter a noun: ').casefold()
+    verb = input('Enter a verb: ').casefold()
+    adjective = input('Enter an adjective: ').casefold()
+    adverb = input('Enter an abverb: ').casefold()
+    print(noun, verb, adjective, adverb)
+    print(f'Do you {verb} your {adjective} {noun} {adverb}? '
+          'That\'s hilarious!')
+    print(f'The {adjective} {noun} {verb}s {adverb} over the lazy '
+           f'{noun}.')
+    print(f'The {noun} {adverb} {verb}s up to Joe\'s {adjective} turtle.')
 
 madlibs()
