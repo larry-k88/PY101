@@ -2,42 +2,62 @@
 
 ### 1: Which variable is coerced? Is it implicit or explicit coercion?
 
-```python
+```
 x = 3.5
 y = 5
 z = x + y
 ```
-
+> Variable `x` is created and assigned the float value of 3.5. Another variable `y` is created and assigned the integer value of 5.
+> A third variable `z` is created and assigned the value of the expression `x + y`. 
+> Python's arithmetic operators will coerce the data types of their operands if required. In this case, the addition operator must have both operands of the same data type. We currently have a float and an integer but Python implicitly coerces `y` into a float (`5` to `5.0`) so its data types matches that of `x`. The expression is then evaluated, resulting in `z` being assigned the value of `8.5` - a float.
+> This can be confirmed by checking the data type of `z` using type(z).
+> It is implicit coercion as we haven't specifically asked Python to change a data type.
+* It is an example of Python automatic type conversion
 
 ### 2: What coercion is happening here? Is it implicit or explicit?
 
-```python
+```
 a = 1
 b = 2
 print(a + b)
 ```
-
+> Variable `a` is created and assigned the integer value of 1. Another variable `b` is created and assigned the integer value of 2.
+> The expression `a + b` is then evaluated first before its result is passed to the `print()` built-in function as an argument.
+> As `a` and `b` are both of the same data type (integers), there is no coercion required - the expression evaluates to the integer value of `3`, which is passed to `print()`
+> The `print()` function returns `None`, but displays an output to the use via the terminal. The output is implicitly coerced to a string data type to make it more reader-friendly.
+> The program will output the string '3'.
+* Output will be displayed without the quotes but is a string
+* `print()` automatically converts its arguments to string representation for display
 
 ### 3: What coercion is happening here? Is it implicit or explicit?
 
-```python
+```
 month = "December"
 day = int(input("What day is it? "))
 print(f"Today is the {day} of {month}")
 ```
-
+> A variable `month` is created and assigned the string value of 'December'. A variable called `day` is created which is assigned the value of the expression on the right hand side. This expression uses the built-in `input()` function to get some data from the user - in this case, the prompt "What day is it? " is displayed to the user and they can type their input. The `int()` built-in function explicitly coerces the user input into an integer (from a string). This integer is the value assigned to the variable `day`
+> The built-in `print()` function then automatically converts its arguments to strings for display purposes, an example of implicit coercion. In this case, the argument is an 'f-string', or 'formatting string literal'. This is a way to interpolate expressions and include them in the string that is output. 
+* The f-string firstly evaluates the expressions inside the {}.
+* Then it automatically converts the `day` integer to its string representation for interpolation (a special type of implicit coercion) - these take the place of the placeholders in the f-string.
+* The whole string is then passed to `print()`
+* `print()` isn't considered coercion - it doesn't return the resulting strings, it just displays them
 
 ## Numbers, including handling exceptions (ValueError, ZeroDivisionError)
 
 ### Basic questions:
-- Are integers and floats mutable or immutable? (Immutable)
-- Are integers and floats primitive or non-primitive? (Primitive)
-- Are integers and floats literals? (Literals)
-- What is a literal? (Any syntatic notation that lets you directly represent an object in source code.
+- Are integers and floats mutable or immutable? 
+> Both integers and floats are immutable data types in Python - this means they cannot be changed once created. Anything that appears to change them are actually creating a new object. Integers are whole numbers without any fractional competent. Floats are numbers with a decimal point.
+- Are integers and floats primitive or non-primitive?
+> They are primitive data types, otherwise known as basic or fundamental. Other types are Booleans and Strings
+- Are integers and floats literals?
+> Yes. 
+- What is a literal?
+> A literal is something that the parser can recognise and create an object from. It is notation for representing a fixed value
 
 ### 1: What does this return and why? What concept does this cover?
 
-```python
+```
 def convert_to_int(string):
     try:
         converted_integer = int(string)
@@ -49,11 +69,17 @@ print(convert_to_int("hello"))
 
 print(convert_to_int("5"))
 ```
-
+> The function is defined on Line 1: it takes a string as an argument and tries to explicitly coerce it into an integer.
+> If no errors are raised, the function returns that coerced integer.
+> If a ValueError is raised (i.e. the argument is not numeric), the return value will be the string on Line 6.
+> When the print statement on Line 8 is executed, the string 'hello' is passed to the function. As it is not a numeric string, the built-in function `int()` will raise a Value Error - this will result in the code in the `except` block executed.
+> When the print statement on Line 10 is run, the numeric string '5' will be coerced to the integer value 5.
+> Both these return value are passed to the `print()` function which automatically convert any non-string arguments into string representations for display purposes.
+> Concepts include: exception handling, implicit/explicit coercion, ValueErrors, built-in functions
 
 ### 2: What does this return and why? What concept does this cover?
 
-```python
+```
 def division(number1, number2):
     numerator = number1
     denominator = number2
@@ -66,11 +92,16 @@ def division(number1, number2):
 
 print(division(5, 0))
 ```
-
+> The function is defined and takes 2 arguments - they are then assigned to two variables which are within the functions scope.
+> A try block is executed which divides one of the arguments by the other. If no error is raised, the value of expression (a float, due to the division operator) will be returned from the function.
+> If a ZeroDivisionError is raised, the string on Line 9 is returned instead.
+> These return values are then passed as arguments into the `print()` function which automatically converts non-string arguments into string representation for display purposes.
+> In this case, the output will be "The denominator cannot be zero"
+> This snippet covers the `/` operator (floating-point division - not implicit coercion), exception handling, built-in functions and ZeroDivisionErrors.
 
 ### 3: What does this print and why, what concept does this demonstrate?
 
-```python
+```
 def addition(number1, number2):
     number1 += number2
 
@@ -80,8 +111,11 @@ y = 2
 addition(x, y)
 print(f"x is {x}, y is {y}")
 ```
-
-
+> The function is defined in Line 1 and takes 2 arguments. The augmented assignment operator is used to assign the value of the expression `number1 + number2` to the variable called `number1`. There is no return value to this function (by default, it will return `None`)
+> Outside the function, two variables are created and assigned integer values. These values are passed into the function when it is called on Line 7. 
+> The `print()` function on Line 8 contains an f-string. Python will evaluate the expressions in the curly braces and the result of the expression will be interpolated into the string. This string is then passed to the `print()` function with automatically converts any non-string argument into a string representation for display purposes.
+> The output here will be "x is 1, y is 2". The function definition and invocation have no impact on the output in this case.
+> This demonstrates the immutability of integers - when an immutable object is passed to a function, any changes to the parameter inside the function don't affect the variable outside the function. In this case, `number1` is reassigned using the `+=` operator (it is originally initialised as `x` on Line 7, but is reassigned to `3` on Line 2.) This does not change the value of `x` in the global scope.
 
 ### 4. What does this print and why? What concept does this cover? How would you refactor this to remove the space?
 

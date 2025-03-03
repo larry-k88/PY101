@@ -2,7 +2,7 @@
 
 - [Study Guide for PY109](#study-guide-for-py109)
   - [naming conventions: legal vs. idiomatic, illegal vs. non-idiomatic](#naming-conventions-legal-vs-idiomatic-illegal-vs-non-idiomatic)
-  - [type coercions: explicit (e.g. using int(), str()) and implicit](#type-coercions-explicit-eg-using-int-str-and-implicit)
+  - [type coercions: explicit (e.g. using int(), str() and implicit)](#type-coercions-explicit-eg-using-int-str-and-implicit)
   - [numbers](#numbers)
   - [strings](#strings)
   - [f-strings](#f-strings)
@@ -104,7 +104,7 @@
         first,last = ['Bill', 'Ben'] # illegal as it contains punctuation
     + creates 2 variables rather that one called 'first,last'
 
-## type coercions: explicit (e.g. using int(), str()) and implicit
+## type coercions: explicit (e.g. using int(), str() and implicit)
 
 + Built-in Data Types:  
 a) Table Format
@@ -185,14 +185,15 @@ b) Tree format:
 + Value to Boolean:
   + `bool()` returns `True` or `False` depending on truthiness
   
-+ Implicit coercion performs it without specifying it:
-  + `print()` implicitly coerces to a string before printing it
++ Implicit coercion performs it without the programmer specifying it, it is automatically performed by the Python interpreter:
   + mixing number types in an [expression](#expressions-and-statements):
     + Adding an integer to a float outputs a float
+    + NB Division operator does NOT implicitly coerce before performing the operation - it performs it in floating-point arithmetic
   + Booleans are coerced to integer values of 1 or 0 in arithmetic expressions:
  
         print(True + True + True)
         --> 3
+  + `print()` implicitly coerces to a string before printing it but doesn't return the converted data type to be used in the program, therefore it's not usually defined as coercion
 
   + Truthiness of any value (regardless of type) in conditional expressions:
 
