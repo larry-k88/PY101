@@ -119,30 +119,43 @@ print(f"x is {x}, y is {y}")
 
 ### 4. What does this print and why? What concept does this cover? How would you refactor this to remove the space?
 
-```python
+```
 print(2 + 3 * 4, 4 * (3 + 2))
 ```
-
+> It will print '14, 20'
+> It covers the concept of operator precedence. The 2 expressions,separated by a comma, are evaluated first, then their results are passed to the `print()` function where they are automatically converted into their string representation
+> In the first expression, the `*` operator has precedence over the `+` operator - that is, the operands `3` and `4` bind more closely to their operator that the operands `2` and `3`. Therefore, we evaluate `3 * 4` to `12`, before adding `2`.
+> In the second expression, the parentheses around `3 + 2` have a higher precedence so this is evaluated first. We therefore have `4 * 5` as our final expression to evaluate.
+> In order to remove the space in the output, we can add a separator parameter after the expressions. The default separator is a space, so by refactoring to this, we change that separator to nothing:
+> print(2 + 3 * 4, 4 * (3 + 2), sep='')  
 
 ### 5. What can be used in place of commas to make this more readable?
 
-```python
+```
 print(123112940)
 ```
+> Underscores are used to make large (or small) numbers more readable. Commas cannot be used as they are used to separate arguments in the print function. The placement underscores can be used flexibly - that is, they can separate any numbers
+> print(123_112_940) or print(12_31129_40)
 
 ## Strings
 
 ### Basic questions:
-- Are strings mutable or immutable? (Immutable)
-- Are strings primitive or non-primitive? (Primitive)
-- Are strings literals? (Literals)
-- What is a text sequence? (strings of characters)
-- What kind of characters are used in a string? (Unicode characters)
-- Are text sequences the same as ordinary sequences? (No, text sequence contain only string characters. ordinary sequences refer to any other sequence types that store multiple elements (e.g. lists, tuples, ranges))
+- Are strings mutable or immutable? 
+> Immutable, anything that appear to re-assign a string is actually creating a new object
+- Are strings primitive or non-primitive?
+> Primitive
+- Are strings literals?
+> Yes, strings are recognised by the parser which an object can be created from
+- What is a text sequence?
+> It is a string of characters  
+- What kind of characters are used in a string? 
+> Unicode characters, of which ASCII characters are a subset
+- Are text sequences the same as ordinary sequences?
+> No, they only contain string characters and are immutable. Sequences can contain multiple objects of various types and some are mutable. The characters in a text sequence are strings of length 1. 
 
 ### 1. What is the output of this code, and why? What is the concept covered here?
 
-```python
+```
 str1 = "Hello, world!"
 sub1 = str1[8:12]
 print(sub1)
@@ -151,52 +164,73 @@ print(sub2)
 sub3 = str1[::2]
 print(sub3)
 ```
-
+> The text sequence "Hello, world!" is assigned to the variable `str1`
+> We then create a new variable called `sub1` which is assigned to the slice of `str1` from index 8 to 11 (index notation includes the start value but excludes the stop value) - given that indexing starts from position 0, when `sub1` is passed to the `print()` function, the string representation "orld" is output
+> Another variable `sub2` is then created and assigned to the a new object which is the reverse of `str1` - the `::-1` syntax in relation to strings creates a new reversed object (strings are immutable). This is then printed.
+> A final variable `sub3` is created and is assigned to the value of a slice of `str1` - the start and stop has been omitted which defaults to the whole string, but the step value of 2 means the new object will contain every other character from the string.
+> The output will be:
+> 'orld'
+> '!dlrow ,olleH'
+> 'Hlo ol!'
 
 ### 2. What does this print and why? What concept is this?
 
-```python
+```
 print("Hello\nWorld")
 ```
-
+> It will print:
+> Hello
+> World
+> The `\n` is an escape character and Python inserts a line break at the position where it's printed
 
 ### 3. What does this print and why? What concept is this?
 
-```python
+```
 name = 'Alexander Graham Bell'
 print(name[0])
 ```
-
+> A
+> This is example of the indexing syntax that text sequences support. Strings are ordered sequences of characters. Index numbers start at 0 in Python so when we index the 0th character in the string referenced by `name`, the character 'A' is passed as an argument to the `print()` function.
 
 ## f-strings
 
 ### Basic Questions:
-- What are f-strings? (string prefix for defining formatted string literals that enables string interpolation)
+- What are f-strings? 
+> They are strings prefixed with an 'f' which enables formatting of the string and string interpolation using {}
 
 ### 1. What does this print and why, what is the concept?
 
-```python
+```
 name = 'Abraham Lincoln'
 print(f"{name} was a President of the US")
 ```
-
+> Abraham Lincoln was a President of the US
+> The f prefix indicates that this is an f-string, or formatted string literal.
+> The expression in curly braces (in this case, the variable `name`) is evaluated first its value (the string "Abraham Lincoln") is passed to the print function along with the rest of the string.
+> Another option is the the `str.format()` method:
+> print("{} was a President of the US".format(name))
 
 ## string methods
 
 ### Basic Questions:
 - How do you identify a method versus a function?
+> A function is invoked by typing its name, followed by its argument in parentheses 
+> Methods are called on the object, followed by a `.` and the the function invocation
 
 ### 1. What does this print and why?
 
-```python
+```
 mashup = "thIs is How we type careLEssly"
 cleaned = mashup.capitalize()
 print(cleaned)
 ```
+> This is how we type carelessly
+> `mashup` is a variable which points to a string object. When the `capitalize()` method is called on the object, it returns a new string (strings are immutable) whose value is assigned to a new variable, called `cleaned`. The function itself returns the string but with the first character in uppercase and the rest in lowercase.
+> We then pass this new object to the `print()` function
 
 ### 2. What do these print and why?
 
-```python
+```
 stuff = 'tHIS iS bACKWARDS'
 str1 = stuff.swapcase()
 str2 = stuff.upper()
@@ -206,10 +240,18 @@ print(str1)
 print(str2)
 print(str3)
 ```
+> tHIS iS bACKWARDS
+> This Is Backwards
+> THIS IS BACKWARDS
+> this is backwards
+> `stuff` points to a string object which is immutable. When we call the three methods on `stuff`, they return a new object whose value is captured by assigning it to a new variable. This happens because the string objects are immutable. These variables are then passed to the `print()` function and their respective values are displayed in their string representations.
+> swapcase() swaps the case of each character in the string
+> upper() makes every character uppercase
+> lower() makes every character lowercase
 
 ### 3. What do these print and why?
 
-```python
+```
 s1 = "Hello"
 print(s1.isalpha())
 s2 = "Hello World"
@@ -227,10 +269,20 @@ print(s7.isalpha())
 words = ["apple", "banana", "cherry"]
 print(all(word.isalpha() for word in words))
 ```
+> True
+> False
+> False
+> False
+> False
+> True
+> True
+> True
+> `is.alpha()` returns True is all characters in the string are alphabetic and there is at least one character
+> The `all()` function returns True if all items in an iterable evaluate to Truthy. In this case, the argument passed to the `all()` function is a generator expression - the expression iterates over each word in words and evaluates `word.isalpha()`, which returns True or False based on whether the word contains only alphabetic characters. Here, as each of list items is alphabetic, each call to `isalpha()` returns True, meaning that the `all()` is passed an iterable where each element is True, therefore also returning True.
 
 ### 4. What does this print and why?
 
-```python
+```
 string1 = "HelloWorld"
 string2 = "12345"
 string3 = "Hello World"
@@ -243,10 +295,15 @@ print("Is '{}' alphabetic?".format(string1), result1)
 print("Is '{}' alphabetic?".format(string2), result2)
 print("Is '{}' alphabetic?".format(string3), result3)
 ```
+> Is 'HelloWorld' alphabetic? True
+> Is '12345' alphabetic? False
+> Is 'Hello World' alphabetic? False
+> This produces the same and is more flexible:
+> print("Is '{}' alphabetic? {}".format(string1, result1))
 
 ### 5. What do these print and why?
 
-```python
+```
 s1 = "123abc"
 print(s1.isdigit())
 s2 = "123$%^"
@@ -256,29 +313,38 @@ print(s3.isdigit())
 s4 = "12345"
 print(s4.isdigit())
 ```
+> False
+> False
+> False
+> True
 
 ### 6. What do these print and why?
 
-```python
+```
 print("Hello World".isalnum())
 print("Hello@World".isalnum())
 print("".isalnum())
 print("Hello123".isalnum())
 ```
+> False
+> False
+> False
+> True
 
 ### 7. What do these print and why?
 
-```python
+```
 name = 'HELLO'
 
 if name.isupper():
     print("WORLD")
 else:
     print("world")
-    ```
+```
+> WORLD
 
 ###  8. What do these print and why?
-```python
+```
 def punctuation_type(str):
     if str == str.upper():
         print('This is all caps')
@@ -295,10 +361,13 @@ punctuation_type(str1)
 punctuation_type(str2)
 punctuation_type(str3)
 ```
+> This is all caps
+> This is all lowercase
+> Neither
 
 ### 9. What do these print and why?
 
-```python
+```
 str1 = "    "
 str2 = "  Hello   "
 str3 = "Hello World"
@@ -311,41 +380,55 @@ sentence = "Hello     World!   How are you?   "
 word_count = sum(1 for word in sentence.split() if not word.isspace())
 print("Number of words in the sentence:", word_count)
 ```
+> True
+> False
+> False
+> Number of words in the sentence: 5
+> `.split()` function splits, by default, at whitespace. It also treats consecutive spaces as a single delimiter and removes all leading/trailing whitespace.
 
 ### 10. What do these print and why?
 
-```python
+```
 s = "   Hello, World!   "
 print(s.strip())
 print(s.strip(" !"))
 ```
+> Hello, World!
+> Hello, World
+> It only strips leading/trailing characters (it leaves the space between the words)
 
 ### 11. What do these print and why?
 
-```python
+```
 s = "www.example.com"
 print(s.lstrip('wcmo.'))
 ```
+> example.com
+
 
 ### 12. What do these print and why?
 
-```python
+```
 s = 'impatient'
 print(s.rstrip('tp'))
 print(s.rstrip('p'))
 ```
+> impatien
+> impatient
 
 ### 13. What do these print and why?
 
-```python
+```
 s = "Hello, World!"
 print(s.replace("Hello", "Hi"))
 print(s.replace("o", "0"))
 ```
+> Hi, World!
+> Hell0, W0rld!
 
 ### 14. What do these print and why?
 
-```python
+```
 sentence = "This is a sample sentence."
 words = sentence.split()
 print(words)
@@ -358,15 +441,21 @@ sentence = "This is a sample sentence."
 words = sentence.split(maxsplit=2)
 print(words)
 ```
+> ['This', 'is', 'a', 'sample', 'sentence.']
+> ['John', 'Doe', '30', 'New York']
+> ['This', 'is', 'a sample sentence']
+> Last one splits only 2 times, resulting in 3 elements
 
 ### 15. What does this print and why?
 
-```python
+```
 str1 = "hello world"
 str2 = str1.capitalize()
 print("Original string:", str1)
 print("Capitalized string:", str2)
 ```
+> Original string: hello world
+> Capitalized string: Hello World
 
 ## boolean vs. truthiness
 
