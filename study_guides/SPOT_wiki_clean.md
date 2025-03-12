@@ -461,10 +461,11 @@ print("Capitalized string:", str2)
 
 ### Basic Question:
 - In Python, what values are considered Falsy and what are considered Truthy?
+> Falsy values are those which evaluate to False when passed to the `bool()` built-in function. Examples are: None, any numeric value representing 0, empty sequence/collections, False
 
 ### 1. What do these print and why?
 
-```python
+```
 truthy_values = [1, 2, 3, "hello", [1, 2, 3], {"a": 1}, True, 0, "", [], {}, None, False]
 
 print(“Values:”)
@@ -474,10 +475,25 @@ for value in truthy_values:
     else:
         print(f"{value} is falsy")
 ```
+> Values:
+> 1 is truthy
+> 2 is truthy
+> 3 is truthy
+> hello is truthy
+> [1, 2, 3] is truthy
+> {'a' : 1} is truthy
+> True is truthy
+> 0 is falsy
+>  is falsy
+> [] is falsy
+> {} is falsy
+> None is falsy
+> False is falsy
+> NB quotes around strings are left out when using the print function, even for an empty string
 
 ### 2. What do these print and why?
 
-```python
+```
 x = 5
 y = 10
 z = 15
@@ -488,28 +504,40 @@ print(x < y and y < z)
 print(x > y or y > z)
 print(not (x > y))
 ```
+> True
+> True
+> True
+> False
+> True
+> No short-circuiting in any of these
 
 ### 3. What do these print and why?
 
-```python
+```
 a = 10
 b = 20
 
 print(a < b < 30)
 print(a > b or b == 20)
+print(b == 20 or a > b)
 ```
+> True
+> True
+> True (this one short-circuits)
 
 ### 4. What do these print and why?
 
-```python
+```
 my_list = [1, 2, 3, 4, 5]
 print(3 in my_list)
 print(6 not in my_list)
 ```
+> True
+> True
 
 ### 5. What do these print and why?
 
-```python
+```
 temperature = 25
 time_of_day = "morning"
 
@@ -518,10 +546,11 @@ if temperature < 30 and (time_of_day == "morning" or time_of_day == "afternoon")
 else:
     print("It's either too hot or not the right time of day.")
 ```
+> It's a pleasant day
 
 ### 6. What does this print and why?
 
-```python
+```
 num = 12
 
 if num / 3 < 3 and num > 10:
@@ -533,21 +562,30 @@ elif num % 4 == 0 or num < 7 and num < 10:
 else:
     print("Buy")
 ```
+> Hello 2
+> No number will return "Hello"
 
 ## ranges
 
-### asic questions:
+### Basic questions:
 - Is a range primitive or non-primitive?
+> Non-primitive
 - Is a range mutable or immutable?
+> Immutable - once created, they cannot be modified
 - Does range have a literal form or a type constructor?
+> Type constructor `range()`
 - Is a range a sequence or a collection?
+> Sequence
 - What is the most common use of the range datatype?
+> Providing a finite limit of iterations for loops
 - Are ranges homogenous or heterogeneous?
+> Homogeneous - they contain only integer types
 - Why are ranges considered lazy?
+> The only integers stored by Python, until the constructor function is called, are the start, stop and step parameters. The values in the range are not stored in memory (more efficient for large ranges)
 
 ### 1. What do these print and why? What concept does this demonstrate?
 
-```python		
+```		
 print(range(0,10))
 print(len(range(5, 15)))
 print(my_range[1])
@@ -557,20 +595,30 @@ print(list(range(5, 5, 1)))
 print(5 in range(5))
 print(5 not in range(5, 10))
 ```
+> range(0, 10) - lazy sequence
+> 10
+> Error - my_range not defined. Ranges are indexable if defined - they are sequences
+> range(3, 7)
+> [12, 11, 10, 9]
+> []
+> False
+> False
 
 ### 2. What does this code print and why? What concept does this demonstrate?
 
-```python
+```
 example = range(0)
 if example:
     print(list(example))
 else:
     print(example)
 ```
+>`range(0)` is a falsy value. Python is able to check the length of the range generator expression before it generates (or tried to generate) its values.
+> The `else` block executes, printing the range object `range(0)`
 
 ### 3. What does this code print and why? What concept does this demonstrate?
 
-```python
+```
 def number_range(number):
     match number:
         case n if n < 0:
@@ -584,30 +632,49 @@ def number_range(number):
 number_range(0)
 number_range(25)
 ```
+> 0 is between 0 and 50
+> 25 in between 0 and 50
+> `n` is a local variable that is used in pattern matching.
+> Alternative is to use `case _ if number < 0`
 
 ## list and dictionary syntax
 
 ### Basic Questions
 - What categories are lists and dictionaries?
+> Lists are sequences, dictionaries are mappings
 - Are they mutable or immutable?
-- Are they primitive or non-primitve?
+> Mutable
+- Are they primitive or non-primitive?
+> Both non-primitive
 - Are they literals, or do they require type constructors?
+> Lists can be literals `[1, 2, 3]` or type constructors: `list((1, 2, 3))`
 - Are they sequences?
+> Lists are sequences - they are ordered and therefore support indexing syntax. Dictionaries preserve insertion order and are indexing by the key (not position)
 - Does the order of the elements in both matter?
+> The order is a list is essential for many list operations, such as indexing. Since Python 3.7, dictionaries maintain insertion order.
 
 ## list methods: len(list), list.append(), list.pop(), list.reverse()
 
 ### 1. What does this print and why?
 
-```python
+```
 my_list = [1, 2, 3, 4, 5]
 length_of_list = len(my_list)
 print("Length of the list:", length_of_list)
 ```
+> Length of the list: 5
+> A variable named `my_list` is created and assigned to a list object `[1, 2, 3, 4, 5]`
+> The `len()` function takes one argument and returns the number of items in that object. In this case, it returns the number of items (the length) of the list object. That value is assigned to a new variable `length_of_list`.
+> The value of the `length_of_list` variable is passed to the `print()` function, along with a string. The `print()` function automatically converts any non-string expressions (here, the integer 5) to a string to be displayed to the user
+* This has the same output and is more concise and reduces the number of single-use variables. However, the original is better for debugging, and also if the variable is re-used elsewhere in the program
+```
+my_list = [1, 2, 3, 4, 5]
+print("Length of the list:", len(my_list))
+```
 
 ### 2. What does this print and why?
 
-```python
+```
 lst_one = [0, 1, 2, 3]
 lst_two = lst_one.append(4)
 if lst_two:
@@ -615,10 +682,13 @@ if lst_two:
 else:
     print(lst_one)
 ```
+> The `append()` function is mutating (modifies in-place, or 'destructive'). The variable `lst_one` is assigned to a list object `[0, 1, 2, 3]`. The return value of the `append()` function is `None` and that value is therefore assigned to a new variable `lst_two`.
+> The `if` block will run if `lst_two` is a truthy value, which is it not. The `else` block is therefore executed, printing the string representation of the object referenced by `lst_one` - in this case, the mutated list `[0, 1, 2, 3, 4]`
+* Python passes the reference to the object when we call `append()`, not the object itself. The mutability of that object dictates whether the original object is modified.
 
 ### 3. What does this print and why?
 
-```python
+```
 my_list = [1, 2, 3, 4, 5]
 ele = my_list.pop()
 print("Popped element:", ele)
@@ -627,18 +697,32 @@ ele1 = my_list.pop(1)
 print("Popped element at index 1:", ele1)
 print("Modified list after popping at index 1:", my_list)
 ```
+> A variable `my_list` is assigned to the list object `[1, 2, 3, 4, 5]`
+> Another variable is created and assigned to the return value of the `pop()` method being called on the list object, which is `5`. As lists are mutable, the object is modified in-place (mutated).
+> The `print()` function is then called on a string and the variable `ele` - the variable is evaluated first and its string representation is displayed: 'Popped element: 5'
+> The `print()` function is then called again on a string and the variable `my_list` - the variable is evaluated first and its string representation is displayed: 'List after popping: [1, 2, 3, 4]' 
+> A further variable `ele1` is created and assigned the return value of calling the `pop(1)` method on the, now modified, list object. The function retrieves and returns the element at index 1, which is the integer 2 (indexing starts at zero)
+> Two more string representations are printed:
+> Popped element at index 1: 2
+> Modified list after popping at index 1: [1, 3, 4]
+* If using string concatenation (as opposed to commas) in the `print()` statements, explicit coercion to strings is required: `print("Popped element:" + str(ele))`
 
 ### 4. What does this print and why?
 
-```python
+```
 elements = [0, 1 , 2, "Dima"]
 print(elements.reverse())
 print(elements)
 ```
+> A variable `elements` is created and assigned to a list object which contains integer and string elements. The list object itself is mutable but the integers and strings within are immutable.
+> The `reverse()` method is called on the list object which mutates the object, in this case reversing the order of the elements (lists are sequences so order is important). The return value of calling the method would be `None`, and this is the value that is passed to the `print()` function
+> When the `print()` function is called on the object, it will display the mutated object: `["Dima", 2, 1, 0]`
+* To reverse a list without mutating/modifying the original, use `reversed()` function or slicing (`[::-1]`):
+* `print(elements[::-1])` or `print(list(reversed(elements)))`
 
 ### 5. What does this print and why?
 
-```python
+```
 ages = {
     "dimo": 31,
     "olena": 32,
@@ -647,23 +731,36 @@ ages = {
 
 def get_val_of_dimo(info):
     try:
-        info['dimo']
+        # info['dimo']
         return info['dimo']
     except KeyError:
         return "Typo"
 
 print(get_val_of_dimo(ages))
 ```
+> A dictionary object is created which contains 3 key/value pairs - the dictionary is mutable but the actual keys and value are strings/integers and therefore immutable
+> A function is defined which handles exceptions: the line of code that may raise an error is `return info['dimo']` - this will raise a KeyError if the key (in square brackets) is not in the dictionary (`info`)
+> If no error is raised (i.e. the key is in the dictionary), the value associated with the key is returned
+> If the error is raised, it is caught and handled by the `except` block which returns the string "Typo"
+> When we pass the dictionary into the function, the key 'dimo' exists and therefore we see the string representation of the integer 31 as the output
+> I do not know what the purpose of `info['dimo']` line - please can you elaborate?
+* commented out line not needed
+* Better overall to use the `.get()` method:
+```
+def get_val_of_dimo(info):
+    return info.get('dimo', "Typo")
+```
 
 ### 6. What does this print and why?
 
-```python
+```
 my_dict = {'a': 1, 'b': 2, 'c': 3}
 keys = my_dict.keys()
 print(keys)
 for key in keys:
     print(key)
 ```
+> 
 
 ### 7. What does this print and why?
 
