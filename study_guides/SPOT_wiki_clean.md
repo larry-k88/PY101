@@ -760,33 +760,50 @@ print(keys)
 for key in keys:
     print(key)
 ```
-> 
+> A variable named `my_dict` is created and references a dictionary object with 3 key/value pairs. The object is mutable but the strings/integers that make up the keys and values are immutable.
+> The `keys()` method returns a dictionary view object containing the keys from the dictionary - the object (not the keys themselves) will be referenced by the variable `keys` which, when passed to the print function, will simply display the type (dict_keys) and the contained keys as a string representation `dict_keys(['a', 'b', 'c'])`. This object updates automatically when a new key is added.
+> The dictionary view object is iterable so the `for` loop will iterate over each key in turn, passing its value to the print function, displaying it to the user:
+> a
+> b
+> c
 
 ### 7. What does this print and why?
 
-```python
+```
 my_dict = {'a': 1, 'b': 2, 'c': 3}
 values = my_dict.values()
 print(values)
 for value in values:
     print(value)
 ```
+> A variable named `my_dict` is created and references a dictionary object with 3 key/value pairs. The object is mutable but the strings/integers that make up the keys and values are immutable.
+> The `values()` method returns a dictionary view object containing the values from the dictionary - the object (not the values themselves) will be referenced by the variable `values` which, when passed to the print function, will simply display the type (dict_values) and the contained values as a string representation `dict_values([1, 2, 3])`. This object updates automatically when a new value is added.
+> The dictionary view object is iterable so the `for` loop will iterate over each value in turn, passing it to the print function, displaying it to the user:
+> 1
+> 2
+> 3
 
 ### 8. What does this print and why?
 
-```python
+```
 my_dict = {'a': 1, 'b': 2, 'c': 3}
 items = my_dict.items()
 print(items)
 for key, value in items:
     print(key, value)
 ```
+> A variable named `my_dict` is created and references a dictionary object with 3 key/value pairs. The object is mutable but the strings/integers that make up the keys and values are immutable.
+> The `items()` method returns a dictionary view object containing the key/value pairs from the dictionary - the object (not the values themselves) will be referenced by the variable `items` which, when passed to the print function, will simply display the type (dict_items) and the contained items as a string representation `dict_items([('a', 1), ('b', 2), ('c', 3)])`. This object updates automatically when a new pair is added.
+> The dictionary view object is iterable so the `for` loop will iterate over each item in turn, assigning the key and the value to the variables `key` and `value` respectively - this is tuple unpacking. The variables are passed to the print function, displaying them to the user:
+> a 1
+> b 2
+> c 3
 
 ## variable scope, global keyword, variables as pointers, variable shadowing
 
 ### 1. What does this print and why?
 
-```python
+```
 name = 'John'
 
 def greet():
@@ -794,28 +811,41 @@ def greet():
 
 greet()
 ```
+> A global variable `name` is created and assigned to the string object 'John'. 
+> A function `greet` is defined which takes no arguments and doesn't define any local variables.
+> The global variable `name` is referenced from within the function. Python searches various scopes in order to find the variable - the order is Local, Enclosing, Global, Built-In. It is not in the local (function) scope, it doesn't have an enclosing scope, but it is in the global scope.
+> The variable is only referenced, so its mutability isn't relevant here and the output is:
+> Hello, John
+
 
 ### 2. What does this print and why?
 
-```python
+```
 def assign():
     var = 20
     print(var)
 
 assign()
 ```
+> The function `assign` is defined and the local variable `var` is created within in, assigned to the integer object 20. This local variable exists only within the function scope and will no longer be accessible after the function has finished executing. It then prints the string representation of the object referenced by `var`. In this case, `var` is a local variable and can be accessed from the function where it was defined.
+> The output is therefore:
+> 20
 
 ### 3. What does this print and why?
-```python
+
+```
 try:
     print(var)
 except NameError as e:
     print("Error occurred")
 ```
+> The code within the `try` block is a print statement - the argument is the variable `var`. Python will look for this variable in the local scope, then the enclosing scope (if one exists), the global scope and finally the built-in scope. If the variable doesn't exist in any of them, a NameError exception will be raised.
+> In this case, the variable `var` isn't defined in any scope, so the NameError will be raised and "caught" by the `except` block, therefore printing "Error occurred". A NameError occurs when a name hasn't yet been defined but accessed.
+* `as e` syntax captures the information about the error. Printing `e` would print the explanation for the error. `type(e).__name__` would print "NameError" and `type(e)` would print "<class 'NameError'>".
 
 ### 4. What does this print and why?
 
-```python
+```
 var = 10
 
 def function1():
@@ -846,10 +876,26 @@ def function3():
 function3()
 print(var)
 ```
+> Code Analysis:
+> The global variable `var` is defined and assigned to the integer object 10.
+> `function1` is defined: creates a local variable `var` and assigns it to the integer object 20. This object is passed to the `print()` function. At the end of the function execution, the shadowed variable is not longer accessible.
+> `function1` is called and prints the string representation of the local variable, which is 20.
+> The `try/except` block is then executed: `var` is found in the global scope and passed to the `print()` statement therefore the `except` block isn't executed
+> `function2` is defined: the `+=` operator (augmented assignment) is equivalent to reassignment for immutable objects (such as integers). When Python tried to reassign the object it references, it looks within the function scope for its initialisation, which doesn't exist (this differs from simply referencing the variable, which results in Python checking LEGB scopes). We there therefore see an UnboundLocalError when `function2` is called. This exception is caught by the next `try/except` block and "Error Occurred" is printed.
+> `function3` is then defined which is similar to `function2` except that the code `global var` tells Python to use the global variable `var` as the initialisation. It is therefore able to reassign the value to the new local variable to the integer object 15, which is printed when `function3` is called.
+> Finally, the value of `var` is printed, which now references the integer object 15.
+* Local variables shadow global ones with the same name
+* Reading global variables from a within function works without declaration
+* Any variable in the global scope can be accessed (read) from within a function
+* If the variable is being assigned or reassigned within the function (without `global` keyword), we will see an UnboundLocalError
+* If the variable is mutable and being mutated, the global variable is modified.
+* If the variable is immutable and being mutated, we get an UnboundLocalError
+* Trying to modify a variable in a function creates a local variable by default
+* The global keyword is needed to modify global variables from within a function
 
 ### 5. What does this print and why?
 
-```python
+```
 var = 10
 
 def function1():
@@ -864,10 +910,14 @@ def function2():
 function2()
 print(var)
 ```
+> `var` is initialised and assigned to the integer object 10
+> `function1()` is defined and then called: it prints the string representation of the variable referenced by `var`, in this case, 10. `var` is not a local variable (within the function) but can be accessed as it's in the global scope
+> `function2` is defined and then called: it creates a new local variable `var` within the function, assigns it to the integer object 20 and then prints a string representation of that object: 20. After the function has executed, the local variable `var` is no longer accessible (global `var` is unchanged)
+> We then print the string representation of the global variable `var`: 10
 
 ### 6. What does this print and why?
 
-```python
+```
 def function1():
     x = 10
 
@@ -882,12 +932,88 @@ function1()
 print(x)
 print(y)
 ```
+> `function1` is defined and then called. Within it, `function2` is defined.
+> Within `function1`, a local variable `x` is created and assigned the value 10, before calling `function2`. 
+> `function2` defines a local variable `y` and assigns it the value of 20. It then prints the value of `x` which is not a local variable. Python looks in the enclosing scope and finds `x`, this can be accessed and printed (10)
+> `function1` contains a print statement which prints the value of its local variable `x` (10)
+> `function1` is now executed and its local scope is destroyed (which includes `x` anx `y`).
+> `print(x)` will raise NameError as `x` is not defined. The code never reaches `print(y)`
 
 ### 7. What does this print and why?
 
-```python
+```
 var = 10
 
 def access():
     print(var)
 ```
+> A global variable `var` is created and assigned the value 10
+> A function called `access` is defined which prints `var`, but this function is never invoked so we see no output.
+> If the function was invoked, the print statement tries to find `var` in the local scope but can't, so it looks in the enclosing scope and finds `var = 10` and it would print the value 10.
+
+## LSBot Questions:
+
+
+### What's the purpose of the global keyword in Python, and what will the following code print? Explain why.
+
+```
+count = 0
+
+def increment():
+    count = count + 1
+    return count
+
+try:
+    print(increment())
+except Exception as e:
+    print(f"Error: {type(e).__name__}")
+```
+> A global variable `count` is assigned to the integer value of `0`
+> A function called `increment` is defined. The line `count = count + 1` tries to read the object referenced by `count` on the right hand side of the `=` operator, but it hasn't yet been defined as a local variable so we get an UnboundLocalError. Python cannot look in the enclosing (or global) scope (as it would if it was simply accessing the variable) because the presence of `count =` means Python is treating `count` as a local variable which must be assigned before being used.
+> The `except` block will execute: it captures any virtually and exceptions (by use of `Exception` instead of a specific one) as the variable `e` (the exception object is now bound to the variable). When it's passed to `type()`, we would get the exception class, but with the `.__name__` attribute, it returns the string name of that class. This is then passed into the print function via an f-string.
+> The `global` keyword allows us to access and modify variables from within a function. In this case, rather than treating `count` as a local variable (and being unable to find its initial assignment), it is able to use the fact that it was assigned in the global scope.
+
+
+### What will the following code print and why? How does it demonstrate Python's variable scope rules?
+```
+name = "Charlie"
+
+def change_name():
+    global name
+    name = "David"
+    print(f"Inside function: {name}")
+
+print(f"Before function call: {name}")
+change_name()
+print(f"After function call: {name}")
+```
+> A global variable `name` is assigned the string object "Charlie"
+> A function called `change_name` is defined
+> A print statement displays the output of the f-string "Before function call: {name}" - the expression in curly braces is evaluated and the result (the string object "Charlie") is interpolated into the string before being displayed
+> The function `change_name` is then called which declares the variable `name` within the function as a global variable. Instead of creating a local variable which happens to have the same name as the global one (an example of shadowing), it reassigns the value of the global variable `name` from "Charlie" to "David" before interpolating it and passing it to the print function.
+> The final line interpolates the value of the variable `name` which has now been reassigned as above
+> We therefore get: 
+> Before function: Charlie
+> Inside function: David
+> After function: David
+* Without the global keyword, we get Charlie, David, Charlie as the global variable isn't changed when the function is called - all that happens is that a local variable is created, interpolated and printed before being destroyed.
+
+### Identify the issue in the following code and explain what happens when it runs. Then, provide a corrected version that accomplishes the intended task.
+
+```
+greeting = "Hello"
+
+def greet():
+    greeting = "Hi"
+    return greeting
+
+result = greet()
+print(result)
+print(greeting)
+```
+> Global variable `greeting` is initialised and assigned value Hello (a string object)
+> A function `greet` is defined
+> A new variable `result` is initialised and assigned the value of the return of the `greet` function:
+> `greet` creates a local variable with the same name as the global one and assigns it the value of "Hi" (a string object). This value is then returned and assigned to the variable `result` (result = "Hi")
+> When `result` is printed, we see Hi
+> When `greeting` is printed, we see Hello
