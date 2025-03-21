@@ -2,7 +2,7 @@
 
 - [Study Guide for PY109](#study-guide-for-py109)
   - [naming conventions: legal vs. idiomatic, illegal vs. non-idiomatic](#naming-conventions-legal-vs-idiomatic-illegal-vs-non-idiomatic)
-  - [type coercions: explicit (e.g. using int(), str() and implicit)](#type-coercions-explicit-eg-using-int-str-and-implicit)
+  - [type coercions: explicit (e.g. using `int()`, `str()`) and implicit](#type-coercions-explicit-eg-using-int-str-and-implicit)
   - [numbers](#numbers)
   - [strings](#strings)
   - [f-strings](#f-strings)
@@ -25,7 +25,7 @@
   - [slicing (strings, lists, tuples)](#slicing-strings-lists-tuples)
   - [operators](#operators)
     - [Arithmetic: +, -, \*, /, //, %, \*\*](#arithmetic--------)
-    - [String operators: +](#string-operators-)
+    - [String operators: + and \*](#string-operators--and-)
     - [List operators: +](#list-operators-)
     - [Comparison: ==, !=, \<, \>, \<=, \>=](#comparison------)
     - [Logical: and, or, not](#logical-and-or-not)
@@ -104,7 +104,7 @@
         first,last = ['Bill', 'Ben'] # illegal as it contains punctuation
     + creates 2 variables rather that one called 'first,last'
 
-## type coercions: explicit (e.g. using int(), str() and implicit)
+## type coercions: explicit (e.g. using `int()`, `str()`) and implicit
 
 + Built-in Data Types:  
 a) Table Format
@@ -167,8 +167,8 @@ b) Tree format:
 + Values to string:
   + `str()` (works with all built-in data types)
   + `print()` coerces its arguments to strings, but prints them (rather than returning them) so isn't regarded as coercion in the same way
-    + string interpolation, however, does coerce the values in the expressions to strings
-  + `str()` is created to represent an object in a readable format (e.g. in the `print()` function above)
+    + string interpolation, however, does implicitly coerce the values in the expressions in`{}` to strings if they are not already strings
+  + `str()` is created to represent an object in a readable format
   + `repr()` is similar but returns a developer-friendly string representation of the object:
 
         x = 'hello\nthere'
@@ -185,7 +185,7 @@ b) Tree format:
 + Value to Boolean:
   + `bool()` returns `True` or `False` depending on truthiness
   
-+ Implicit coercion performs it without the programmer specifying it, it is automatically performed by the Python interpreter:
++ Implicit coercion is performed without the programmer specifying it, it is automatically performed by the Python interpreter:
   + mixing number types in an [expression](#expressions-and-statements):
     + Adding an integer to a float outputs a float
     + NB Division operator does NOT implicitly coerce before performing the operation - it performs it in floating-point arithmetic
@@ -255,6 +255,8 @@ b) Tree format:
         print(f'{123456789.987654321:,}') # 123,456,789.98765433
         print(f'{123456789.987654321:e}') # 1.234568e+08
 
++ The expressions in `{}` are evaluated first. They may simply be variables but may also be more complex operations. The value of the expression is then implicitly coerced into a string before being passed to the `print` function.
+
 ## string methods
 
 + all methods are functions (not all functions are methods)
@@ -267,29 +269,29 @@ b) Tree format:
 
 ### capitalize, swapcase, upper, lower
 
-+ **str.capitalize()** - first letter capitalised (titlecase, not uppercase - digraphs have first letter capitalised, not the full character which would be 2 characters), everything else lowercase
-  + **str.title()** - first letter of each word is capitalised but it treats whitespace and punctuation as word boundaries so beware. `str.capwords(string)` (from `import string') can solve this
-+ **str.swapcase()** - upper becomes lower, lower becomes upper
-  + str.swapcase().swapcase() == str not always true (e.g. always True for standard ASCII, but not for extended ASCII or special Unicode characters)
-+ **str.upper()** - changes to uppercase
-  + same rules apply as above re. str.upper().upper()
-+ **str.lower()** - changes to lowercase (best for standard ASCII, but different to `casefold()` which is more useful when dealing with special characters or non-English language )
-  + same rules apply as above re. str.lower().lower()
++ `str.capitalize()` - first letter capitalised ("titlecase", not uppercase - digraphs have first letter capitalised, not the full character which would be 2 characters), everything else lowercase
+  + `str.title()` - first letter of each word is capitalised but it treats whitespace and punctuation as word boundaries so beware. `str.capwords(string)` (from `import string') can solve this
++ `str.swapcase()` - upper becomes lower, lower becomes upper
+  + `str.swapcase().swapcase() == str` not always true (e.g. always True for standard ASCII, but not for extended ASCII or special Unicode characters)
++ `str.upper()` - changes to uppercase
+  + same rules apply as above re. `str.upper().upper()`
++ `str.lower()` - changes to lowercase (best for standard ASCII, but different to `casefold()` which is more useful when dealing with special characters or non-English language )
+  + same rules apply as above re. `str.lower().lower()`
 
 ### isalpha, isdigit, isalnum, islower, isupper, isspace
 
-+ **isalpha()** - True if string has at least 1 character, and all are alphabetic, False otherwise. (add `isascii()` if you need to exclude non-ASCII characters)
-+ **isdigit()** - True if string has at least 1 character, and all are digits, False otherwise
-+ **isalnum()** - True if string has at least 1 character, and all are alphanumeric (i.e. at least one of the following is True isalpha, isdecimal, isdigit or isnumeric), False otherwise
-+ **islower()** - True if string has at least 1 character, and all characters are lowercase, False otherwise
-+ **isupper()** - True if string has at least 1 character, and all characters are uppercase, False otherwise
-+ **isspace()** - True if string has at least 1 character, and all characters are whitespace (includes tabs, newlines, carriage returns, vertical tabs and form feeds), False otherwise
-+ NB empty strings will return False
++ `isalpha()` - `True` if string has at least 1 character, and all are alphabetic, `False` otherwise. (add `isascii()` if you need to exclude non-ASCII characters)
++ `isdigit()` - `True` if string has at least 1 character, and all are digits, `False` otherwise
++ `isalnum()` - `True` if string has at least 1 character, and all are alphanumeric (i.e. at least one of the following is True isalpha, isdecimal, isdigit or isnumeric), `False` otherwise
++ `islower()` - `True` if string has at least 1 character, and all characters are lowercase, `False` otherwise
++ `isupper()` - `True` if string has at least 1 character, and all characters are uppercase, `False` otherwise
++ `isspace()` - `True` if string has at least 1 character, and all characters are whitespace (includes tabs, newlines, carriage returns, vertical tabs and form feeds), `False` otherwise
++ NB empty strings will return `False`
 
 ### strip, rstrip, lstrip, replace
 
 + These can all take arguments:
-+ **strip(characters)** - removes *leading* or *trailing* characters
++ `strip(characters)` - removes *leading* or *trailing* characters
   + default is whitespace
 
         string = '   3 spaces either side   '
@@ -300,7 +302,7 @@ b) Tree format:
 
         string = '?-*-mixture-*-?'
         string.strip('*')
-        --> '?-*-mixture-*-?'
+        --> '?-*-mixture-*-?' # nothing removed
 
   + `?` is removed
     
@@ -314,13 +316,13 @@ b) Tree format:
         string.strip('w.ocm')
         --> 'rightmove'
 
-+ **`rstrip(characters)`** - as above but for *trailing* characters only.   (`removesuffix()` will remove a single suffix, not a set of characters)
-+ **`lstrip(characters)`** - as above but for *leading* characters only.   (`removeprefix()` will remove a single prefix, not a set of characters)
-+ **`replace(old, new, count=-1)`** - `old` occurrences replaced by `new`, specified by the count (from left to right). Default is all (notation: `-1`)
++ `rstrip(characters)` - as above but for *trailing* characters only. (`removesuffix()` will remove a single suffix, not a set of characters)
++ `lstrip(characters)` - as above but for *leading* characters only. (`removeprefix()` will remove a single prefix, not a set of characters)
++ `replace(old, new, count=-1)` - `old` occurrences replaced by `new`, specified by the count (from left to right). Default is all (notation: `-1`)
 
 ### split, find, rfind
 
-+ **split(sep=None, maxsplit=-1)**
++ `split(sep=None, maxsplit=-1)`
   + returns a *list* of words, separated by the delimiter `sep`:
 
         string = 'him, her, they'
@@ -345,7 +347,7 @@ b) Tree format:
 
   + delimiters can be multi-character
 
-  + if sep=None (or not provided), a different algorithm runs which treats any consecutive whitespace as a single separator (resulting in no empty strings if there is leading/trailing whitespace)
+  + if `sep=None` (or not provided), a different algorithm runs which treats any consecutive whitespace as a single separator (resulting in no empty strings if there is leading/trailing whitespace)
 
         string = ''
         string.split()
@@ -364,13 +366,13 @@ b) Tree format:
         list(string) # to separate them
         --> ['a', 'b', 'c', 'd', 'e']
 
-+ **find(sub, start, end)**
++ `find(sub, start, end)`
   + returns the index of the 1st character in the substring
   + `start` and `end` denote a slice (optional) - NB `,` not `:` syntax
     + leaving `end` blank defaults to end of string
   + if sub not found, returns -1
 
-+ **rfind(sub, start, end)**
++ `rfind(sub, start, end)`
   + as above but returns the highest index (i.e. furthest to the right), rather than the 1st
   + if sub not found, returns -1 
 
@@ -386,7 +388,7 @@ b) Tree format:
 ### booleans
 
 + Boolean values are either `True` or `False` - they are definitive versions of 'truthy' and 'falsy'
-+ Logical operators return boolean values
++ Logical operators usually return boolean values
 + They can behave as numerical values (True = 1 and False = 0)
 
 ### truthiness
@@ -415,7 +417,7 @@ b) Tree format:
 
 + see [logical operators](#logical-and-or-not)
 + truthiness can be combined with short-circuiting as follows:
-  + logical operators don't always return True or False - they care about the truthiness and return the final expression they evaluate:
+  + logical operators don't always return `True` or `False` - they care about the truthiness and return the *final expression* that they evaluate:
 
         3 and 'foo'    --> 'foo'
         0 and 3        --> 0
@@ -425,9 +427,12 @@ b) Tree format:
         0 or 3         --> 3
         'foo' or 0     --> 'foo'
 
++ `and` returns the first falsy value (from left to right), or (if all are truthy), the final value
++ `or` returns the first truthy value (from left to right), or (if all are falsy), the final value
+
 ## None
 
-+ This is the absence of a value (not `0` or something empty/falsey/False)
++ This is the absence of a value (not `0` or something empty/falsy/False)
 + The only member of the `NoneType` class
 
 ## ranges
@@ -479,7 +484,7 @@ b) Tree format:
 
 ### dictionaries
 
-+ not ordered by definition (but dicts do preserve insertion order)
++ not ordered by definition (but do preserve insertion order)
 + these map a key (usually string) onto a value - the key is unique (trying to add a duplicate just replaces the value)
 + `len()` counts the pairs
 + instead of indexes, we use the keys to access/reassign values:
@@ -511,7 +516,7 @@ b) Tree format:
           list1.insert(1, 6)
           --> list 1 is now: [5, 6, 7, 8] i.e. inserts before position 1
 
-  + `list.pop(i)` - removes and returns element at position i, or the last element if left blank (IndexError if out of range)
+  + `list.pop(i)` - removes and returns element at position i, or the last element if left blank (IndexError if out of range) - this doesn't return `None`, it returns the item that was removed
     + `list.remove()` - searches for the object and removes the first occurrence (ValueError if no such object)
     + `list.clear()` - empties the sequence (works with dicts)
   + `list.reverse()` - reverses the sequence (use when you don't need to preserve the original list order):
@@ -528,7 +533,7 @@ b) Tree format:
 + all 3 of the above get automatically updated if the dictionary is mutated
 + these objects are iterables so their contents can be iterated over (e.g. in loops)
 
-+ `dict.get(key)` used instead of key access if unsure if the key exists as this returns `None` by default if not present (can be set as a parameter):
++ `dict.get(key)` used instead of key access , useful if unsure if the key exists as this returns `None` by default if not present (can be set as a parameter):
 
         number_pairs.get('three','Does Not Exist')
         --> 'Does Not Exist'
@@ -582,7 +587,7 @@ b) Tree format:
             from decimal import Decimal
             Decimal('0.1') + Decimal('0.2) == Decimal('0.3') --> True
 
-### String operators: +
+### String operators: + and *
 
 + will be reassignment
 + looks like addition and/or multiplication:
@@ -651,7 +656,7 @@ b) Tree format:
   + determines if it is a subset or superset:
 
         {3, 1, 2} < {2, 4, 3, 1}
-        --> True, LHS is a subset of the RH
+        --> True, LHS is a subset of the RHS
 
         {2, 4, 3, 1} > {3, 1, 2}
         --> True, LHS is a superset of the RHS
@@ -691,7 +696,7 @@ b) Tree format:
 + these compare the objects that the variables point at:
   + if they point to the same object (and therefore have the same value), `is` will return `True` (they will also have identical id numbers)
   + if they have the same value (i.e. satisfies the `==` operator), they are not necessarily the same object
-+ NB 'interning' is a process which assigns a unique object to every value from -5 to 256 (and also some strings) - this means that their id will be the same even if the variables point to different objects:
++ NB 'interning' is a process which assigns a unique object to every value from -5 to 256 (and also some strings) - this means that their `id` will be the same even if the variables point to different objects:
 
         x = 5
         y = 5 (2 distinct objects, expect id to be different even though values are the same)
@@ -740,6 +745,9 @@ b) Tree format:
 
         5 or 1 / 0
         --> 5 (1 / 0 never evaluated even though `/` has higher precedence than `or`)
+    
+    + treat the expressions either side of the `and` or `or` operator as in parentheses:
+      + 5 or ( 1 / 0)
 
 + some expressions will evaluate right-to-left (multiple assignments or multiple `**` operators) - they are **not** good practice:
 
@@ -770,7 +778,7 @@ b) Tree format:
         name = 'jim'
         change_name(name)
         print(name)
-        --> 'jim' (the variable `name` is only changed within the function)
+        --> 'jim' (the variable `name` is only changed to 'Bob' within the function)
 
         def add_element(my_list):
             my_list.extend([4])
@@ -808,7 +816,7 @@ b) Tree format:
 + when assigning a variable, the expression on the RHS is evaluated first
 
 + augmented assignment (statement, not expression):
-  + ****generally, using `a = a + b` will be reassignment. `a += b` will be reassignment too, unless a is mutable**
+  + **generally, using `a = a + b` will be reassignment. `a += b` will be reassignment too, unless a is mutable**
   + simply shorthand for reassigning a value based on a previous one
 
             number = 100
@@ -841,7 +849,7 @@ b) Tree format:
 + Rule 5: 
   + Nested function have their own scope - inner scopes can access outer scopes, but not the other way round
   
-+ NB variables defined in blocks, like `if` or `while` loops do not have their own scope in the same way that functions do
++ NB variables defined in blocks, like `if` or `while` loops do *not* have their own scope in the same way that functions do
 + functions can access variables *outside* of its location, but not *inside*
   + python searches the **lexical** scope (i.e. outer scopes) to find the nearest variable
 
@@ -918,7 +926,7 @@ b) Tree format:
             duplicate = original[:] # or list(original)
             # shallow copy: `3` and `True` copied, but pointer to ['hello', 'world'] copied
 
-    + `original` and `duplicate` have same value but different id
+    + `original` and `duplicate` have same value but different `id`
 
             original[2] = False
             original 
@@ -941,7 +949,7 @@ b) Tree format:
 ### variable shadowing
 
 + occurs when identifiers (variables) share the same name in different scopes
-+ it is the temporary hiding of the variable of the same name in the outer scope.
++ it is the temporary hiding of the variable of the same name in the outer scope
   
         greeting = 'Salutations' # this will be shadowed/hidden
 
@@ -1021,7 +1029,7 @@ b) Tree format:
 
 #### zip
 
-+ to get data from 2 separate collections, we can use the `zip` function
++ to get data from multiple collections, we can use the `zip` function
 + it is a lazy sequence that acts like a list of tuples:
 
         list_a = ['Bill', 'Ben']
@@ -1032,7 +1040,15 @@ b) Tree format:
             print(f'{name} {verb} {status}')
     
 + collections can be anything iterable (if using a dict, `.values()` and `.items()` will work)
-+ there is no issue with the length of the collections being different
++ it will return an iterator of tuples
++ there is no issue with the length of the collections being different, the resulting iterator of tuples will be equal to the shortest collection
++ `*` reverses the process
+
+        data = [('hello', 5), ('there', 5), ('pal', 3)]
+        words, letters = zip(*data)
+
+        print(words)    --> ('hello', 'there', 'pal')    
+        print(letters)  --> (5, 5, 3)
 
 #### Comprehensions
 
@@ -1049,8 +1065,8 @@ b) Tree format:
     + 'for element in iterable' is the iterating part, similar to a `for` loop
     + 'if condition' is selective (called a **selection**)
   + the iterable can be a dict object and the return value will be the keys (unless you select `dict.values()` or `dict.items()` as the iterable)
-    + result is similar to dict.keys() except it's a proper list, not a dict view object
-  + you can have more than one selection criteria, just chain if statements (act like nested `if` statements or `and`-ed conditions)
+    + result is similar to `dict.keys()` except it's a proper list, not a dict view object
+  + you can have more than one selection criteria, just chain `if` statements (act like nested `if` statements or `and`-ed conditions)
   + you can have more than one `for` part which act like nested for loops:
 
             suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
@@ -1070,7 +1086,7 @@ b) Tree format:
   + expression will be a key : value pair
   + generic example:
 
-        { key: value for element in iterable if condition }
+        # { key: value for element in iterable if condition }
 
         squares = { f'{number}-squared': number * number
             for number in range(1, 6) }
@@ -1086,7 +1102,7 @@ b) Tree format:
 
 
 + Set Comprehensions:
-  + look similar to dict comprehensions (curly brackets) but have a single expression to the left of the `for`, not a key: value pair
+  + look similar to dict comprehensions (curly brackets) but have a single expression to the left of the `for`, not a 'key : value' pair
   + generic example:
   
         { expression for element in iterable if condition }
@@ -1161,7 +1177,7 @@ b) Tree format:
         --> TypeError
         
 + `SyntaxError`
-  + These are unique as they arises after loading the program, but *before* it runs
+  + These are unique as they arise after loading the program, but *before* it runs
   + Encounters code that break syntactic rules, e.g. missing trailing quote:
 
         print('hello) 
@@ -1249,7 +1265,7 @@ Example:
 + called by prepending an object with a `.` - known as method calls
 + all methods are functions but not all functions are methods
 + methods belong to a class, and can only be called on objects of the same class
-+ sometimes the caller (the object calling the method) is mutated but the method (not possible if the caller is immutable):
++ sometimes the caller (the object calling the method) is mutated by the method (not possible if the caller is immutable):
 
         odd_numbers = [1, 3, 5]
         odd_numbers.pop() # pop() method mutates the caller
@@ -1298,7 +1314,7 @@ Example:
         --> 'hello!'
 
 + if there are multiple parameters, defaults can be set but once one is specified, subsequent ones must also have defaults
-+ they are called positional parameters the 1st is set to arg1, the 2nd to arg2 etc.
++ they are called positional parameters the 1st is set to `arg1`, the 2nd to `arg2` etc.
 
 ### nested functions
 
@@ -1381,5 +1397,5 @@ Example:
 + 'stand-alone' expressions have return values that are ignored and therefore appear to be statements - considered to be both:
 
         3 + 4            # Simple expression
-        pint('Hello')    # Function call; returns None
+        print('Hello')   # Function call; returns None
         my_list.sort()   # Method call; returns None    

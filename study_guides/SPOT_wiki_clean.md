@@ -1017,3 +1017,4 @@ print(greeting)
 > `greet` creates a local variable with the same name as the global one and assigns it the value of "Hi" (a string object). This value is then returned and assigned to the variable `result` (result = "Hi")
 > When `result` is printed, we see Hi
 > When `greeting` is printed, we see Hello
+* No idea what the intended task is
