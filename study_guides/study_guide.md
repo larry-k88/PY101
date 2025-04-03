@@ -67,6 +67,7 @@
     - [expressions](#expressions)
     - [statement](#statement)
     - [important points](#important-points)
+  - [Misc advice/guidance](#misc-adviceguidance)
 
 
 ## naming conventions: legal vs. idiomatic, illegal vs. non-idiomatic
@@ -525,6 +526,26 @@ b) Tree format:
         list1.reverse()
         --> list1 is now: [3, 2, 1]
 
+  + `list.sort()` - mutates the list and returns it in order. keyword `reverse=True` will return it in reverse order. Only works if the objects in the list are the same type (i.e. it cannot compare strings with integers). Can work on nested lists too
+
+        my_list = [[1, 5], [100, 3]]
+        my_list.sort(reverse=True)
+        --> my_list is now [[100, 3], [1, 5]]
+
+        my_list[0].sort()
+        --> my_list is now [[3, 100], [1, 5]]
+        
+        my_list[1].sort(reverse=True)
+        --> my_list is now [[3, 100], [5, 1]]        
+
+    + NB `sorted()` as a built-in function returns a new list, sorted based on a key (e.g. len)
+    
+            a = ("Jennifer", "Sally", "Jane")
+            x = sorted(a, key=len) # return value saved to a variable
+            print(x) 
+            --> ['Jane', 'Sally', 'Jennifer']
+
+
 ## dictionary methods: dict.keys(), dict.values(), dict.items(), dict.get()
 
 + `dict.keys()` - returns a dict_keys object (dictionary view object)
@@ -761,16 +782,33 @@ b) Tree format:
 + see the [data types](#type-coercions-explicit-eg-using-int-str-and-implicit) table
 + mutation is the act of changing the value of the object in memory
 + you cannot do this to immutable objects, you will have to create a new object and change where the variable is pointing/referencing
++ Can be confirmed with the `id()` function:
+
+        a = [1, 2, 3]
+        b = a
+        b += [4]
+        print(f'ID a = ID b: {a is b}') # True
+        print(a)                        # [1, 2, 3, 4]
+
+        a = '[1, 2, 3]'
+        b = a
+        b += '[4]'
+        print(f'ID a = ID b: {a is b}') # False
+        print(a)                        # [1, 2, 3]
   
 ## pass by object reference
 
 + pass by value:
   + the function has a copy of the original object 
-  + anything the function does to the copy does not affect the original 
+  + anything the function does to the copy does not affect the original
+  + no mutation
+   
 + pass by reference:
-  + the function has a reference to the original (a pointer)
+  + the function is passed a reference to the **variable** (not the object)
   + anything the function does to the object affects the original
-+ Python appears to do both:
+  + mutation (regardless of mutability)
+
++ In Python, we see both mutation and non-mutation
 
         def change_name(name):
             name = 'bob'
@@ -789,7 +827,7 @@ b) Tree format:
         --> [1, 2, 3, 4] (object has been mutated)
 
 + Python uses 'pass by object reference':
-  + we pass the reference to the object but whether the function modifies the original depends on the mutability of the object
+  + we pass the a copy of the reference to the **object** but whether the function modifies the original depends on the mutability of the object
   + **if the operation within the function mutates the argument, it will affect the original object** 
 
 ## variables
@@ -972,7 +1010,7 @@ b) Tree format:
 + these are forks in code and usually use `if` with some comparison or logical operator
 + other forks can be taken with `elif` and `else` keywords
 + Python will run the code block if the condition evaluates is truthy (not necessarily `True`), but skips it otherwise
-+ `else` block will be executed if no other blocks are
++ `else` block will be executed if no other blocks truthy
 + `if` blocks can be nested but this should be avoided, use `elif` in their place. `elif` must be after the `if` block and before the `else` block
 + the blocks can contain multiple statements and that statement can be to do nothing: `pass` (if you do this, best to add a comment as to why)
 
@@ -992,11 +1030,16 @@ b) Tree format:
 
 ### Ternary Expressions
 
++ avoiding confusion with [list comprehensions](#comprehensions):
+  + if you see square brackets and a for loop in a single line, you're looking at a list comprehension
+  + if you see if/else without square brackets, you're looking at a ternary expression
+  
 + sometimes called conditional expressions or ternary operators:
 
         value1 if condition else value2 
 
-+ condition is evaluated and python returns `value1` if truthy or `value2` otherwise
++ condition is evaluated first and then only one of the values is evaluated based on whether the condition is truthy or falsy - it is defined as [short circuiting](#short-circuiting) as it happens within a single expression
++ they have return values so can be used in assignments, function arguments and function return statements
 + useful for dealing with missing/invalid data:
 
         print('N/A' if value == None else value)
@@ -1052,9 +1095,14 @@ b) Tree format:
 
 #### Comprehensions
 
++ Avoiding confusion with [ternary expressions](#ternary-expressions):
+  + if you see square brackets and a for loop in a single line, you're looking at a list comprehension
+  + if you see if/else without square brackets, you're looking at a ternary expression
+  
 + they create mutable collections from iterable collections, based on optional selection
 + they are expressions but are similar to `for` and `while` loops (which are statements - [see here](#expressions-and-statements))
 + they are not meant to print values, but are often used as return value, function arguments or anywhere else that expressions can be used
++ iteration variables created within comprehensions are local to that comprehension (NB only apply to the **iteration** variables)
 
 + List Comprehensions:
   + generic example:
@@ -1082,24 +1130,23 @@ b) Tree format:
 
 + Dict Comprehensions:
   + created dictionary instead of a list
-  + use curly brackets, not square
-  + expression will be a key : value pair
-  + generic example:
+  + syntax is curly brackets, not square and expression will be a key/value pair
+  + example (filtering):
+    + `{key: value for element in iterable if condition}`
+    + only include numbers based on the condition
 
-        # { key: value for element in iterable if condition }
+            squares = { f'{num}-squared': num * num
+                for num in range(1, 6) if num % 2}
+            print(squares)
 
-        squares = { f'{number}-squared': number * number
-            for number in range(1, 6) }
-        print(squares)
-        
-        {
-            '1-squared': 1,
-            '2-squared': 4,
-            '3-squared': 9,
-            '4-squared': 16,
-            '5-squared': 25
-        }
+            --> {'1-squared': 1, '3-squared': 9, '5-squared': 25}
 
+  + example (conditionals - ternary expression within the comprehension):
+    + `{key: value1 if condition else value2 for item in iterable}`
+    + for all numbers, use different values based on the condition
+  
+            def process_list(numbers):
+                return {num : 'odd' if num % 2 else 'even' for num in numbers }
 
 + Set Comprehensions:
   + look similar to dict comprehensions (curly brackets) but have a single expression to the left of the `for`, not a 'key : value' pair
@@ -1164,7 +1211,7 @@ b) Tree format:
   + Using a variable or function that is undefined
   
 + `TypeError`
-  + Using a value of the wrong type in an expression
+  + Using a value of the wrong type in an expression e.g. mutating a tuple
 
         word = 'hello'
         word.find(42)
@@ -1246,6 +1293,21 @@ Example:
         print("Exception handling complete.")
 
 + This catches occurrences when use enters something that isn't an integer (such as a float, or string), or 0 
++ A bare `except` clause catches any Exception that is raised - not helpful for debugging however
++ The syntax `except ValueError as error` allows you to capture the details of the Exception Object and use them later: 
+
+        try:
+            result = 10 / 0
+        except ZeroDivisionError as error:
+            print(f"Caught an exception: {error}")
+            print(f"Exception type: {type(error)}")
+            print(f"Exception args: {error.args}")
+
+        # 
+        Caught an exception: division by zero
+        Exception type: <class 'ZeroDivisionError'>
+        Exception args: ('division by zero',)
+        Full exception as string: division by zero
 
 ## Functions:
 
@@ -1329,6 +1391,8 @@ Example:
         def bottom():
             print('Hi)' 
 
+        top()
+
         --> tries to call bottom() which isn't yet defined but doesn't matter as Python first reads and saves top() and bottom() to memory, therefore when it executes top(), it already knows bottom() exists
     
 
@@ -1336,6 +1400,7 @@ Example:
 
 + Most functions should *either* return a 'useful value' *or* have a side effect; not both (avoid `get_and_display_total()`, split it up)
   + A 'useful value' has meaning to calling the code - something that returns an arbitrary number or the same value, like `None`, is not usually useful
+  + A side effect is an action that affects something outside the function 
 + There will be exceptions to this, such as reading from a database, writing to the terminal and also returning it
 + Function names should reflect the purpose:
   + `display_total` implies it will print the total (i.e. a side effect)
@@ -1398,4 +1463,8 @@ Example:
 
         3 + 4            # Simple expression
         print('Hello')   # Function call; returns None
-        my_list.sort()   # Method call; returns None    
+        my_list.sort()   # Method call; returns None
+
+## Misc advice/guidance
+
++ When iterating over something like a string, consider reassigning it to a `set` before iteration to avoid unnecessary steps
