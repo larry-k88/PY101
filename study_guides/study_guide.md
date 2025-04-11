@@ -256,7 +256,7 @@ b) Tree format:
         print(f'{123456789.987654321:,}') # 123,456,789.98765433
         print(f'{123456789.987654321:e}') # 1.234568e+08
 
-+ The expressions in `{}` are evaluated first. They may simply be variables but may also be more complex operations. The value of the expression is then implicitly coerced into a string before being passed to the `print` function.
++ The expressions in `{}` are evaluated first. They may simply be variables but may also be more complex operations. The value of the expression is then implicitly coerced into a string **before** being passed to the `print` function.
 
 ## string methods
 
