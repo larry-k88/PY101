@@ -412,7 +412,7 @@ b) Tree format:
     + Any empty collection/sequence: `''`, `()`, `[]`, `{}`, `set()`, `frozenset()`, `range(0)`
     + Any custom data types can define additional *falsy* values
 + Everything else is *truthy*:
-  + e.g. [0] is truthy as the list itself is not empty
+  + e.g. `[0]` is truthy as the list itself is not empty
   
 ### short-circuiting
 
